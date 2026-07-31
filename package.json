@@ -1,0 +1,29 @@
+{
+  "name": "cmh-react",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chris Michael Harris — WordPress to React migration",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p ${PORT:-3000}",
+    "lint": "next lint",
+    "migrate:images": "node scripts/migrate-images.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "gray-matter": "^4.0.3",
+    "next-mdx-remote": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
