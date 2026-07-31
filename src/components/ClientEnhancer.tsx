@@ -68,6 +68,17 @@ export default function ClientEnhancer() {
       window.addEventListener('scroll', onScroll, { passive: true });
     }
 
+    // ── Date stamp ───────────────────────────────────────────────────────────
+    // Computed client-side, never baked at build: a frozen "YYYY.MM" is accurate
+    // on deploy day and wrong the next month. Mirrors the mock's renderVals().
+    {
+      const d = new Date();
+      const stamp = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}`;
+      document
+        .querySelectorAll<HTMLElement>('[data-stamp]')
+        .forEach((el) => { el.textContent = stamp; });
+    }
+
     // ── Atmosphere (mock defaults) ──────────────────────────────────────────
     // gridSpeed "still" -> grid animation paused; glowIntensity 100 -> bloom .85
     document.querySelectorAll<HTMLElement>('[data-grid]').forEach((el) => {

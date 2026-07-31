@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import './fonts.css';
 import './globals.css';
 import ClientEnhancer from '@/components/ClientEnhancer';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
@@ -13,23 +14,15 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
 };
 
-// Fonts load from Google Fonts so the literal family names used throughout the
-// frozen v6 markup ('Fraunces' / 'Manrope' / 'JetBrains Mono') resolve unchanged.
-const FONTS_HREF =
-  'https://fonts.googleapis.com/css2' +
-  '?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300' +
-  '&family=Manrope:wght@400;500;600;700' +
-  '&family=JetBrains+Mono:wght@400' +
-  '&display=swap';
+// Fonts are self-hosted from /public/fonts — the exact static instances
+// extracted byte-for-byte from the v6 export (see src/app/fonts.css). Serving
+// Fraunces as those fixed instances (rather than Google's variable font, which
+// re-applies optical sizing) keeps letter metrics identical to the design, so
+// text wraps exactly as in the export.
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href={FONTS_HREF} />
-      </head>
       <body>
         {children}
         <ClientEnhancer />
