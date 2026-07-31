@@ -1,0 +1,36 @@
+/* Single-post article template. There is no v6 single-post mock, so this reuses
+   the design's own tokens (Fraunces headings, Manrope body, amber accents) —
+   net-new styling for a net-new template, kept out of the frozen globals.css. */
+
+.postWrap { max-width: 760px; margin: 0 auto; padding: clamp(48px,7vw,86px) clamp(18px,4vw,44px) clamp(60px,8vw,96px); }
+.postWrap .backlink { display:inline-block; margin-bottom:28px; }
+.postWrap h1 {
+  font-family:'Fraunces',serif; font-weight:300; font-size:clamp(30px,5vw,50px);
+  line-height:1.06; letter-spacing:-.03em; margin:14px 0 18px; text-wrap:pretty;
+}
+.postWrap .postMeta { display:flex; align-items:center; gap:14px; margin-bottom:clamp(28px,4vw,40px); }
+.postWrap .postCover { margin:0 0 clamp(28px,4vw,40px); border:1px solid rgba(240,169,60,.2); overflow:hidden; }
+.postWrap .postCover img { width:100%; height:auto; display:block; }
+
+.postWrap .ytEmbed { position:relative; aspect-ratio:16/9; margin:0 0 clamp(28px,4vw,40px); border:1px solid rgba(240,169,60,.2); overflow:hidden; }
+.postWrap .ytEmbed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+.postBody { font-size:clamp(16.5px,2vw,18px); line-height:1.75; color:#D9D3CA; }
+.postBody > * + * { margin-top:1.25em; }
+.postBody h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(23px,3.2vw,30px); line-height:1.2; letter-spacing:-.02em; color:#EDEAE4; margin-top:1.8em; }
+.postBody h3 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(20px,2.6vw,24px); line-height:1.25; color:#EDEAE4; margin-top:1.6em; }
+.postBody a { color:#F0A93C; text-decoration:underline; text-underline-offset:3px; }
+.postBody a:hover { color:#FFD79A; }
+.postBody strong { color:#EDEAE4; font-weight:600; }
+.postBody ul, .postBody ol { padding-left:1.4em; }
+.postBody li + li { margin-top:.5em; }
+.postBody blockquote {
+  border-left:2px solid rgba(240,169,60,.55); padding:2px 0 2px 22px; margin-left:0;
+  font-family:'Fraunces',serif; font-style:italic; font-weight:300; color:#FFD79A;
+  font-size:clamp(19px,2.6vw,24px); line-height:1.4;
+}
+.postBody code { font-family:'JetBrains Mono',monospace; font-size:.88em; background:rgba(240,169,60,.1); padding:2px 6px; border-radius:3px; }
+.postBody pre { background:rgba(255,255,255,.03); border:1px solid rgba(240,169,60,.16); padding:18px 20px; overflow-x:auto; }
+.postBody pre code { background:none; padding:0; }
+.postBody img { max-width:100%; height:auto; display:block; border:1px solid rgba(240,169,60,.16); }
+.postBody hr { border:none; border-top:1px solid rgba(240,169,60,.18); }

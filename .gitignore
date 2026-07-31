@@ -30,3 +30,6 @@ yarn-error.log*
 
 # scratch
 /scratch
+
+# generated at build by scripts/sync-covers.mjs (copied from content/posts)
+/public/post-covers
