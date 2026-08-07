@@ -5,7 +5,7 @@ import { pageMetadata } from '@/lib/metadata';
 export const metadata: Metadata = pageMetadata({
   title: 'The Dispatch — my weekly report on AI + marketing',
   description:
-    "One email a week: what's coming, what's working now, and what you can safely ignore. For business owners who sell coaching, courses, or services.",
+    "One email a week: what's coming, what's working now, and what you can safely ignore. For business owners who sell coaching or services.",
   ogTitle: "One email a week, and you're not behind anymore.",
   path: '/dispatch',
 });

@@ -4,10 +4,10 @@ import { pageMetadata } from '@/lib/metadata';
 
 // The Library lives at /blog (SEO equity preserved); nav labels it "The Show".
 export const metadata: Metadata = pageMetadata({
-  title: 'Library — everything I’ve found up ahead',
+  title: 'The Show — everything I’m finding up ahead',
   description:
-    'Videos and written breakdowns from testing AI and marketing inside a real business. Watch the short version or read the full walkthrough.',
-  ogTitle: 'Everything I’ve found up ahead.',
+    'Videos and written breakdowns from testing AI and marketing inside a real business. Watch or read the full walkthrough.',
+  ogTitle: 'Everything I’m finding up ahead.',
   path: '/blog',
 });
 

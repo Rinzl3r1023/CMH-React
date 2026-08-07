@@ -7,6 +7,7 @@ import HtmlFragment from './HtmlFragment';
 import FeaturedPost from './FeaturedPost';
 import PostCard from './PostCard';
 import Pagination from './Pagination';
+import LoadMore from './LoadMore';
 import WatchShelf, { PLACEHOLDER_VIDEOS } from './WatchShelf';
 
 // The Library (v6) lives at /blog to keep the blog's SEO equity, labelled
@@ -88,17 +89,36 @@ export default async function LibraryIndex({ page }: { page: number }) {
             </div>
           )}
 
-          {pagePosts.length > 0 ? (
-            <div className="cardGrid">
-              {pagePosts.map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))}
-            </div>
+          {page === 1 ? (
+            // Main page: Load more reveals batches; sitemap + /blog/page/N carry
+            // crawl discovery (§4.4).
+            grid.length > 0 ? (
+              <LoadMore
+                gridClassName="cardGrid"
+                initial={6}
+                step={6}
+                label="Load more posts"
+                items={grid.map((post) => <PostCard key={post.slug} post={post} />)}
+              />
+            ) : (
+              <p style={{ color: '#8A8378', fontSize: 15.5 }}>No posts yet. New breakdowns land here as they publish.</p>
+            )
           ) : (
-            <p style={{ color: '#8A8378', fontSize: 15.5 }}>No posts yet. New breakdowns land here as they publish.</p>
+            // Deeper pages stay as a crawlable paginated ladder (unlinked from the
+            // main page but reachable via sitemap).
+            <>
+              {pagePosts.length > 0 ? (
+                <div className="cardGrid">
+                  {pagePosts.map((post) => (
+                    <PostCard key={post.slug} post={post} />
+                  ))}
+                </div>
+              ) : (
+                <p style={{ color: '#8A8378', fontSize: 15.5 }}>No posts yet. New breakdowns land here as they publish.</p>
+              )}
+              <Pagination currentPage={page} totalPages={totalPages} />
+            </>
           )}
-
-          <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </section>
 

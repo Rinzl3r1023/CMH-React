@@ -125,23 +125,34 @@ service variables.
 real pagination; sharp images; server-side Kit and YouTube endpoints; sitemap /
 robots; migration + cover scripts.
 
-**Blocked on inputs (owner):**
+The July audit batch is applied: nav CTA → "Book a 20-min call"; Home/About/
+Dispatch/The Show copy + structure revisions; "Library" retired to "The Show";
+Dispatch got the standard nav; The Show uses "Load more" (sitemap carries crawl
+discovery); proof cards lost their photos; the Home coaching CTA is now
+"Learn more" (page-qualifies, not application). Images live under `/public/images`.
 
+**Blocked on inputs (owner) — rendered as visible placeholders:**
+
+- **Chris's Calendly link** → `NEXT_PUBLIC_CALENDLY_URL`. The nav "Book a 20-min
+  call" CTA falls back to the on-page `#capture` form until set. Must be an event
+  on **Chris's** account, not Kim's (bookings currently default to hers).
+- **TBL coaching page URL** → `NEXT_PUBLIC_COACHING_URL` (Home "Learn more" CTA;
+  same `#capture` fallback).
+- **Proof-card titles:** Katy M. and Clint W. render `[title needed]` (Katy:
+  financial advisor vs bookkeeping expert; Clint: crypto key recovery / Founder).
 - **Kit** — the account (The Business Lounge) has **no dedicated "The Dispatch"
-  form or welcome sequence** yet; existing forms are all lead-magnet/product
-  funnels. Create a Dispatch form → `KIT_FORM_ID`, and optionally a welcome
-  sequence → `KIT_WELCOME_SEQUENCE_ID`, so subscribers get an email instead of
-  silence. Launch gate: nobody goes live until a real submission lands in Kit
-  (§6.2). The endpoint already handles honeypot, IP rate-limiting, and the
-  already-subscribed case.
-- **YouTube** API key + three playlist IDs; and the long-form video count —
-  three buckets vs. start-flat (§4.2/§7 #2–3).
-- **Content** real post bodies + image originals, from the WP export + Search
-  Console inventory (§1.1, Phase 2). The 10 placeholders stand in for now.
-- **§7 open decisions:** SPARC / AI-Services nav + 301s; Privacy / Terms pages;
-  the `[role needed]` ×2 and `[X]` years placeholders; Matt's & Clint's sign-off.
-- **Assets:** `public/og-card.png` (1200×630) is an on-brand **placeholder** —
-  replace with the final card when ready (§5.1).
-- **Copy flag:** the Library hero eyebrow still reads "The library" and the
-  `/blog` `<title>` says "Library …" while the nav now says "The Show". Left as
-  frozen v6 copy pending your call — say the word to switch these to "The Show".
+  form or welcome sequence** yet. Create a Dispatch form → `KIT_FORM_ID`, and
+  optionally a welcome sequence → `KIT_WELCOME_SEQUENCE_ID`. Launch gate: nobody
+  goes live until a real submission lands in Kit (§6.2). The endpoint handles
+  honeypot, IP rate-limiting, and the already-subscribed case.
+- **YouTube** API key → `YOUTUBE_API_KEY` + a playlist id; and the long-form
+  count (start-flat vs load-more on first paint). The Watch shelf is flat.
+- **Three images:** Home hero portrait, About full-width hero, About "I don't
+  coach alone" — all render placeholder boxes; drop files into `/public/images`
+  or co-locate post covers, commit, deploy.
+- **Belief #2 / "scout" retirement:** applied per Tarvis's recommendation
+  (pending Chris's confirm).
+- **Content** real post bodies + image originals + the keep/rewrite/kill 301 map,
+  from the WP export + Search Console inventory (§10, Phase 2). 10 placeholders
+  stand in.
+- **Assets:** `public/images/og-card.png` (1200×630) is an on-brand placeholder.
