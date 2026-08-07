@@ -89,22 +89,24 @@ export default function ClientEnhancer() {
     });
 
     // ── External CTA links (env-configured, §1.1 / §2.10 / §9) ───────────────
-    // The nav "Book a 20-min call" CTA and the Home coaching "Learn more" CTA
-    // route to URLs supplied via env. Set here client-side so the static nav
-    // fragments stay data-driven. Until the env var is set the anchor keeps its
-    // #capture fallback, so the button is never dead.
+    // The nav "book a call" CTA and the Home coaching "Learn more" CTA route to
+    // URLs supplied via env. They are hidden by default (globals.css) and revealed
+    // ONLY when their URL is set — fail-closed, like the Kit 503. An unset URL
+    // ships nothing rather than a button that scrolls to the wrong place.
     const calendly = process.env.NEXT_PUBLIC_CALENDLY_URL;
     if (calendly) {
       document.querySelectorAll<HTMLAnchorElement>('[data-book-call]').forEach((a) => {
         a.href = calendly;
         a.target = '_blank';
         a.rel = 'noopener';
+        a.style.setProperty('display', 'inline-flex', 'important');
       });
     }
     const coaching = process.env.NEXT_PUBLIC_COACHING_URL;
     if (coaching) {
       document.querySelectorAll<HTMLAnchorElement>('[data-coaching-link]').forEach((a) => {
         a.href = coaching;
+        a.style.setProperty('display', 'inline-flex', 'important');
       });
     }
 
