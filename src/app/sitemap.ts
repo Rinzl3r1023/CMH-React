@@ -7,7 +7,7 @@ import { getAllPosts, getGridPosts } from '@/lib/posts';
 // Search Console at cutover.
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ['', '/about', '/show', '/dispatch', '/blog'].map((p) => ({
+  const staticRoutes = ['', '/about', '/dispatch', '/blog'].map((p) => ({
     url: `${SITE_URL}${p}`,
     lastModified: now,
   }));

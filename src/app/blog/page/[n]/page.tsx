@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import BlogIndex from '@/components/BlogIndex';
+import LibraryIndex from '@/components/LibraryIndex';
 import { pageMetadata } from '@/lib/metadata';
 import { getGridPosts } from '@/lib/posts';
 import { POSTS_PER_PAGE } from '@/lib/site';
@@ -24,7 +24,7 @@ export async function generateMetadata({
     title: `Blog — page ${n}`,
     description:
       'Full walkthroughs and breakdowns from testing AI and marketing inside a real business.',
-    ogTitle: "What I'm testing, written down.",
+    ogTitle: 'Everything I’ve found up ahead.',
     path: `/blog/page/${n}`,
   });
 }
@@ -33,5 +33,5 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<{ 
   const { n } = await params;
   const page = Number(n);
   if (!Number.isInteger(page) || page < 2) notFound();
-  return <BlogIndex page={page} />;
+  return <LibraryIndex page={page} />;
 }

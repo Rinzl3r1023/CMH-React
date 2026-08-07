@@ -111,6 +111,7 @@ export default function ClientEnhancer() {
       const handler = async (e: Event) => {
         e.preventDefault();
         const input = form.querySelector<HTMLInputElement>('[data-kit-email]');
+        const hp = form.querySelector<HTMLInputElement>('[data-kit-hp]');
         const btn = form.querySelector<HTMLElement>('[data-kit-btn]');
         const note = form.parentElement?.querySelector<HTMLElement>('p:last-of-type');
         const email = input?.value?.trim();
@@ -120,7 +121,7 @@ export default function ClientEnhancer() {
           const res = await fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify({ email, company: hp?.value || '' }),
           });
           if (!res.ok) throw new Error(String(res.status));
           if (btn) btn.textContent = "You're in ✓";

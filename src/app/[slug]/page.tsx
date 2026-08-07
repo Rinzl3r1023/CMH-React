@@ -48,8 +48,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   });
 
   return (
-    <div style={rootStyle('blog.style.txt')}>
-      <HtmlFragment html={fragment('blog.nav.html')} />
+    <div style={rootStyle('library.style.txt')}>
+      <HtmlFragment html={fragment('library.nav.html')} />
 
       <article className="postWrap reveal">
         <Link href="/blog" className="btn backlink" style={{ color: '#F0A93C' }}>
@@ -97,7 +97,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <div className="postBody">{content}</div>
       </article>
 
-      <HtmlFragment html={fragment('blog.bottom.html')} />
+      <HtmlFragment html={fragment('library.capfoot.html')} />
     </div>
   );
 }

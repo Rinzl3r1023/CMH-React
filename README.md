@@ -28,13 +28,17 @@ npm run dev                  # http://localhost:3000
 src/app/                 routes
   page.tsx               /            (Home)      ported from Home v6
   about/                 /about                   ported from About v6
-  show/                  /show        (The Show)  ported + live YouTube buckets
   dispatch/              /dispatch    (Dispatch)  ported from The Dispatch v6
-  blog/                  /blog                    index (featured + grid + pagination)
+  blog/                  /blog        (The Show)  the Library: Watch shelf + Read grid
   blog/page/[n]/         /blog/page/N             preserved WP pagination shape
   [slug]/                /<post-slug>             root-level post pages (MDX)
   api/subscribe/         POST → Kit (server-side, holds the key)
   sitemap.ts, robots.ts
+
+Information architecture: the v6 "Library" page unifies video (Watch) and blog
+(Read) into one destination. It lives at /blog to keep the blog's SEO equity and
+is labelled "The Show" in the nav; the old /show 301s to /blog. There is no
+separate Blog or Show nav item.
   globals.css            shared stylesheet, lifted verbatim from the v6 exports
   fonts.css              @font-face for the 18 self-hosted woff2 (see below)
   post.css               single-post article styling (net-new template)
@@ -123,12 +127,21 @@ robots; migration + cover scripts.
 
 **Blocked on inputs (owner):**
 
-- **Kit** `KIT_API_KEY` + `KIT_FORM_ID` — launch gate: nobody goes live until a
-  real submission lands in Kit (§6.2).
+- **Kit** — the account (The Business Lounge) has **no dedicated "The Dispatch"
+  form or welcome sequence** yet; existing forms are all lead-magnet/product
+  funnels. Create a Dispatch form → `KIT_FORM_ID`, and optionally a welcome
+  sequence → `KIT_WELCOME_SEQUENCE_ID`, so subscribers get an email instead of
+  silence. Launch gate: nobody goes live until a real submission lands in Kit
+  (§6.2). The endpoint already handles honeypot, IP rate-limiting, and the
+  already-subscribed case.
 - **YouTube** API key + three playlist IDs; and the long-form video count —
   three buckets vs. start-flat (§4.2/§7 #2–3).
 - **Content** real post bodies + image originals, from the WP export + Search
   Console inventory (§1.1, Phase 2). The 10 placeholders stand in for now.
 - **§7 open decisions:** SPARC / AI-Services nav + 301s; Privacy / Terms pages;
   the `[role needed]` ×2 and `[X]` years placeholders; Matt's & Clint's sign-off.
-- **Assets:** confirm `public/og-card.png` exists at 1200×630 (§5.1).
+- **Assets:** `public/og-card.png` (1200×630) is an on-brand **placeholder** —
+  replace with the final card when ready (§5.1).
+- **Copy flag:** the Library hero eyebrow still reads "The library" and the
+  `/blog` `<title>` says "Library …" while the nav now says "The Show". Left as
+  frozen v6 copy pending your call — say the word to switch these to "The Show".

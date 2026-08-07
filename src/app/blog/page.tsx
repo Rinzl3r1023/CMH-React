@@ -1,15 +1,19 @@
 import type { Metadata } from 'next';
-import BlogIndex from '@/components/BlogIndex';
+import LibraryIndex from '@/components/LibraryIndex';
 import { pageMetadata } from '@/lib/metadata';
 
+// The Library lives at /blog (SEO equity preserved); nav labels it "The Show".
 export const metadata: Metadata = pageMetadata({
-  title: "Blog — what I'm testing in AI + marketing",
+  title: 'Library — everything I’ve found up ahead',
   description:
-    'Full walkthroughs and breakdowns from testing AI and marketing inside a real business. No theory, no hype — just what\'s actually working.',
-  ogTitle: "What I'm testing, written down.",
+    'Videos and written breakdowns from testing AI and marketing inside a real business. Watch the short version or read the full walkthrough.',
+  ogTitle: 'Everything I’ve found up ahead.',
   path: '/blog',
 });
 
+// The Watch shelf revalidates on the YouTube cache cadence (§4.3).
+export const revalidate = 1800;
+
 export default function BlogPage() {
-  return <BlogIndex page={1} />;
+  return <LibraryIndex page={1} />;
 }

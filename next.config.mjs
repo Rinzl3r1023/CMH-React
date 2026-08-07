@@ -14,9 +14,12 @@ const nextConfig = {
   // slugs are served by the [slug] catch-all, NOT redirected.
   async redirects() {
     return [
-      // /blog/ index is preserved by a real route, so no redirect needed.
+      // The Show + the blog merged into one destination at /blog (labelled
+      // "The Show" in the nav). Old /show 301s there so its equity carries over.
+      // Explicit 301 (not Next's default 308) per the migration decision.
+      { source: '/show', destination: '/blog', statusCode: 301 },
       // Legacy /ai-services -> folded into the coaching conversation (§7 #1).
-      { source: '/ai-services', destination: '/dispatch', permanent: true },
+      { source: '/ai-services', destination: '/dispatch', statusCode: 301 },
     ];
   },
 };

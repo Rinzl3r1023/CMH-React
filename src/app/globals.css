@@ -76,6 +76,7 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 .rail { display:grid; grid-template-columns:repeat(3,1fr); }
 .heroSplit { display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(36px,5vw,64px); align-items:center; }
 .postGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.cardGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
 .featSplit { display:grid; grid-template-columns:1.25fr 1fr; min-width:0; }
 .featSplit > * { min-width:0; }
 
@@ -86,7 +87,7 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 .pipeNodes { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; }
 
 @media (max-width:1180px) { .g4 { grid-template-columns:1fr 1fr; } }
-@media (max-width:1040px) { .postGrid { grid-template-columns:1fr 1fr; } }
+@media (max-width:1040px) { .postGrid { grid-template-columns:1fr 1fr; } .cardGrid { grid-template-columns:1fr 1fr; } }
 @media (max-width:1000px) {
   .heroSplit { grid-template-columns:1fr; }
   .portrait { max-width:430px; margin-inline:auto; }
@@ -114,6 +115,7 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 }
 @media (max-width:660px) {
   .postGrid { grid-template-columns:1fr; gap:16px; }
+  .cardGrid { grid-template-columns:1fr; gap:16px; }
   .stackForm { flex-direction:column; }
   .stackForm button { width:100%; }
 }
