@@ -131,15 +131,16 @@ Dispatch got the standard nav; The Show uses "Load more" (sitemap carries crawl
 discovery); proof cards lost their photos; the Home coaching CTA is now
 "Learn more" (page-qualifies, not application). Images live under `/public/images`.
 
+**Resolved (final values wired):** Calendly (`chris-chrismichaelharris/30min`, on
+Chris's account) and the TBL coaching URL are baked as env-overridable defaults, so
+the CTAs are live; labels updated to 30-min. Proof-card titles filled — Katy M. =
+Financial Expert, Clint W. = Crypto Founder. No `[title needed]` placeholders remain.
+
 **Blocked on inputs (owner) — rendered as visible placeholders:**
 
-- **Chris's Calendly link** → `NEXT_PUBLIC_CALENDLY_URL`. The nav "Book a 20-min
-  call" CTA falls back to the on-page `#capture` form until set. Must be an event
-  on **Chris's** account, not Kim's (bookings currently default to hers).
-- **TBL coaching page URL** → `NEXT_PUBLIC_COACHING_URL` (Home "Learn more" CTA;
-  same `#capture` fallback).
-- **Proof-card titles:** Katy M. and Clint W. render `[title needed]` (Katy:
-  financial advisor vs bookkeeping expert; Clint: crypto key recovery / Founder).
+- **Three images:** Home hero portrait, About full-width hero, About "I don't
+  coach alone" — placeholder boxes; drop files into `/public/images` (or co-locate
+  post covers), commit, deploy.
 - **Kit** — the account (The Business Lounge) has **no dedicated "The Dispatch"
   form or welcome sequence** yet. Create a Dispatch form → `KIT_FORM_ID`, and
   optionally a welcome sequence → `KIT_WELCOME_SEQUENCE_ID`. Launch gate: nobody
@@ -147,11 +148,6 @@ discovery); proof cards lost their photos; the Home coaching CTA is now
   honeypot, IP rate-limiting, and the already-subscribed case.
 - **YouTube** API key → `YOUTUBE_API_KEY` + a playlist id; and the long-form
   count (start-flat vs load-more on first paint). The Watch shelf is flat.
-- **Three images:** Home hero portrait, About full-width hero, About "I don't
-  coach alone" — all render placeholder boxes; drop files into `/public/images`
-  or co-locate post covers, commit, deploy.
-- **Belief #2 / "scout" retirement:** applied per Tarvis's recommendation
-  (pending Chris's confirm).
 - **Content** real post bodies + image originals + the keep/rewrite/kill 301 map,
   from the WP export + Search Console inventory (§10, Phase 2). 10 placeholders
   stand in.
