@@ -48,7 +48,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   });
 
   return (
-    <div style={rootStyle('library.style.txt')}>
+    <div className="pg-lib pg-alt" style={rootStyle('library.style.txt')}>
       <HtmlFragment html={fragment('library.nav.html')} />
 
       <article className="postWrap reveal">
