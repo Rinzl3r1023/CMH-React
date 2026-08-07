@@ -13,6 +13,7 @@ export const metadata: Metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <div
+      className="pg-alt"
       style={rootStyle('about.style.txt')}
       dangerouslySetInnerHTML={{ __html: fragment('about.inner.html') }}
     />

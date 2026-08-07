@@ -13,6 +13,7 @@ export const metadata: Metadata = pageMetadata({
 export default function DispatchPage() {
   return (
     <div
+      className="pg-alt"
       style={rootStyle('dispatch.style.txt')}
       dangerouslySetInnerHTML={{ __html: fragment('dispatch.inner.html') }}
     />
