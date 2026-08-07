@@ -21,10 +21,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { n } = await params;
   return pageMetadata({
-    title: `Blog — page ${n}`,
+    title: `The Show — page ${n}`,
     description:
       'Full walkthroughs and breakdowns from testing AI and marketing inside a real business.',
-    ogTitle: 'Everything I’ve found up ahead.',
+    ogTitle: 'Everything I’m finding up ahead.',
     path: `/blog/page/${n}`,
   });
 }

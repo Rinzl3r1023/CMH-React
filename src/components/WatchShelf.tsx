@@ -1,4 +1,5 @@
 import type { ShowVideo } from '@/lib/youtube';
+import LoadMore from './LoadMore';
 
 const CHANNEL = 'https://www.youtube.com/@HeyCMH';
 
@@ -168,11 +169,13 @@ export default function WatchShelf({ videos }: { videos: ShowVideo[] }) {
     <>
       <FeaturedVideo video={featured} />
       {rest.length > 0 && (
-        <div className="cardGrid">
-          {rest.map((v, i) => (
-            <VideoCard key={v.id || i} video={v} />
-          ))}
-        </div>
+        <LoadMore
+          gridClassName="cardGrid"
+          initial={6}
+          step={6}
+          label="Load more videos"
+          items={rest.map((v, i) => <VideoCard key={v.id || i} video={v} />)}
+        />
       )}
     </>
   );

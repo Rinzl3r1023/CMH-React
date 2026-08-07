@@ -7,8 +7,8 @@ export const SITE_URL = (
 
 export const SITE_NAME = 'Chris Michael Harris';
 
-// The social share card. Must exist at /public/og-card.png at 1200x630 (§5.1).
-export const OG_IMAGE_PATH = '/og-card.png';
+// The social share card, 1200x630 (§5.1). Lives under /public/images (§7.1).
+export const OG_IMAGE_PATH = '/images/og-card.png';
 
 // Primary navigation. Routing is fixed here (§5.2): clean paths, no .dc.html,
 // no spaces, no version numbers.

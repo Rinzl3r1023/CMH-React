@@ -4,11 +4,32 @@
   <div aria-hidden="true" style="position:fixed; inset:0; z-index:59; pointer-events:none; background:radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55));"></div>
 
   
-  <nav style="position:relative; z-index:10; display:flex; align-items:center; justify-content:center; padding:26px 44px 0;">
-    <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4;">
-      <span style="display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
-      <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase;">Chris Michael Harris</span>
-    </a>
+  <nav style="position:sticky; top:0; z-index:50; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(18px,4vw,44px);">
+      <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4; min-width:0;">
+        <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
+        <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:clamp(11px,1.4vw,13px); letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Chris Michael Harris</span>
+      </a>
+      <div class="navLinks">
+        <a href="/" class="navlink" style="color:#9C958A;">Home</a>
+        <a href="/about" class="navlink" style="color:#9C958A;">About</a>
+        <a href="/blog" class="navlink" style="color:#9C958A;">The Show</a>
+        <a href="/dispatch" class="navlink" style="color:#F0A93C;">The Dispatch</a>
+        <a href="#capture" data-book-call="" class="edge navlink" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 20-min strategy call</a>
+      </div>
+      <button type="button" class="navToggle" data-nav-toggle="" aria-label="Toggle navigation" aria-expanded="false" style="align-items:center; justify-content:center; gap:7px; flex-direction:column; width:44px; height:44px; background:transparent; border:1px solid rgba(240,169,60,.4); cursor:pointer; padding:0;">
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+      </button>
+    </div>
+    <div class="mobileMenu" data-mobile-menu="" style="flex-direction:column; gap:2px; padding:8px clamp(18px,4vw,44px) 20px; border-top:1px solid rgba(240,169,60,.14);">
+      <a href="/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">Home</a>
+      <a href="/about" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">About</a>
+      <a href="/blog" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Show</a>
+      <a href="/dispatch" class="navlink" style="padding:14px 0; font-size:13px; color:#F0A93C;">The Dispatch</a>
+      <a href="#capture" data-book-call="" data-nav-close="" class="btn" style="margin-top:10px; display:inline-flex; align-items:center; justify-content:center; padding:16px 20px; background:#F0A93C; color:#06060A;">Book a 20-min call</a>
+    </div>
   </nav>
 
   
@@ -27,7 +48,7 @@
         The weekly dispatch
       </div>
       <h1 style="font-family:'Fraunces',serif; font-weight:300; font-size:62px; line-height:1.02; letter-spacing:-.03em; margin:0 0 24px; text-wrap:pretty;">One email a week,<br>and you're not behind <span style="font-style:italic; color:#F0A93C; text-shadow:0 0 44px rgba(240,169,60,.65);">anymore.</span></h1>
-      <p style="font-size:19px; line-height:1.6; color:#A8A199; max-width:580px; margin:0 auto 42px;">I scout AI + marketing inside a real business and send back the few things that matter — in plain language. No hype. No homework. Just the view from up ahead.</p>
+      <p style="font-size:19px; line-height:1.6; color:#A8A199; max-width:580px; margin:0 auto 42px;">I go first on AI and marketing inside a real business and send back the few things that matter — in plain language. No hype. No homework. Just the view from up ahead.</p>
       <form data-kit-form="" style="display:flex; max-width:540px; margin:0 auto; border:1px solid rgba(240,169,60,.5); background:rgba(6,6,10,.6); box-shadow:0 0 50px -10px rgba(240,169,60,.6);"><input type="text" name="company" data-kit-hp="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;">
         <input type="email" required="" placeholder="your@email.com" name="email" data-kit-email="" style="flex:1; min-width:180px; padding:20px 22px; border:none; background:transparent; color:#EDEAE4; font-size:15px; font-family:'Manrope',sans-serif; font-weight:600; outline:none;">
         <button type="submit" style="padding:20px 32px; border:none; background:#F0A93C; color:#06060A; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-family:'Manrope',sans-serif; font-weight:600; cursor:pointer; white-space:nowrap;"><span data-kit-btn="">Get access</span></button>
@@ -66,43 +87,11 @@
     <div aria-hidden="true" style="position:absolute; inset:0; background-image:repeating-linear-gradient(90deg, rgba(240,169,60,.055) 0 1px, transparent 1px 90px);"></div>
     <div style="position:relative; max-width:800px; margin:0 auto; text-align:center;">
       <p style="font-family:'Manrope',sans-serif; font-weight:600; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#F0A93C; margin:0 0 26px;">Who it's for</p>
-      <p style="font-family:'Fraunces',serif; font-weight:300; font-size:30px; line-height:1.42; color:#FFD79A; margin:0 0 24px; text-shadow:0 0 50px rgba(240,169,60,.3);">It's for business owners — if you sell coaching, courses, or services and you feel one step behind, and you want someone to go first, tell you the truth, and keep it human.</p>
-      <p style="font-size:17px; line-height:1.68; color:#A8A199; margin:0;">It's <em>not</em> for people looking for a technical tutorial or the latest tool to chase. If you want peace and a plan instead of pressure, you're in the right place.</p>
+      <p style="font-family:'Fraunces',serif; font-weight:300; font-size:30px; line-height:1.42; color:#FFD79A; margin:0 0 24px; text-shadow:0 0 50px rgba(240,169,60,.3);">It's for business owners — if you sell coaching or services and you feel one step behind, and you want someone to go first, tell you the truth, and keep it human.</p>
+      <p style="font-size:17px; line-height:1.68; color:#A8A199; margin:0;">It's <em>not</em> for people looking for the latest tool to chase. If you want peace and a plan instead of pressure, you're in the right place.</p>
     </div>
   </section>
 
-  
-  <section class="reveal" style="max-width:1100px; margin:0 auto; padding:100px 44px;">
-    <h2 style="font-family:'Fraunces',serif; font-weight:300; font-size:40px; line-height:1.1; letter-spacing:-.025em; margin:0 0 50px; text-align:center;">People who went ahead with it.</h2>
-    <div class="m-stack" style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
-      <div class="edge" style="position:relative; display:flex; flex-direction:column; border:1px solid rgba(240,169,60,.22); padding:36px 32px; background:linear-gradient(160deg, rgba(240,169,60,.06), transparent 70%);">
-        <span class="brk" style="top:-1px; left:-1px; border-top:1px solid; border-left:1px solid;"></span>
-        <span class="brk" style="bottom:-1px; right:-1px; border-bottom:1px solid; border-right:1px solid;"></span>
-        <p style="font-size:17px; line-height:1.55; color:#EDEAE4; margin:0 0 24px;">"I'd never run an ad in my life. My first campaign outperformed the ad gurus <span style="color:#F0A93C; font-weight:600;">four to one</span>."</p>
-        <span style="margin-top:auto; font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#F0A93C;">— Katy</span>
-      </div>
-      <div class="edge" style="position:relative; display:flex; flex-direction:column; border:1px solid rgba(240,169,60,.22); padding:36px 32px; background:linear-gradient(160deg, rgba(240,169,60,.06), transparent 70%);">
-        <span class="brk" style="top:-1px; left:-1px; border-top:1px solid; border-left:1px solid;"></span>
-        <span class="brk" style="bottom:-1px; right:-1px; border-bottom:1px solid; border-right:1px solid;"></span>
-        <p style="font-size:17px; line-height:1.55; color:#EDEAE4; margin:0 0 24px;">"I wasn't doing marketing at all — or I threw money at it, and it never sounded like me. Now I do it myself, stay consistent, and it takes a fraction of the time."</p>
-        <span style="margin-top:auto; font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#F0A93C;">— Clint</span>
-      </div>
-      <div class="edge" style="position:relative; display:flex; flex-direction:column; border:1px solid rgba(240,169,60,.22); padding:36px 32px; background:linear-gradient(160deg, rgba(240,169,60,.06), transparent 70%);">
-        <span class="brk" style="top:-1px; left:-1px; border-top:1px solid; border-left:1px solid;"></span>
-        <span class="brk" style="bottom:-1px; right:-1px; border-bottom:1px solid; border-right:1px solid;"></span>
-        <p style="font-size:17px; line-height:1.55; color:#EDEAE4; margin:0 0 24px;">"I shipped a month of repurposed content without changing a word — then mapped two years of promotions in one afternoon."</p>
-        <span style="margin-top:auto; font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#F0A93C;">— Amber</span>
-      </div>
-      <div class="edge" style="position:relative; display:flex; flex-direction:column; border:1px solid rgba(240,169,60,.22); padding:36px 32px; background:linear-gradient(160deg, rgba(240,169,60,.06), transparent 70%);">
-        <span class="brk" style="top:-1px; left:-1px; border-top:1px solid; border-left:1px solid;"></span>
-        <span class="brk" style="bottom:-1px; right:-1px; border-bottom:1px solid; border-right:1px solid;"></span>
-        <p style="font-size:17px; line-height:1.55; color:#EDEAE4; margin:0 0 24px;">"I'd been stuck for days on a sales page I hated. I rebuilt one I loved — by voice, from my phone, on a plane."</p>
-        <span style="margin-top:auto; font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#F0A93C;">— Jenn</span>
-      </div>
-    </div>
-  </section>
-
-  
   <section class="reveal" style="position:relative; overflow:hidden; padding:130px 44px 330px; border-top:1px solid rgba(240,169,60,.14);">
     <div aria-hidden="true" style="position:absolute; left:-25%; right:-25%; bottom:0; height:240px; perspective:320px; perspective-origin:50% 0;">
       <div data-grid="1" style="position:absolute; inset:0; transform:rotateX(75deg); transform-origin:50% 0; background-image:repeating-linear-gradient(180deg, rgba(240,169,60,.24) 0 1px, transparent 1px 60px), repeating-linear-gradient(90deg, rgba(240,169,60,.17) 0 1px, transparent 1px 60px); animation:gridRun 2.6s linear infinite; mask-image:linear-gradient(180deg, transparent, #000 25%, #000 65%, transparent);"></div>

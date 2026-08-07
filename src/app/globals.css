@@ -136,6 +136,12 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
    restore each page to its own export's values. Ported verbatim — no design or
    copy change. Page roots carry .pg-alt (About/Dispatch/Library/posts) and
    .pg-lib (Library + posts, which share the Library chrome). */
+/* Fail-closed external CTAs (§1.1 / §2.10): the "Book a call" and coaching
+   "Learn more" buttons stay hidden until their URL is configured. Same posture
+   as the Kit 503 — a missing button beats a button that makes a false promise.
+   ClientEnhancer reveals + wires them only when the env URL is present. */
+[data-book-call], [data-coaching-link] { display: none !important; }
+
 .pg-alt .brk { border-color:rgba(240,169,60,.6); }
 .pg-lib .navLinks { gap:clamp(14px,2vw,28px); }
 .pg-lib .navlink { font-size:11.5px; letter-spacing:.16em; }
