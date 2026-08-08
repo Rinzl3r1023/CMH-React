@@ -80,6 +80,13 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 .featSplit { display:grid; grid-template-columns:1.25fr 1fr; min-width:0; }
 .featSplit > * { min-width:0; }
 
+/* About "I don't coach alone" two-column (added in §3.5). Collapses to one
+   column at the site's <=1000px breakpoint (text above image); min-width:0 lets
+   the columns shrink so a long CTA can't force horizontal overflow on mobile. */
+.coachSplit { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; }
+.coachSplit > * { min-width:0; }
+@media (max-width:1000px) { .coachSplit { grid-template-columns:1fr; gap:22px; } }
+
 .navLinks { display:flex; align-items:center; gap:clamp(16px,2.2vw,28px); }
 .navToggle { display:none; }
 .mobileMenu { display:none; }

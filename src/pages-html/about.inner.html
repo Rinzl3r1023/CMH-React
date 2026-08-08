@@ -3,17 +3,31 @@
   <div id="scanveil" aria-hidden="true" style="position:fixed; inset:0; z-index:60; pointer-events:none; display:none; background:repeating-linear-gradient(180deg, rgba(255,255,255,.016) 0 1px, transparent 1px 3px); mix-blend-mode:screen;"></div>
   <div aria-hidden="true" style="position:fixed; inset:0; z-index:59; pointer-events:none; background:radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55));"></div>
 
-  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 44px; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
-    <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4;">
-      <span style="display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
-      <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:13px; letter-spacing:.22em; text-transform:uppercase;">Chris Michael Harris</span>
-    </a>
-    <div style="display:flex; align-items:center; gap:30px;">
-      <a href="/" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#9C958A;">Home</a>
-      <a href="/about" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#F0A93C;">About</a>
-      <a href="/blog" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#9C958A;">The Show</a>
-      <a href="/dispatch" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:#9C958A;">The Dispatch</a>
-      <a href="#capture" data-book-call="" class="edge" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 30-min strategy call</a>
+  <nav style="position:sticky; top:0; z-index:50; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(18px,4vw,44px);">
+      <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4; min-width:0;">
+        <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
+        <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:clamp(11px,1.4vw,13px); letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Chris Michael Harris</span>
+      </a>
+      <div class="navLinks">
+        <a href="/" class="navlink" style="color:#9C958A;">Home</a>
+        <a href="/about" class="navlink" style="color:#F0A93C;">About</a>
+        <a href="/blog" class="navlink" style="color:#9C958A;">The Show</a>
+        <a href="/dispatch" class="navlink" style="color:#9C958A;">The Dispatch</a>
+        <a href="#capture" data-book-call="" class="edge navlink" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 30-min strategy call</a>
+      </div>
+      <button type="button" class="navToggle" data-nav-toggle="" aria-label="Toggle navigation" aria-expanded="false" style="align-items:center; justify-content:center; gap:7px; flex-direction:column; width:44px; height:44px; background:transparent; border:1px solid rgba(240,169,60,.4); cursor:pointer; padding:0;">
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+      </button>
+    </div>
+    <div class="mobileMenu" data-mobile-menu="" style="flex-direction:column; gap:2px; padding:8px clamp(18px,4vw,44px) 20px; border-top:1px solid rgba(240,169,60,.14);">
+      <a href="/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">Home</a>
+      <a href="/about" class="navlink" style="padding:14px 0; font-size:13px; color:#F0A93C;">About</a>
+      <a href="/blog" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Show</a>
+      <a href="/dispatch" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Dispatch</a>
+      <a href="#capture" data-book-call="" data-nav-close="" class="btn" style="margin-top:10px; display:inline-flex; align-items:center; justify-content:center; padding:16px 20px; background:#F0A93C; color:#06060A;">Book a 30-min call</a>
     </div>
   </nav>
 
@@ -96,8 +110,8 @@
   </section>
 
   
-  <section class="reveal" style="max-width:1100px; margin:0 auto; padding:110px 44px 90px;">
-    <div class="g2wide" style="align-items:center;">
+  <section class="reveal" style="max-width:1100px; margin:0 auto; padding:110px clamp(18px,4vw,44px) 90px;">
+    <div class="coachSplit">
       <div>
         <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:22px;">
           <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; color:#F0A93C;">03</span>
@@ -105,7 +119,7 @@
         </div>
         <h2 style="font-family:'Fraunces',serif; font-weight:300; font-size:46px; line-height:1.1; letter-spacing:-.025em; margin:0 0 20px; max-width:620px;">I don't coach alone.</h2>
         <p style="font-size:18px; line-height:1.62; color:#A8A199; max-width:660px; margin:0 0 36px;">I coach alongside my wife and business partner, Kim, inside <strong style="color:#EDEAE4; font-weight:600;">The Business Lounge</strong>. I bring what's next; she brings the how. When you're ready to go deeper, that's the room.</p>
-        <a href="https://thebusinesslounge.co/" class="edge" style="display:inline-flex; align-items:center; white-space:nowrap; padding:16px 30px; border:1px solid rgba(237,234,228,.28); color:#EDEAE4; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.14em; text-transform:uppercase;">See how The Business Lounge works →</a>
+        <a href="https://thebusinesslounge.co/" class="edge" style="display:inline-flex; align-items:center; max-width:100%; padding:16px 30px; border:1px solid rgba(237,234,228,.28); color:#EDEAE4; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.14em; text-transform:uppercase;">See how The Business Lounge works →</a>
       </div>
       <div style="position:relative; aspect-ratio:4/3; border:1px solid rgba(240,169,60,.16); background:linear-gradient(160deg, rgba(240,169,60,.09), transparent 60%), repeating-linear-gradient(90deg, rgba(240,169,60,.08) 0 1px, transparent 1px 40px), repeating-linear-gradient(180deg, rgba(240,169,60,.08) 0 1px, transparent 1px 40px); display:flex; align-items:flex-end; padding:20px;">
         <span class="brk" style="top:-1px; left:-1px; border-top:1px solid; border-left:1px solid; z-index:1;"></span>
