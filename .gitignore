@@ -33,3 +33,5 @@ yarn-error.log*
 
 # generated at build by scripts/sync-covers.mjs (copied from content/posts)
 /public/post-covers
+# generated at build by scripts/gen-site-images.mjs (derived from /public/images sources)
+/public/images/gen

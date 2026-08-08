@@ -5,7 +5,7 @@
   "description": "Chris Michael Harris — WordPress to React migration",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/sync-covers.mjs",
+    "prebuild": "node scripts/sync-covers.mjs && node scripts/gen-site-images.mjs",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
