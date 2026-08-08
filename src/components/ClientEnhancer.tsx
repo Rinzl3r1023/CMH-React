@@ -93,7 +93,11 @@ export default function ClientEnhancer() {
     // URLs supplied via env. They are hidden by default (globals.css) and revealed
     // ONLY when their URL is set — fail-closed, like the Kit 503. An unset URL
     // ships nothing rather than a button that scrolls to the wrong place.
-    const calendly = process.env.NEXT_PUBLIC_CALENDLY_URL;
+    // Final public URLs (§9). Baked as defaults so the CTAs work on every deploy;
+    // Railway can override via env. Set an env var to an empty string to force the
+    // fail-closed (hidden) state again.
+    const calendly =
+      process.env.NEXT_PUBLIC_CALENDLY_URL ?? 'https://calendly.com/chris-chrismichaelharris/30min';
     if (calendly) {
       document.querySelectorAll<HTMLAnchorElement>('[data-book-call]').forEach((a) => {
         a.href = calendly;
@@ -102,7 +106,7 @@ export default function ClientEnhancer() {
         a.style.setProperty('display', 'inline-flex', 'important');
       });
     }
-    const coaching = process.env.NEXT_PUBLIC_COACHING_URL;
+    const coaching = process.env.NEXT_PUBLIC_COACHING_URL ?? 'https://thebusinesslounge.co/coaching/';
     if (coaching) {
       document.querySelectorAll<HTMLAnchorElement>('[data-coaching-link]').forEach((a) => {
         a.href = coaching;
