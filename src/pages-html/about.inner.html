@@ -47,12 +47,17 @@
   </header>
 
   
-  <div style="position:relative; height:460px; border-top:1px solid rgba(240,169,60,.16); border-bottom:1px solid rgba(240,169,60,.16); background:linear-gradient(160deg, rgba(240,169,60,.09), transparent 60%), repeating-linear-gradient(90deg, rgba(240,169,60,.08) 0 1px, transparent 1px 44px), repeating-linear-gradient(180deg, rgba(240,169,60,.08) 0 1px, transparent 1px 44px); display:flex; align-items:flex-end; justify-content:center; padding:28px;">
-    <span class="brk" style="top:14px; left:14px; border-top:1px solid; border-left:1px solid;"></span>
-    <span class="brk" style="top:14px; right:14px; border-top:1px solid; border-right:1px solid;"></span>
-    <span class="brk" style="bottom:14px; left:14px; border-bottom:1px solid; border-left:1px solid;"></span>
-    <span class="brk" style="bottom:14px; right:14px; border-bottom:1px solid; border-right:1px solid;"></span>
-    <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:#8A8378;">[ full-width photo of Chris — on location, mid-conversation, warm light ]</span>
+  <div style="position:relative; height:460px; overflow:hidden; border-top:1px solid rgba(240,169,60,.16); border-bottom:1px solid rgba(240,169,60,.16);">
+    <picture>
+      <source type="image/avif" srcset="/images/gen/about-hero-400.avif 400w, /images/gen/about-hero-561.avif 561w, /images/gen/about-hero-800.avif 800w, /images/gen/about-hero-1122.avif 1122w, /images/gen/about-hero-1600.avif 1600w, /images/gen/about-hero-2000.avif 2000w" sizes="100vw">
+      <source type="image/webp" srcset="/images/gen/about-hero-400.webp 400w, /images/gen/about-hero-561.webp 561w, /images/gen/about-hero-800.webp 800w, /images/gen/about-hero-1122.webp 1122w, /images/gen/about-hero-1600.webp 1600w, /images/gen/about-hero-2000.webp 2000w" sizes="100vw">
+      <img src="/images/gen/about-hero-1600.jpg" srcset="/images/gen/about-hero-400.jpg 400w, /images/gen/about-hero-561.jpg 561w, /images/gen/about-hero-800.jpg 800w, /images/gen/about-hero-1122.jpg 1122w, /images/gen/about-hero-1600.jpg 1600w, /images/gen/about-hero-2000.jpg 2000w" sizes="100vw" width="2000" height="667" alt="Chris Michael Harris" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:0;">
+    </picture>
+    <span aria-hidden="true" style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(160deg, rgba(240,169,60,.09), transparent 60%), repeating-linear-gradient(90deg, rgba(240,169,60,.08) 0 1px, transparent 1px 44px), repeating-linear-gradient(180deg, rgba(240,169,60,.08) 0 1px, transparent 1px 44px);"></span>
+    <span class="brk" style="top:14px; left:14px; border-top:1px solid; border-left:1px solid; z-index:2;"></span>
+    <span class="brk" style="top:14px; right:14px; border-top:1px solid; border-right:1px solid; z-index:2;"></span>
+    <span class="brk" style="bottom:14px; left:14px; border-bottom:1px solid; border-left:1px solid; z-index:2;"></span>
+    <span class="brk" style="bottom:14px; right:14px; border-bottom:1px solid; border-right:1px solid; z-index:2;"></span>
   </div>
 
   
