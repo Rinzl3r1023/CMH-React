@@ -7,8 +7,12 @@ import { NextResponse } from 'next/server';
 //   • per-IP rate limiting
 //   • idempotent already-subscribed handling (Kit's form-subscribe is a no-op on
 //     an existing email and returns 200, so the UI still says "You're in")
-//   • an optional welcome sequence, so new subscribers get an email instead of
-//     silence after "first dispatch arrives this week"
+//
+// This route ONLY adds the email to KIT_FORM_ID. Everything that happens to a new
+// subscriber after that — the CMH tag, the welcome sequence — is owned by a Kit
+// automation that listens for this form. That keeps a single source of truth in
+// Kit (changeable without a deploy) and covers subscribers arriving from other
+// paths later. The route deliberately does not enrol sequences or apply tags.
 //
 // Until KIT_API_KEY + KIT_FORM_ID are set this returns 503 rather than a silent
 // success, so nothing is "live" until a real subscriber can be created (§6.2).
@@ -89,21 +93,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: 'Subscription failed.' }, { status: 502 });
     }
 
-    // Optional: also enroll in a welcome sequence so a real email fires. Failure
-    // here must not fail the whole request — they're already subscribed.
-    const welcomeSeq = process.env.KIT_WELCOME_SEQUENCE_ID;
-    if (welcomeSeq) {
-      try {
-        await fetch(`https://api.convertkit.com/v3/sequences/${encodeURIComponent(welcomeSeq)}/subscribe`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ api_key: apiKey, email }),
-        });
-      } catch {
-        // swallow — subscription already succeeded
-      }
-    }
-
+    // Tagging + welcome-sequence enrolment are handled by a Kit automation that
+    // listens for this form — intentionally not done here (see header note).
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ ok: false, error: 'Subscription failed.' }, { status: 502 });
