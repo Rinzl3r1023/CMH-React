@@ -99,7 +99,7 @@ export default async function LibraryIndex({ page }: { page: number }) {
           </div>
           <p style={{ fontSize: 'clamp(15px,1.8vw,16px)', lineHeight: 1.6, color: '#8A8378', margin: '0 0 clamp(26px,3.4vw,36px)', maxWidth: 560 }}>
             The longer pieces — full walkthroughs, step by step. Want the short version instead?{' '}
-            <a href="/dispatch" style={{ fontWeight: 600 }}>
+            <a href="/dispatch/" style={{ fontWeight: 600 }}>
               The Dispatch
             </a>{' '}
             lands once a week. →

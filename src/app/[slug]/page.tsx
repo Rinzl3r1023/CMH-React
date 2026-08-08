@@ -80,7 +80,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <HtmlFragment html={fragment('library.nav.html')} />
 
       <article className="postWrap reveal">
-        <Link href="/blog" className="btn backlink" style={{ color: '#F0A93C' }}>
+        <Link href="/blog/" className="btn backlink" style={{ color: '#F0A93C' }}>
           ← All posts
         </Link>
         <div className="label" style={{ color: '#F0A93C' }}>

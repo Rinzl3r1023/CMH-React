@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { SITE_NAME, SITE_URL, OG_IMAGE_PATH, absoluteUrl } from './site';
+import { SITE_NAME, SITE_URL, OG_IMAGE_PATH, absoluteUrl, canonicalUrl } from './site';
 
 type PageMetaInput = {
   title: string;
@@ -22,7 +22,9 @@ type PageMetaInput = {
 //   • og:url is absolute and per-page
 //   • twitter:card is present on every page (was Blog-only)
 export function pageMetadata(input: PageMetaInput): Metadata {
-  const url = absoluteUrl(input.path);
+  // Canonical + og:url are trailing-slash (match the served path); the image is an
+  // asset and stays slash-free.
+  const url = canonicalUrl(input.path);
   const image = absoluteUrl(input.image || OG_IMAGE_PATH);
   return {
     metadataBase: new URL(SITE_URL),

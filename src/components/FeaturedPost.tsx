@@ -7,7 +7,7 @@ import ResponsiveImage from './ResponsiveImage';
 export default function FeaturedPost({ post }: { post: PostMeta }) {
   return (
     <Link
-      href={`/${post.slug}`}
+      href={`/${post.slug}/`}
       className="edge"
       style={{
         position: 'relative',

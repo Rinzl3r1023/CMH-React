@@ -15,7 +15,6 @@ import { faqPageNode, type FaqItem } from './faq';
 import { howToNode } from './howto';
 import { breadcrumbNode } from './breadcrumb';
 import { HOME_URL, pageUrl, postUrl } from './config';
-import { SITE_URL } from '../site';
 
 type Node = Record<string, unknown>;
 
@@ -45,7 +44,7 @@ export function blogGraph(opts: {
   description?: string;
   items: Array<{ url: string; name: string }>;
 }): Node[] {
-  const url = opts.page <= 1 ? pageUrl('/blog') : `${SITE_URL}/blog/page/${opts.page}`;
+  const url = opts.page <= 1 ? pageUrl('/blog') : pageUrl(`/blog/page/${opts.page}`);
   return clean([...siteNodes(), collectionPageNode({ url, name: opts.name, description: opts.description, items: opts.items })]);
 }
 
