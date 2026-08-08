@@ -3,7 +3,7 @@ import { fragment, rootStyle } from '@/lib/pageHtml';
 import { pageMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'About Chris Michael Harris — going first on AI + marketing',
+  title: 'About Chris Michael Harris — keeping up with AI + marketing so you don\'t have to',
   description:
     'I test what\'s next in AI and marketing inside a real business, then bring back the few things that matter — in plain language.',
   ogTitle: 'You were never the problem.',
