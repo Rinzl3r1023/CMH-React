@@ -10,7 +10,9 @@
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "sync:covers": "node scripts/sync-covers.mjs",
-    "migrate:images": "node scripts/migrate-images.mjs"
+    "migrate:images": "node scripts/migrate-images.mjs",
+    "postbuild": "node scripts/validate-schema.mjs",
+    "validate:schema": "node scripts/validate-schema.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

@@ -179,3 +179,57 @@ export async function getShowVideos(): Promise<ShowVideo[] | null> {
 
   return longform.length ? longform : null;
 }
+
+// Raw metadata for specific video ids, keyed by id. Used to build VideoObject
+// schema for posts that carry a youtube_id (§4.2). Reuses the SAME videos.list
+// path and 30-min Data Cache as the shelf — no second API integration, no
+// search.list. Returns {} when unconfigured, so the schema fails closed.
+export type VideoMeta = {
+  id: string;
+  title: string;
+  description: string;
+  durationIso: string; // ISO 8601, e.g. PT16M40S
+  uploadDate: string; // ISO 8601
+  thumbnail: string | null;
+};
+
+export async function getVideosByIds(ids: string[]): Promise<Record<string, VideoMeta>> {
+  const apiKey = process.env.YOUTUBE_API_KEY;
+  const clean = [...new Set(ids.filter(Boolean))];
+  if (!apiKey || clean.length === 0) return {};
+
+  const out: Record<string, VideoMeta> = {};
+  try {
+    for (let i = 0; i < clean.length; i += 50) {
+      const batch = clean.slice(i, i + 50);
+      const url =
+        'https://www.googleapis.com/youtube/v3/videos' +
+        `?part=snippet,contentDetails&id=${batch.map(encodeURIComponent).join(',')}` +
+        `&key=${encodeURIComponent(apiKey)}`;
+      const res = await fetch(url, { next: { revalidate: 1800 } });
+      if (!res.ok) continue;
+      const data = (await res.json()) as {
+        items?: Array<{
+          id?: string;
+          snippet?: { title?: string; description?: string; publishedAt?: string; thumbnails?: Record<string, { url: string }> };
+          contentDetails?: { duration?: string };
+        }>;
+      };
+      for (const it of data.items ?? []) {
+        const s = it.snippet;
+        if (!it.id || !s) continue;
+        out[it.id] = {
+          id: it.id,
+          title: s.title ?? '',
+          description: (s.description ?? '').split('\n')[0].slice(0, 500),
+          durationIso: it.contentDetails?.duration ?? '',
+          uploadDate: s.publishedAt ?? '',
+          thumbnail: bestThumb(s.thumbnails),
+        };
+      }
+    }
+  } catch {
+    return out;
+  }
+  return out;
+}

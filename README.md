@@ -125,6 +125,18 @@ service variables.
 real pagination; sharp images; server-side Kit and YouTube endpoints; sitemap /
 robots; migration + cover scripts.
 
+**Structured data (JSON-LD, replaces Yoast).** Hand-written `@graph` per page from
+pure builders in `src/lib/schema/` (Person, Organization, WebSite, WebPage,
+ProfilePage, CollectionPage, BlogPosting, VideoObject, FAQPage, HowTo,
+BreadcrumbList), serialized by `components/JsonLd.tsx`. `@id`/`url` match the
+site's non-trailing canonical exactly; `datePublished` comes from the post's
+frontmatter (the WP export), never file mtime. VideoObject reuses the cached
+`videos.list` path (no second API call) and fires for posts with a `youtube_id`.
+FAQPage/HowTo are built but dormant — they emit only when a post's visible content
+carries real `faq:`/`howto:` frontmatter. `npm run build` runs a `postbuild`
+validator (`scripts/validate-schema.mjs`) that fails the build on invalid JSON,
+duplicate `@id`, or a node missing required fields.
+
 The July audit batch is applied: nav CTA → "Book a 20-min call"; Home/About/
 Dispatch/The Show copy + structure revisions; "Library" retired to "The Show";
 Dispatch got the standard nav; The Show uses "Load more" (sitemap carries crawl
@@ -143,15 +155,21 @@ Financial Expert, Clint W. = Crypto Founder. No `[title needed]` placeholders re
   sharp variant pipeline. Note: the coaching source arrived downscaled to
   2000×1250 (the 3238×2023 original was capped in transit) — ample for its ~520px
   slot, but drop the full-res original into `public/images/about-coaching.jpg` to
-  upgrade the archival. **Still open:** About full-width hero.
-- **Kit** — the account (The Business Lounge) has **no dedicated "The Dispatch"
-  form or welcome sequence** yet. Create a Dispatch form → `KIT_FORM_ID`, and
-  optionally a welcome sequence → `KIT_WELCOME_SEQUENCE_ID`. Launch gate: nobody
-  goes live until a real submission lands in Kit (§6.2). The endpoint handles
-  honeypot, IP rate-limiting, and the already-subscribed case.
-- **YouTube** API key → `YOUTUBE_API_KEY` + a playlist id; and the long-form
-  count (start-flat vs load-more on first paint). The Watch shelf is flat.
+  upgrade the archival. The About full-width hero (`about-hero.jpg`) is also in and
+  wired; the source arrived capped at 2000px (crown clips on 4K only — a better
+  source is a drop-in replacement).
 - **Content** real post bodies + image originals + the keep/rewrite/kill 301 map,
   from the WP export + Search Console inventory (§10, Phase 2). 10 placeholders
   stand in.
+
+**Live (resolved):**
+
+- **Kit** — `KIT_API_KEY` + `KIT_FORM_ID` set in Railway; launch gate closed (a
+  real submission on the deployed site created a subscriber, and the Kit
+  automation applied the CMH tag + enrolled the welcome sequence).
+  `KIT_WELCOME_SEQUENCE_ID` is deliberately unused — onboarding is owned by that
+  Kit automation, not `/api/subscribe` (see `.env.example`).
+- **YouTube** — `YOUTUBE_API_KEY` + `YOUTUBE_CHANNEL_ID` (`@HeyCMH`) set. The Watch
+  shelf and the Home "CMH Show" block share one channel-driven, duration-filtered
+  feed (long-form only, ≤3-min Shorts dropped).
 - **Assets:** `public/images/og-card.png` (1200×630) is an on-brand placeholder.

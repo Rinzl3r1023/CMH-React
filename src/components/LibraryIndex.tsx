@@ -9,6 +9,13 @@ import PostCard from './PostCard';
 import Pagination from './Pagination';
 import LoadMore from './LoadMore';
 import WatchShelf, { PLACEHOLDER_VIDEOS } from './WatchShelf';
+import JsonLd from './JsonLd';
+import { blogGraph } from '@/lib/schema/graphs';
+import { postUrl } from '@/lib/schema/config';
+
+// Matches LoadMore's `initial` on page 1 — only the posts actually rendered are
+// listed in the CollectionPage ItemList (§3.3), never those behind "Load more".
+const LOADMORE_INITIAL = 6;
 
 // The Library (v6) lives at /blog to keep the blog's SEO equity, labelled
 // "The Show" in the nav (/show 301s here). It combines a flat Watch shelf and
@@ -27,8 +34,23 @@ export default async function LibraryIndex({ page }: { page: number }) {
   const liveVideos = page === 1 ? await getShowVideos() : null;
   const videos = liveVideos ?? PLACEHOLDER_VIDEOS;
 
+  // Only the posts visible on this page go in the CollectionPage list (§3.3).
+  const visiblePosts =
+    page === 1
+      ? [featured, ...grid.slice(0, LOADMORE_INITIAL)].filter((p): p is NonNullable<typeof p> => Boolean(p))
+      : pagePosts;
+  const schemaItems = visiblePosts.map((p) => ({ url: postUrl(p.slug), name: p.title }));
+
   return (
     <div className="pg-lib pg-alt" style={rootStyle('library.style.txt')}>
+      <JsonLd
+        graph={blogGraph({
+          page,
+          name: 'The Show',
+          description: 'Videos and written breakdowns from testing AI and marketing inside a real business.',
+          items: schemaItems,
+        })}
+      />
       <HtmlFragment html={fragment('library.nav.html')} />
 
       {page === 1 && <HtmlFragment html={fragment('library.hero.html')} />}

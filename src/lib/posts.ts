@@ -11,20 +11,35 @@ const COVER_MANIFEST = path.join(process.cwd(), 'public', 'post-covers', 'manife
 
 export type Cover = { src: string; width: number; height: number };
 
+export type FaqItem = { q?: string; a?: string };
+
 export type PostMeta = {
   slug: string;
   title: string;
-  date: string; // ISO yyyy-mm-dd
+  date: string; // ISO yyyy-mm-dd — used for sorting/display
+  /** Full ISO 8601 publish date from the WP export, for schema. NEVER file mtime (§5). */
+  datePublished: string;
+  /** Full ISO 8601; from `date_modified` frontmatter, else = datePublished (§4.1). */
+  dateModified: string;
   dateStamp: string; // formatted for the .stamp element, e.g. 2026.04.03
   excerpt: string;
   youtubeId?: string;
   featured: boolean;
   cover: Cover | null;
+  /** Schema-only frontmatter (optional). */
+  keywords?: string[];
+  articleSection?: string;
   /** True for migration placeholders that still need real body content (Phase 2). */
   placeholder: boolean;
 };
 
-export type Post = PostMeta & { body: string };
+export type Post = PostMeta & {
+  body: string;
+  wordCount: number;
+  /** Dormant until the AEO rewrite writes real Q&A / ordered steps into the body (§4.3/§4.4). */
+  faq?: FaqItem[];
+  howto?: unknown;
+};
 
 function readCoverManifest(): Record<string, Cover> {
   try {
@@ -70,15 +85,35 @@ function toMeta(slug: string, data: Record<string, unknown>, covers: Record<stri
     rawDate instanceof Date
       ? rawDate.toISOString().slice(0, 10)
       : String(rawDate ?? '');
+  // Preserve the full timestamp for schema (§5): when the WP export carries a
+  // time-of-day it survives here; a date-only value becomes UTC midnight. The
+  // publish date is NEVER derived from file mtime.
+  const datePublished =
+    rawDate instanceof Date ? rawDate.toISOString() : rawDate ? String(rawDate) : '';
+  const rawMod = data.date_modified;
+  const dateModified =
+    rawMod instanceof Date ? rawMod.toISOString() : rawMod ? String(rawMod) : datePublished;
+  const keywords = Array.isArray(data.keywords)
+    ? data.keywords.map((k) => String(k)).filter(Boolean)
+    : undefined;
+  const articleSection = data.category
+    ? String(data.category)
+    : data.section
+      ? String(data.section)
+      : undefined;
   return {
     slug: fmSlug,
     title: String(data.title ?? slug),
     date,
+    datePublished,
+    dateModified,
     dateStamp: formatStamp(date),
     excerpt: String(data.excerpt ?? ''),
     youtubeId: data.youtube_id ? String(data.youtube_id) : undefined,
     featured: Boolean(data.featured),
     cover: covers[fmSlug] ?? null,
+    keywords,
+    articleSection,
     placeholder: Boolean(data.placeholder),
   };
 }
@@ -104,7 +139,10 @@ export function getPost(slug: string): Post | null {
   const raw = loadRaw(slug);
   if (!raw) return null;
   const covers = readCoverManifest();
-  return { ...toMeta(slug, raw.data, covers), body: raw.body };
+  const wordCount = raw.body.trim() ? raw.body.trim().split(/\s+/).filter(Boolean).length : 0;
+  const faq = Array.isArray(raw.data.faq) ? (raw.data.faq as FaqItem[]) : undefined;
+  const howto = raw.data.howto;
+  return { ...toMeta(slug, raw.data, covers), body: raw.body, wordCount, faq, howto };
 }
 
 export function getAllSlugs(): string[] {

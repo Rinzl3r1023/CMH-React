@@ -4,6 +4,8 @@ import { pageMetadata } from '@/lib/metadata';
 import { getShowVideos } from '@/lib/youtube';
 import HtmlFragment from '@/components/HtmlFragment';
 import HomeShow from '@/components/HomeShow';
+import JsonLd from '@/components/JsonLd';
+import { homeGraph } from '@/lib/schema/graphs';
 
 export const metadata: Metadata = pageMetadata({
   title: "Chris Michael Harris — What's next in AI + marketing, for business owners",
@@ -26,6 +28,13 @@ export default async function HomePage() {
 
   return (
     <div style={rootStyle('home.style.txt')}>
+      <JsonLd
+        graph={homeGraph({
+          name: 'Chris Michael Harris',
+          description:
+            "I test what's next in AI and marketing inside a real business — then tell you what matters, what doesn't, and what to do next.",
+        })}
+      />
       <HtmlFragment html={fragment('home.top.html')} />
       {/* Fail-safe: when the feed is unavailable the block is omitted entirely,
           rather than rendering an empty section. */}
