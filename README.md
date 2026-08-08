@@ -138,9 +138,12 @@ Financial Expert, Clint W. = Crypto Founder. No `[title needed]` placeholders re
 
 **Blocked on inputs (owner) — rendered as visible placeholders:**
 
-- **Three images:** Home hero portrait, About full-width hero, About "I don't
-  coach alone" — placeholder boxes; drop files into `/public/images` (or co-locate
-  post covers), commit, deploy.
+- **Images:** Home hero portrait ✅ (`chris-portrait.jpg`, 1122×1402) and About
+  "I don't coach alone" ✅ (`about-coaching.jpg`) are in and wired through the
+  sharp variant pipeline. Note: the coaching source arrived downscaled to
+  2000×1250 (the 3238×2023 original was capped in transit) — ample for its ~520px
+  slot, but drop the full-res original into `public/images/about-coaching.jpg` to
+  upgrade the archival. **Still open:** About full-width hero.
 - **Kit** — the account (The Business Lounge) has **no dedicated "The Dispatch"
   form or welcome sequence** yet. Create a Dispatch form → `KIT_FORM_ID`, and
   optionally a welcome sequence → `KIT_WELCOME_SEQUENCE_ID`. Launch gate: nobody
