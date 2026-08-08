@@ -19,7 +19,7 @@ function ShowCard({ video }: { video: ShowVideo }) {
       <div
         style={{
           position: 'relative',
-          aspectRatio: '16/10',
+          aspectRatio: '16/9', // YouTube thumbnails are 16:9 — match to avoid clipping text-heavy frames
           background: video.thumbnail ? undefined : THUMB_GRID,
           display: 'flex',
           alignItems: 'center',

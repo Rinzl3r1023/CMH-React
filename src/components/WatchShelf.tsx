@@ -116,7 +116,7 @@ function VideoCard({ video }: { video: ShowVideo }) {
       <div
         style={{
           position: 'relative',
-          aspectRatio: '16/10',
+          aspectRatio: '16/9', // YouTube thumbnails are 16:9 — match to avoid clipping text-heavy frames
           background: video.thumbnail
             ? undefined
             : 'repeating-linear-gradient(90deg, rgba(240,169,60,.08) 0 1px, transparent 1px 34px), repeating-linear-gradient(180deg, rgba(240,169,60,.08) 0 1px, transparent 1px 34px)',
