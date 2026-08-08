@@ -13,7 +13,7 @@ const cell: React.CSSProperties = {
 };
 
 function pageHref(n: number): string {
-  return n <= 1 ? '/blog' : `/blog/page/${n}`;
+  return n <= 1 ? '/blog/' : `/blog/page/${n}/`;
 }
 
 export default function Pagination({

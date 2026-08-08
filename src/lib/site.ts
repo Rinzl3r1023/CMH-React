@@ -27,3 +27,13 @@ export function absoluteUrl(path: string): string {
   if (/^https?:\/\//.test(path)) return path;
   return `${SITE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
 }
+
+// Canonical page URL — ALWAYS trailing-slash, to match WordPress's served URLs
+// and Next's `trailingSlash: true` routing. Use this for <link rel=canonical>,
+// og:url, the sitemap, and schema @id/url. Do NOT use it for asset URLs (images):
+// those are files and must not gain a trailing slash — use absoluteUrl for them.
+export function canonicalUrl(path: string): string {
+  if (/^https?:\/\//.test(path)) return path.replace(/\/?$/, '/');
+  const trimmed = path.replace(/^\/+/, '').replace(/\/+$/, '');
+  return trimmed ? `${SITE_URL}/${trimmed}/` : `${SITE_URL}/`;
+}

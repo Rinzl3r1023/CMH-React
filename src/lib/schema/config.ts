@@ -7,27 +7,28 @@
 // canonicals are NON-trailing (/about, /<slug>) except the site root, which is "/".
 // These helpers encode that — do not hand-append slashes elsewhere.
 
-import { SITE_URL, SITE_NAME, absoluteUrl } from '../site';
+import { SITE_URL, SITE_NAME, absoluteUrl, canonicalUrl } from '../site';
 
 export { SITE_NAME };
 
-// Site root carries the trailing slash (matches the home canonical); everything
-// else is non-trailing.
-export const HOME_URL = `${SITE_URL}/`;
+// URL contract (§1.3 / §5): every @id/url matches the site's canonical exactly.
+// With `trailingSlash: true`, canonicals are TRAILING-slash (WordPress served the
+// same, so migrated URLs land on the page, not a redirect). canonicalUrl() is the
+// single source of truth for that format.
+export const HOME_URL = canonicalUrl('/');
 
-export const PERSON_ID = `${SITE_URL}/#person`;
-export const ORG_ID = `${SITE_URL}/#organization`;
-export const WEBSITE_ID = `${SITE_URL}/#website`;
+export const PERSON_ID = `${HOME_URL}#person`;
+export const ORG_ID = `${HOME_URL}#organization`;
+export const WEBSITE_ID = `${HOME_URL}#website`;
 
-/** Canonical URL for a page path (non-trailing), matching pageMetadata()/sitemap. */
+/** Canonical URL for a page path (trailing-slash), matching pageMetadata()/sitemap. */
 export function pageUrl(path: string): string {
-  if (path === '/' || path === '') return HOME_URL;
-  return `${SITE_URL}/${path.replace(/^\//, '').replace(/\/$/, '')}`;
+  return canonicalUrl(path);
 }
 
-/** Canonical URL for a root-level post slug (non-trailing). */
+/** Canonical URL for a root-level post slug (trailing-slash). */
 export function postUrl(slug: string): string {
-  return `${SITE_URL}/${slug}`;
+  return canonicalUrl(`/${slug}`);
 }
 
 // ⚑ NEEDS FROM CHRIS (§7). Provisional values from the spec — safe to ship, and

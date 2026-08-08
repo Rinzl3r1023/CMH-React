@@ -92,7 +92,7 @@ export default function HomeShow({ videos }: { videos: ShowVideo[] }) {
             Where I show you what I found.
           </h2>
         </div>
-        <a href="/blog" className="navlink" style={{ whiteSpace: 'nowrap' }}>
+        <a href="/blog/" className="navlink" style={{ whiteSpace: 'nowrap' }}>
           Subscribe on YouTube →
         </a>
       </div>
