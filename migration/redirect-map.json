@@ -1,0 +1,677 @@
+[
+  {
+    "source": "/chris-michael-harris",
+    "destination": "/about/",
+    "statusCode": 301
+  },
+  {
+    "source": "/nice-to-meet-you",
+    "destination": "/about/",
+    "statusCode": 301
+  },
+  {
+    "source": "/podcast-options",
+    "destination": "/blog/",
+    "statusCode": 301
+  },
+  {
+    "source": "/podcast-page",
+    "destination": "/blog/",
+    "statusCode": 301
+  },
+  {
+    "source": "/show",
+    "destination": "/blog/",
+    "statusCode": 301
+  },
+  {
+    "source": "/youtube-page",
+    "destination": "/blog/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ai-services",
+    "destination": "/dispatch/",
+    "statusCode": 301
+  },
+  {
+    "source": "/privacy-policy-slf",
+    "destination": "/privacy/",
+    "statusCode": 301
+  },
+  {
+    "source": "/terms-and-conditions",
+    "destination": "/terms/",
+    "statusCode": 301
+  },
+  {
+    "source": "/12mc",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/2020-top-reads-list",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/2021-reading-list",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/7-day-reading-challenge",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/apply",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ask-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/avatar",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/bb",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/best-year-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/biohacking-playbook",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/blog-old",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/blogging-basics-2",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/book-module-example",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/bschoolcart",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/burnout-breakthrough",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/burnout-quiz",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/business-type-quiz-expired",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/cancel",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/challenge",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/checkout",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/chris-michael-harris-old",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/class",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/class-3",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/confirmation",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/contact",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/copy-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ctc",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ep1",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/essentialism-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/everything-is-figureoutable-by-marie-forleo",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/finding-your-ideal-customers",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/forgot-password",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/game-changers-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/get-started",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/getting-things-done-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ghe",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/growth-hacker-elite",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/home",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/investor-playbook",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ipb-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/login",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/logout",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/marketing-guide",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/masterclass",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/maximize-efficiency",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/me-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/mm-error",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/myaccount",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/night-and-weekend-warrior-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/opt-out",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/orientation-3",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/path-quiz",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/podcast-equipment-guide",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/power-of-habit-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/pr",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/programs",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/purchase-confirmation",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/quiz-results-burnout",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/quiz-results-burnout-severe",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/quiz-results-high",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/quiz-results-none",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/read-challenge-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/read-list-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/reading-challenge-module",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/redeem-gift",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/relationship-guide",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/remember-dae",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/reset-password",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/rework-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/sample-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/seff",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-2021-registration-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-2021-registration-page-slf-bonus4",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-class-2",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-dashboard-draft",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-expired-bonus",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-module-1-2",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-module-2-walk",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-module-3-run",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-pass-expired",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-webby-reg-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/slf-webinar-2",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/smartcuts-by-shane-snow",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/startup-launch-factory",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/startup-u-with-chris-michael-harris",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/startupbooks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/startupu",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/story-brand-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tfs-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/thank-you-website-popup",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-12-week-year-by-brian-moran",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-22-immutable-laws-of-marketing-al-ries-and-jack-trout",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-builder-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-expert-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-fire-starter",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-hustler-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-lead-converter",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-lifestyler-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-one-thing-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-side-hustler-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-steward-outcome-page",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-unstuck-formula",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/the-vip-room",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/think-and-grow-rich-by-napoleon-hill",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/this-is-marketing-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/thrive-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tlc-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tmg-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/training",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/type-quiz",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/uf",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ultimate-startup-checklist",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ultimate-startup-checklist-slf-bonus3",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/usc-thanks",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/usc-webby",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip-course-dashboard",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip-eb-thankyou",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip-expired",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip-orientation",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip-orientation-2",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip1",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/vip50",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/webinar-countdown",
+    "destination": "/",
+    "statusCode": 301
+  },
+  {
+    "source": "/webinar-error",
+    "destination": "/",
+    "statusCode": 301
+  }
+]

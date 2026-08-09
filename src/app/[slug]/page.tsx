@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import '../post.css';
@@ -46,10 +46,11 @@ function splitForMidCta(body: string): { before: string; after: string } {
 
 // Root-level post slugs (§1). Static routes (/about, /show, /dispatch, /blog)
 // live in their own folders and take precedence; this dynamic segment is the
-// catch-all that resolves the remaining root paths to posts. dynamicParams=false
-// means only known post slugs render — anything else 404s, so the root namespace
-// stays honest (the cost of root slugs, accepted in §1).
-export const dynamicParams = false;
+// catch-all that resolves the remaining root paths to posts. dynamicParams=true
+// so an unknown root path doesn't hard-404: known legacy pages are 301'd in
+// next.config, and anything else this route can't resolve to a post folds to '/'
+// (see generateMetadata + the redirect in PostPage). Nothing at the root dead-ends.
+export const dynamicParams = true;
 // Match /blog: the VideoObject schema reads the shared YouTube Data Cache, which
 // revalidates on this cadence.
 export const revalidate = 1800;
@@ -78,7 +79,10 @@ export async function generateMetadata({
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) notFound();
+  // Unknown root path that isn't a post and wasn't caught by a 301 in
+  // next.config: fold to home rather than 404 (§1 — the root namespace never
+  // dead-ends). Explicit 307 via redirect(); the curated legacy pages get 301s.
+  if (!post) redirect('/');
 
   // The mid-article Dispatch renders for both cta modes; it needs content on both
   // sides of the split (skip it if the post is too short to split).

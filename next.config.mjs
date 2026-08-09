@@ -1,3 +1,17 @@
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+// Legacy WordPress *page* URLs -> 301 targets. Generated from the pages export
+// (migration/redirect-map.json) so the list is auditable and regeneratable, not
+// hand-maintained. Retired funnels/opt-ins/thank-you pages all fold to '/';
+// a handful of curated pages point at /about/, /blog/, /dispatch/, /privacy/,
+// /terms/. Post slugs and real routes are excluded at generation time, so
+// nothing here shadows a live page. Root-level post slugs are served by the
+// [slug] route; anything it can't resolve falls through to '/' there.
+const __dir = dirname(fileURLToPath(import.meta.url));
+const pageRedirects = JSON.parse(readFileSync(join(__dir, 'migration/redirect-map.json'), 'utf8'));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -19,14 +33,11 @@ const nextConfig = {
   // intentionally not carried forward gets a 301 here (§1.1). Root-level post
   // slugs are served by the [slug] catch-all, NOT redirected.
   async redirects() {
-    return [
-      // The Show + the blog merged into one destination at /blog (labelled
-      // "The Show" in the nav). Old /show 301s there so its equity carries over.
-      // Explicit 301 (not Next's default 308) per the migration decision.
-      { source: '/show', destination: '/blog/', statusCode: 301 },
-      // Legacy /ai-services -> folded into the coaching conversation (§7 #1).
-      { source: '/ai-services', destination: '/dispatch/', statusCode: 301 },
-    ];
+    // Every legacy WordPress page URL -> its 301 target, generated from the
+    // pages export. Explicit 301 (not Next's default 308) per the migration
+    // decision. /show and /ai-services are part of this list; the [slug] route
+    // handles root-level *post* slugs and folds any unknown path to '/'.
+    return pageRedirects;
   },
 };
 
