@@ -82,12 +82,22 @@ See `.env.example`. Secrets are **never** committed and never reach client JS.
 ## Content workflow (blog)
 
 1. `content/posts/<slug>/index.mdx` — frontmatter + body. `slug` **must** match
-   the live URL (URL preservation, §1).
-2. Drop `cover.jpg` in the same folder. `npm run build` runs `sync-covers`
-   automatically; `ResponsiveImage` handles the rest.
+   the live URL (URL preservation, §1). Assign the next `archive_no`:
+   `node scripts/assign-archive-no.mjs` (ascending by `datePublished`, frozen —
+   existing numbers are never touched, the new post gets the next integer).
+2. **Generate the cover — required step, do not skip:** `npm run gen:covers`.
+   The "Index" cover (Direction B) is rendered from `archive_no` + the slug hash
+   with headless Chromium (`playwright-core` + a local browser), so it runs
+   **locally**, not in the Railway build. **Commit the generated `cover.png`
+   alongside the post.** The build is fail-closed: `sync-covers` errors if any
+   post lacks a cover (unless it sets an explicit `cover:` in frontmatter), so a
+   skipped `gen:covers` fails the build rather than shipping a placeholder.
 3. `youtube_id` in frontmatter → the video embeds in the post body. Omit it for
    text-only posts.
 4. One post with `featured: true` fills the featured block; otherwise the newest.
+
+Publish checklist: **write `index.mdx` → `assign-archive-no` → `gen:covers` →
+commit (post + cover together) → push.**
 
 Posts currently in `content/posts` are **placeholders** (`placeholder: true`),
 using the real root slugs so routing/pagination are exercised. Their bodies are
