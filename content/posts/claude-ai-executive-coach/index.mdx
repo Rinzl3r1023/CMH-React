@@ -1,18 +1,131 @@
 ---
-title:      "Using Claude as an AI Executive Coach"
+title:      "How to Build an Executive Coach With Claude AI (My Full Build)"
 slug:       "claude-ai-executive-coach"
-date:       2026-02-11
-excerpt:    "What happens when you treat Claude like an executive coach instead of a chatbot."
-featured:   false
-placeholder: true
+date:       "2026-02-19T08:14:00"
+excerpt:    "Today I'm going to show you how I built a high-functioning executive coach using Claude."
+category:   "ai-marketing"
+youtube_id: "gFKqVUfctc8"
 ---
 
-> **Placeholder.** This post's real body is migrated from WordPress in Phase 2
-> (pulled from the WordPress export, with originals — not thumbnails — for images,
-> §3.3). The slug, date, and metadata above match the live URL so the route
-> resolves at its exact current path today.
+Today I'm going to show you how I built a high-functioning executive coach using [Claude](https://claude.ai).
 
-What happens when you treat Claude like an executive coach instead of a chatbot.
+Not a chatbot I ask for advice now and then. An actual system — one that knows my business, knows my strengths and blind spots, and challenges me instead of agreeing with me. It runs in the gaps between the sessions I have with my real coach, my therapist, and my functional medicine practitioner.
 
-When the real content lands, it replaces everything below this line — headings,
-images, and any embedded video — while this file stays at `content/posts/claude-ai-executive-coach/index.mdx`.
+And here's the thing most people get wrong before they even start: they think the magic is in the prompt. It isn't. The magic is in the architecture.
+
+If you're a coach, consultant, or operator who's been using AI as a glorified search bar, this is the post that moves you from dabbling to building. Let's get into it.
+
+## **Why Architecture Beats Prompting**
+
+The single most valuable thing I've learned working with AI: the win is in the planning and the orchestration, not the clever question.
+
+Most people open a chat and start typing. That's why their output is generic — they're asking a brilliant stranger for advice with zero context. What you actually want to do is map the system first. Decide what you're building, what layers it needs, and where each piece of information lives. *Then* you build.
+
+This is the reframe I want you to sit with: if your AI coach feels shallow, it's not because you don't know the right words to say. It's because you haven't built the structure underneath it. That's an architecture problem, not a knowledge problem — and architecture is something you can fix on purpose.
+
+## **The Three Layers of a Claude Executive Coach**
+
+I built mine in three deliberate layers, stacked from most essential to most advanced.
+
+### **Layer 1: Business Context**
+
+If it's going to coach me as an operator, it has to know what I actually do.
+
+So I start a thread inside a project and I flip it: *"I want you to be my executive coach. Before you coach me, I need you to understand the business I run and how I make money. Interview me until you have enough."*
+
+That last part matters. I let Claude interview me — but I decide when it has enough. It might ask two questions or fifteen. **You're the pilot.** You choose where to draw the line, and you choose how much you're comfortable feeding it. There are real privacy considerations here, and your discernment is the whole job. Nobody else decides that for you.
+
+### **Layer 2: Personal Historical Context**
+
+Next, I give it context about *me* — not just the business.
+
+Strengths. Weaknesses. Lived experiences. Where I've excelled, where I've failed, where I have gaps. I operate in generalities here rather than handing over a diary, but enough that it's equipped to actually serve me.
+
+Then I did something most people skip: I had it research other entrepreneurs who matched the profile we'd built. It surfaced five or six archetypes, I picked the one that sounded most like me, and we built a personal operating protocol around that. That was dangerously accurate — and far more useful than anything a cold prompt would've produced.
+
+### **Layer 3 (Optional): Your Own Data**
+
+This is the full-nerd layer, and you do not need it.
+
+For me, I fed it my genetic data so the coach could factor my biology into how I operate day to day. I'm not going to turn this post into health advice — that's not my lane and it shouldn't be Claude's either. The point worth stealing isn't *what* data I used. It's the **cross-audit move**: I had a second AI model ([Gemini](https://gemini.google.com)) audit Claude's findings, and it caught real discrepancies.
+
+That's the transferable pro tip. When the stakes are high, don't trust a single model's output — have one AI check another's work. That habit alone will save you from a lot of confidently-wrong answers.
+
+## **The Most Important Caveat: This Is an Add-On, Not a Replacement**
+
+I need to be as clear as I possibly can here.
+
+This system does **not** replace professionals. I still have a functional medicine practitioner I work with. I still see a business coach every week. My wife and I still see a therapist regularly. None of that goes away.
+
+What this *does* is cut the gap. When I leave my business coach on Thursday with a profound takeaway, I don't have to sit on it for a week. I can keep the dialogue going, do the homework, and bring sharper thinking back the next session. Same with everything else — I'm working the in-between, not replacing the expert.
+
+If you take nothing else from this post, take this: AI is a powerful supplement to real human guidance. It is not a substitute for a licensed therapist, doctor, or coach. Build it as an add-on and it makes everything else better. Treat it as a replacement and you're using it wrong.
+
+## **How Do You Make Claude Remember Everything? (Instructions, Memory, and Files)**
+
+Here's where most people's setups fall apart: they build one beautifully optimized thread, then start a new one and lose all of it.
+
+The fix is to think of three things — instructions, memory, and project files — as the **external hard drive** for your coach. You're building the brain, and you feed it the things it must not forget.
+
+- **Instructions (saved at the project level):** This is the standing SOP. Mine say Claude is serving as my executive coach, therapist, and functional medicine assistant, and to maintain a direct, challenge-oriented tone. Save these at the *project* level so every new thread starts already optimized instead of taking weeks to rebuild.
+
+- **Memory:** Claude builds this automatically as you talk, baking important things into a permanence layer. But I orchestrate it — when something matters, I tell it explicitly: *remember this for the long term.*
+
+- **Project files:** When we land a new protocol or have one of those genuinely profound conversations, I save it as a file right then, while it's ripe. Do it in the moment — I've found it pulls far more context that way than if you try to reconstruct it later.
+
+Capture the key takeaways the way you'd summarize the end of a chapter. That's what makes the system compound instead of reset.
+
+## **How Do You Stop Claude From Just Agreeing With You?**
+
+By default, AI is agreeable. It's trained to confirm what you say — which is useless in a coach.
+
+The fix is one line in your instructions: **truth over comfort.** Tell it to be real with you, to give you the truth as it sees it, not the sugarcoated version that confirms your bias. I add that instruction to every model I use for deep work. A coach that only validates you isn't a coach. It's a mirror.
+
+## **Why Claude for This? (The "WordPress of AI")**
+
+I have different AI models for different jobs. For deep personal work like this, I reach for Claude, and here's the analogy I use: **Claude is the WordPress of AI.**
+
+WordPress became the SEO-friendly platform almost by accident — it was built as a blogging tool, so search-friendly structure was baked into its DNA. Claude is similar. It was built primarily for writing code, which demands precision and detail. So instead of a short, surface answer, Claude tends to give you the thorough, dictionary version.
+
+Some people hate that. For deep work, I love it. When I'm building something this important, I want precision and context — not the fastest possible reply. Use whichever model you've put the most reps into, but for this specific use case, Claude's precision is why it's my pick.
+
+## **Key Takeaways**
+
+- The win is in the architecture, not the prompt. Map the system before you build it.
+- Build in three layers: business context → personal historical context → (optional) your own data, cross-audited with a second model.
+- You're the pilot. You decide how much to feed it and where the privacy line sits.
+- Instructions, memory, and project files are the external hard drive — capture protocols and breakthroughs so the system compounds instead of resetting.
+- Add "truth over comfort" to your instructions so it challenges you instead of confirming your bias.
+- This is an add-on for the in-between gaps — never a replacement for a licensed therapist, doctor, or coach.
+
+## **Frequently Asked Questions**
+
+### **Can you use Claude as an executive coach?**
+
+Yes — if you build it as a system rather than asking one-off questions. By feeding Claude your business context and personal history at the project level and letting it build memory over time, it can function as a high-context coach that challenges your thinking. It works best as a supplement to a real human coach, not a replacement.
+
+### **Is it safe to use AI as a therapist or coach?**
+
+AI can be a useful add-on between sessions with licensed professionals, but it is not a substitute for one. It has no clinical judgment and no accountability. The responsible way to use it is exactly that — an add-on that helps you work the gaps between real sessions, while keeping your actual therapist, doctor, and coach in the loop.
+
+### **How do I make Claude remember things between conversations?**
+
+Use three tools together: save standing instructions at the project level, let Claude build its memory (and tell it explicitly when something should be remembered long-term), and save key protocols or breakthroughs as project files in the moment. Together these act as an external hard drive so each new thread starts optimized.
+
+### **How do I stop Claude from just agreeing with me?**
+
+Add a "truth over comfort" instruction. By default AI tends to confirm what you say. Telling it to give you the honest read rather than the validating one turns it from a mirror into something that can actually coach you.
+
+### **Why use Claude instead of [ChatGPT](https://chatgpt.com) or Gemini for this?**
+
+It comes down to use case. Claude was built primarily for code, which makes it precise and detail-heavy — ideal for deep, context-rich personal work. Other models are better for other jobs (a smart move is using a second model to audit the first). Use the one you've invested the most time in; for deep coaching work, precision is why I prefer Claude.
+
+## **Want Help Building Something Like This?**
+
+Knowing the architecture is one thing. Building it for your specific business — your context, your gaps, your operating style — is another.
+
+My team and I run build audits. We'll get on a Zoom, look at how you're using AI now, and map out how to build a system like this for yourself. If you're a coach or service provider in the online space and you want to stop dabbling and actually build, that's exactly the work we do.
+
+If you want help with this, you can book an audit with my team here.
+
+— Chris
