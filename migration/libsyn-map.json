@@ -1,5 +1,5 @@
 {
-  "note": "Every published post carrying a libsyn embed. libsyn is dead (cancelled); match each to a Buzzsprout episode by TITLE + post_date (libsyn and Buzzsprout ids are unrelated), then the migration swaps the player. buzzsprout_episode / buzzsprout_url to be filled from the Buzzsprout feed.",
+  "note": "libsyn is dead; matched to Buzzsprout (podcast 2597359) by ep-number (ep### slugs) or title-containment + date-proximity. Buzzsprout pubDates are original (2015-2026 preserved), so date reinforces the title match. low-confidence -> strip embed, add text link to the episode page.",
   "posts_with_libsyn": 129,
   "distinct_libsyn_ids": 123,
   "posts": [
@@ -9,7 +9,11 @@
       "post_date": "2017-06-27",
       "title": "Finding Your Authentic Self and Why It Matters | Emotional Fitness is Vastly Underrated",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710320-ep106-finding-your-authentic-self-and-why-it-matters-with-laura-coe-host-of-the-art-of-authenticity-podcast-and-author",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP106: Finding Your Authentic Self and Why It Matters with Laura Coe, "
     },
     {
       "libsyn_episode_id": "5527756",
@@ -17,7 +21,11 @@
       "post_date": "2017-07-11",
       "title": "Can Boomers Still Launch A Successful Business? | Entrepreneurship Extends Beyond Millennials",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710319-ep107-can-boomers-still-launch-a-successful-business-with-anthony-young-president-of-personal-spaceflight-advisors-and-author-design-engineer",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP107: Can Boomers Still Launch A Successful Business? with Anthony Yo"
     },
     {
       "libsyn_episode_id": "5588421",
@@ -25,7 +33,11 @@
       "post_date": "2017-07-28",
       "title": "Creating a New Niche to Compete with the Titans of Your Industry | Never Get Discouraged by Big Name Competition",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710318-ep108-creating-a-new-niche-to-compete-with-the-titans-of-your-industry-with-nima-saati-founder-and-ceo-of-nima-usa",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP108: Creating a New Niche to Compete with the Titans of Your Industr"
     },
     {
       "libsyn_episode_id": "5791396",
@@ -33,7 +45,11 @@
       "post_date": "2017-09-29",
       "title": "Launching a Virtual Summit From Scratch | Your Cause is More Important than the Size of Your List",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710317-ep109-launching-a-virtual-summit-from-scratch-with-bobby-jones-vp-of-marketing-at-helper-helper-and-host-of-content-that-converts",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP109: Launching a Virtual Summit From Scratch with Bobby Jones, VP of"
     },
     {
       "libsyn_episode_id": "5827667",
@@ -41,7 +57,11 @@
       "post_date": "2017-10-10",
       "title": "From Bankrupt to Sexy Boss | Are You Further Clouding Your Confusion or Strengthening Your Clarity?",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710316-ep110-from-bankrupt-to-sexy-boss-with-heather-ann-havenwood-digital-marketing-expert-and-radio-host",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP110: From Bankrupt to Sexy Boss with Heather Ann Havenwood, Digital "
     },
     {
       "libsyn_episode_id": "5949076",
@@ -49,7 +69,11 @@
       "post_date": "2017-11-15",
       "title": "Asking Your Way to the Top | Why The Ask Method is Your In-House Market Research Department",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710315-ep111-asking-your-way-to-the-top-with-ryan-levesque-1-best-selling-author-and-ceo-of-the-ask-method-company",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP111: Asking Your Way to the Top with Ryan Levesque, #1 Best Selling "
     },
     {
       "libsyn_episode_id": "5988568",
@@ -57,7 +81,11 @@
       "post_date": "2017-11-28",
       "title": "Creating Generational Wealth | The Paradigm Shift About Finance That Will Change Your Life",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710314-ep112-creating-generational-wealth-with-garrett-gunderson-founder-at-wealth-factory-and-ny-times-best-selling-author",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP112: Creating Generational Wealth with Garrett Gunderson, Founder at"
     },
     {
       "libsyn_episode_id": "6022759",
@@ -65,7 +93,11 @@
       "post_date": "2017-12-07",
       "title": "Breaking the Mold in Hollywood | How Technology and a Modern Approach Allowed a 28 Year Old to Make it Big",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710313-ep113-breaking-the-mold-in-hollywood-with-michael-d-ratner-founder-and-president-ceo-of-obb-pictures",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP113: Breaking the Mold in Hollywood with Michael D Ratner, Founder a"
     },
     {
       "libsyn_episode_id": "6128512",
@@ -73,7 +105,11 @@
       "post_date": "2018-01-08",
       "title": "Living What You Preach | Be a Motivator, Not Just a Motivational Speaker",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710312-ep114-living-what-you-preach-with-morgan-j-ingram-host-of-thesdrchronicles-and-director-of-sales-execution-at-jbarrows-sales-training",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP114: Living What You Preach with Morgan J Ingram, Host of #TheSDRChr"
     },
     {
       "libsyn_episode_id": "6181416",
@@ -81,7 +117,11 @@
       "post_date": "2018-01-23",
       "title": "New Year's Resolutions - Part 1: How to Get Your Life Organized | Not Being Organized is Impacting Your Professional Successes and Your Personal Well-Being",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710311-ep115-new-year-s-resolutions-part-1-how-to-get-your-life-organized",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP115: New Year's Resolutions - Part 1: How to Get Your Life Organized"
     },
     {
       "libsyn_episode_id": "6189494",
@@ -89,7 +129,11 @@
       "post_date": "2018-01-25",
       "title": "Is Network Marketing Right For You? | Assessing Opportunities with the Right Perspective",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710310-ep116-is-network-marketing-right-for-you-with-romacio-fulcher-16-network-marketer-globally",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP116: Is Network Marketing Right For You? with Romacio Fulcher, #16 N"
     },
     {
       "libsyn_episode_id": "6232651",
@@ -97,7 +141,11 @@
       "post_date": "2018-02-06",
       "title": "New Year's Resolutions - Part 2: Make Reading a Habit | Why it is Essential to Continue Learning Along Your Journey",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710309-ep117-new-year-s-resolutions-part-2-make-reading-a-habit",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP117: New Year's Resolutions - Part 2: Make Reading a Habit"
     },
     {
       "libsyn_episode_id": "6260118",
@@ -105,7 +153,11 @@
       "post_date": "2018-02-14",
       "title": "Empowering Employees to Generate the Results You Desire | The Organization is Always More Than One Person",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710308-ep118-empowering-employees-to-generate-the-results-you-desire-with-brandon-harris-aspiring-franchise-owner",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP118: Empowering Employees to Generate the Results You Desire with Br"
     },
     {
       "libsyn_episode_id": "6268931",
@@ -113,7 +165,11 @@
       "post_date": "2018-02-16",
       "title": "New Year's Resolutions - Part 3: Travel More | Why Taking Quick Vacations is Imperative to an Early Stage Entrepreneur",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710307-ep119-new-year-s-resolutions-part-3-travel-more",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP119: New Year's Resolutions - Part 3: Travel More"
     },
     {
       "libsyn_episode_id": "6286198",
@@ -121,7 +177,11 @@
       "post_date": "2018-02-21",
       "title": "Changing the Game in Your Industry | Bucking Traditional Avenues via Technology and Content Creation",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710306-ep120-changing-the-game-in-your-industry-with-jack-davis-founder-of-crypt-tv",
+      "match_method": "ep-number",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP120: Changing the Game in Your Industry with Jack Davis, Founder of "
     },
     {
       "libsyn_episode_id": "6319226",
@@ -129,7 +189,11 @@
       "post_date": "2018-03-01",
       "title": "Is There a Best Place to Build a Startup? | Slowing Down to Finalize Your Idea Before Running to Market",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.4,
+      "bz_title": "EP182: The New Rules of Leadership in Your Startup with Kevin Kruse, N"
     },
     {
       "libsyn_episode_id": "6340155",
@@ -137,7 +201,11 @@
       "post_date": "2018-03-07",
       "title": "How to Start a Podcast Business | How to Leverage the Podcasting Platform and Create Monetizing Opportunities",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710304-ep122-are-you-a-good-fit-to-launch-a-podcast-business-with-jeremy-slate-host-of-create-your-own-life-podcast-and-founder-of-command-your-brand",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP122: Are You A Good Fit to Launch a Podcast Business? with Jeremy Sl"
     },
     {
       "libsyn_episode_id": "6392079",
@@ -145,7 +213,11 @@
       "post_date": "2018-03-21",
       "title": "New Year's Resolutions - Part 4: Stop Making Resolutions! | How to Set Goals in Your Life",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710303-ep123-new-year-s-resolutions-part-4-stop-making-resolutions",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP123: New Year's Resolutions - Part 4: Stop Making Resolutions!"
     },
     {
       "libsyn_episode_id": "6415608",
@@ -153,7 +225,11 @@
       "post_date": "2018-03-27",
       "title": "Why You Need a Management Systems and Processes Mindset to Grow Your Company | Growth is More Than Just Revenue",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710302-ep124-why-you-need-a-systems-and-processes-mindset-to-grow-your-company-with-nathan-ryan-co-founder-of-blue-sky-partners",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.86,
+      "bz_title": "EP124: Why You Need a Systems and Processes Mindset to Grow Your Compa"
     },
     {
       "libsyn_episode_id": "6442380",
@@ -161,7 +237,11 @@
       "post_date": "2018-04-03",
       "title": "New Year's Resolutions - Part 5: Spend More Time With Family and Friends | Why You Need Your Support System",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710301-ep125-new-year-s-resolutions-part-5-spend-more-time-with-family-and-friends",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP125: New Year's Resolutions - Part 5: Spend More Time With Family an"
     },
     {
       "libsyn_episode_id": "6498149",
@@ -169,7 +249,11 @@
       "post_date": "2018-04-18",
       "title": "Become a Best Selling Author Without Actually Writing a Book | Establish Yourself as an Influencer in Your Space",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710300-ep126-becoming-a-best-selling-author-without-actually-writing-a-book-with-tucker-max-4x-new-york-times-best-selling-author-and-co-founder-of-book-in-a-box",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.88,
+      "bz_title": "EP126: Becoming a Best Selling Author Without Actually Writing a Book "
     },
     {
       "libsyn_episode_id": "6502097",
@@ -177,7 +261,11 @@
       "post_date": "2018-04-19",
       "title": "Where Should I Focus On My Business? | Growing a Business Successfully is About Framework",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710299-ep127-where-should-you-focus-on-your-business-with-pete-williams-author-and-founder-of-preneur",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP127: Where Should You Focus on Your Business? with Pete Williams, Au"
     },
     {
       "libsyn_episode_id": "6517167",
@@ -185,7 +273,11 @@
       "post_date": "2018-04-24",
       "title": "From a Single Food Truck Business to a Multi-Million Dollar Franchise | How Two Cousins Launched a Lobster Dynasty",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710298-ep128-from-a-single-food-truck-to-a-multi-million-dollar-business-with-jim-tselikis-and-sabin-lomac-founders-of-cousins-maine-lobster-and-uber-success-story-from-shark-tank",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.88,
+      "bz_title": "EP128: From a Single Food Truck to a Multi-Million Dollar Business wit"
     },
     {
       "libsyn_episode_id": "6554482",
@@ -193,7 +285,11 @@
       "post_date": "2018-05-03",
       "title": "New Year's Resolutions - Part 6: You Can't Lose Sight of Your Entrepreneur Hobbies | The Benefit to Disengaging and Coming Back with Fresh Perspective",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710297-ep129-new-year-s-resolutions-part-6-you-can-t-lose-sight-of-your-hobbies-as-an-entrepreneur",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP129: New Year's Resolutions - Part 6: You Can't Lose Sight of Your H"
     },
     {
       "libsyn_episode_id": "6572194",
@@ -201,7 +297,11 @@
       "post_date": "2018-05-18",
       "title": "How to Raise Money and Compete with Major Corporations | Leaving a Comfy Job at Google to Cause Disruption",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710296-ep130-how-to-raise-money-and-compete-with-major-corporations-with-renee-wang-founder-of-castbox",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP130: How to Raise Money and Compete with Major Corporations with Ren"
     },
     {
       "libsyn_episode_id": "6554482",
@@ -209,7 +309,11 @@
       "post_date": "2018-05-18",
       "title": "New Year's Resolutions - Part 7: How to Save More Money, Spend Less and Live an Amazing Life | Planning to Succeed in Your Personal Life",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710295-ep131-new-year-s-resolutions-part-7-how-to-save-more-spend-less-and-live-life-to-the-fullest",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.91,
+      "bz_title": "EP131: New Year's Resolutions - Part 7: How to Save More, Spend Less a"
     },
     {
       "libsyn_episode_id": "6597688",
@@ -217,7 +321,11 @@
       "post_date": "2018-05-23",
       "title": "How to Reclaim Your Health Naturally | Why Pharmaceutical Drugs Aren't Always the Answer",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710294-ep132-how-to-reclaim-your-health-naturally-with-kendra-helman-founder-of-wellfull-health",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP132: How to Reclaim Your Health Naturally with Kendra Helman, Founde"
     },
     {
       "libsyn_episode_id": "6627958",
@@ -225,7 +333,11 @@
       "post_date": "2018-05-28",
       "title": "Recover From Entrepreneur Burnout | The Man Who Helped Me Get My Life Back",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710293-ep133-recover-from-entrepreneur-burnout-with-dr-eric-bakker-naturopath-and-formulator-of-the-canxida-supplements",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP133: Recover From Entrepreneur Burnout with Dr. Eric Bakker, Naturop"
     },
     {
       "libsyn_episode_id": "6673420",
@@ -233,7 +345,11 @@
       "post_date": "2018-06-06",
       "title": "Is Lucid Dreaming an Entrepreneur Hack? | Dream Manipulation and Subliminal Truths About Life",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710292-ep134-is-lucid-dreaming-an-entrepreneur-hack-with-martin-martinez-founder-of-a-player-media-and-managing-director-at-founder-institute",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP134: Is Lucid Dreaming an Entrepreneur Hack? with Martin Martinez, F"
     },
     {
       "libsyn_episode_id": "6684211",
@@ -241,7 +357,11 @@
       "post_date": "2018-06-08",
       "title": "New Year's Resolutions - Part 8: Lose Weight and Live a Healthy Life | Health, Happiness and Vitality",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710291-ep135-new-year-s-resolutions-part-8-lose-weight-and-live-a-healthy-life",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP135: New Year's Resolutions - Part 8: Lose Weight and Live a Healthy"
     },
     {
       "libsyn_episode_id": "6698756",
@@ -249,7 +369,11 @@
       "post_date": "2018-06-12",
       "title": "Can You Learn How to Be More Creative? | Continuing The Left Brain, Right Brain Debate",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710290-ep136-can-you-learn-how-to-be-more-creative-with-allen-gannett-founder-ceo-of-trackmaven-and-author-of-the-creative-curve",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP136: Can You Learn How to Be More Creative? with Allen Gannett, Foun"
     },
     {
       "libsyn_episode_id": "6714848",
@@ -257,7 +381,11 @@
       "post_date": "2018-06-18",
       "title": "Why SEO is Still at the Core of Your Marketing Efforts | Adopting a More Holistic Approach to Marketing",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710289-ep137-why-seo-is-still-at-the-core-of-your-marketing-efforts-with-phil-singleton-author-and-ceo-of-kansas-city-web-design",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP137: Why SEO is Still at the Core of Your Marketing Efforts with Phi"
     },
     {
       "libsyn_episode_id": "6724143",
@@ -265,7 +393,11 @@
       "post_date": "2018-06-27",
       "title": "Meditation and Float Therapy Benefits | Being Intentional About Clarity and Lowering Stress Levels",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710288-ep138-meditation-and-float-therapy-benefits-with-edgar-sanchez-aspiring-entrepreneur",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP138: Meditation and Float Therapy Benefits with Edgar Sanchez, Aspir"
     },
     {
       "libsyn_episode_id": "6739682",
@@ -273,7 +405,11 @@
       "post_date": "2018-07-02",
       "title": "Being Entrepreneurial in a 9 to 5 | Viewing Opportunities as Chances to Grow",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710287-ep139-being-entrepreneurial-in-a-9-to-5-with-britt-douglas-general-manager-at-worldwide-vintage-autos",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP139: Being Entrepreneurial in a 9 to 5 with Britt Douglas, General M"
     },
     {
       "libsyn_episode_id": "6796627",
@@ -281,7 +417,11 @@
       "post_date": "2018-07-12",
       "title": "How to Focus on What Matters In Your Business | Building One Bridge at a Time",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.33,
+      "bz_title": "EP140: When to Get Back to Basics in Your Business with Clint Watson, "
     },
     {
       "libsyn_episode_id": "6814298",
@@ -289,7 +429,11 @@
       "post_date": "2018-07-17",
       "title": "Going After Your Dreams in Life | Sacrificing On Your Ambitions is More Costly Than You May Think",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710285-ep141-going-after-your-dreams-in-life",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP141: Going After Your Dreams in Life"
     },
     {
       "libsyn_episode_id": "6831687",
@@ -297,7 +441,11 @@
       "post_date": "2018-07-20",
       "title": "How to Get Your Small Business to Compete With Bigger Companies Today | Leveraging Authority Marketing Strategies",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710194-ep232-how-to-get-unstuck-in-your-business",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP232: How to Get UNSTUCK In Your Business"
     },
     {
       "libsyn_episode_id": "6843946",
@@ -305,7 +453,11 @@
       "post_date": "2018-07-23",
       "title": "How to Create Company Culture Where People Love to Work | Employees are People, Not Numbers",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710283-ep143-how-to-create-company-culture-where-people-love-to-work",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP143: How to Create Company Culture Where People Love to Work"
     },
     {
       "libsyn_episode_id": "6871588",
@@ -313,7 +465,11 @@
       "post_date": "2018-08-01",
       "title": "When Do You Need a Business Coach? | Inside Look at a Coaching Session",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP144: BONUS EPISODE: How Does a Business Coach Help You? with Bryan J"
     },
     {
       "libsyn_episode_id": "6882682",
@@ -321,7 +477,11 @@
       "post_date": "2018-08-02",
       "title": "When to Say No to New Opportunities | Keeping Your Thing The Main Thing",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710281-ep145-when-to-say-no-to-new-opportunities",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP145: When to Say No To New Opportunities"
     },
     {
       "libsyn_episode_id": "6912819",
@@ -329,7 +489,11 @@
       "post_date": "2018-08-13",
       "title": "How to Scale a Service Based Business Without Losing Quality | Evolution of the Technician is Critical",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710280-ep146-how-to-scale-a-service-based-business-without-losing-quality",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP146: How to Scale a Service Based Business Without Losing Quality"
     },
     {
       "libsyn_episode_id": "6936276",
@@ -337,7 +501,11 @@
       "post_date": "2018-08-16",
       "title": "Outsourcing Basics for Early Stage Entrepreneurs | You Don't Have to Wear All the Hats Forever",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710279-ep147-outsourcing-basics-for-early-stage-entrepreneurs-with-bryan-and-shannon-miles-co-ceo-s-and-founders-of-belay",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP147: Outsourcing Basics for Early Stage Entrepreneurs with Bryan and"
     },
     {
       "libsyn_episode_id": "6965645",
@@ -345,7 +513,11 @@
       "post_date": "2018-09-12",
       "title": "10 Tips to Overcome Setbacks in Life | Life Has Bigger Plans Than You Do",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP152: FemPreneur Series Part 2: Quitting Your Job to Start Your Own B"
     },
     {
       "libsyn_episode_id": "6975596",
@@ -353,7 +525,11 @@
       "post_date": "2018-09-12",
       "title": "My Top 5 Rules for Leadership in a Startup | The Concept of Balanced Leadership",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710244-ep182-the-new-rules-of-leadership-in-your-startup-with-kevin-kruse-new-york-times-best-selling-author-founder-of-leadx",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.75,
+      "bz_title": "EP182: The New Rules of Leadership in Your Startup with Kevin Kruse, N"
     },
     {
       "libsyn_episode_id": "6994623",
@@ -361,7 +537,11 @@
       "post_date": "2018-09-18",
       "title": "How to Avoid Mistakes Starting an ECommerce Business | Talking ECommerce with Ezra Firestone",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710369-ep56-starting-your-business",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP56: Starting Your Business"
     },
     {
       "libsyn_episode_id": "7007134",
@@ -369,7 +549,11 @@
       "post_date": "2018-09-18",
       "title": "Rewiring Your Brain for Total Transformation | The Benefits of Rapid Transformational Therapy",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710275-ep151-fempreneur-series-part-1-rewiring-your-brain-for-total-transformation-with-michele-molitor-executive-coach-and-career-growth-expert",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP151: FemPreneur Series Part 1: Rewiring Your Brain for Total Transfo"
     },
     {
       "libsyn_episode_id": "7030141",
@@ -377,7 +561,11 @@
       "post_date": "2018-09-18",
       "title": "Successfully Quitting Your Job to Start Your Own Business | And How to Make Money From Day 1",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710274-ep152-fempreneur-series-part-2-quitting-your-job-to-start-your-own-business-with-nicole-walters-sales-expert-and-income-strategist",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.83,
+      "bz_title": "EP152: FemPreneur Series Part 2: Quitting Your Job to Start Your Own B"
     },
     {
       "libsyn_episode_id": "7061102",
@@ -385,7 +573,11 @@
       "post_date": "2018-09-18",
       "title": "Is It Possible to Build a Retail Business Without Investment Dollars? | When Investors Don't Make Sense for Your Company",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.57,
+      "bz_title": "EP153: FemPreneur Series Part 3: Building a Successful Retail Business"
     },
     {
       "libsyn_episode_id": "7066752",
@@ -393,7 +585,11 @@
       "post_date": "2018-09-19",
       "title": "I'm Not Ready for Retirement, What Now? | The Path of the Modern Elder",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710272-ep154-bonus-episode-i-m-not-ready-for-retirement-what-now-with-chip-conley-author-and-strategic-advisor-at-airbnb",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP154: BONUS EPISODE: I'm Not Ready for Retirement, What Now? with Chi"
     },
     {
       "libsyn_episode_id": "7076389",
@@ -401,7 +597,11 @@
       "post_date": "2018-09-21",
       "title": "Breaking Down Traditional Publishing Versus Self Publishing a Book | The Pros and Cons of Writing a Book",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.57,
+      "bz_title": "EP155: FemPreneur Series Part 4: Publishing House Versus Self Publishi"
     },
     {
       "libsyn_episode_id": "7091522",
@@ -409,7 +609,11 @@
       "post_date": "2018-09-25",
       "title": "Taking a Calculated Leap of Faith | When Business Aspirations Defy Conventional Wisdom",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710270-ep156-fempreneur-series-part-5-taking-a-calculated-leap-of-faith-with-hilary-corna-six-figure-eos-implementer-bestselling-author-keynote-speaker",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP156: FemPreneur Series Part 5: Taking a Calculated Leap of Faith wit"
     },
     {
       "libsyn_episode_id": "7100641",
@@ -417,7 +621,11 @@
       "post_date": "2018-09-27",
       "title": "A Beginner's Guide on How to Use Video for Business | Companies Grow 48% Faster When Using Video",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710269-ep157-fempreneur-series-part-6-a-beginner-s-guide-on-how-to-use-video-for-business-with-keri-murphy-tv-host-speaker-and-ceo-of-inspired-living",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP157: FemPreneur Series Part 6: A Beginner's Guide on How to Use Vide"
     },
     {
       "libsyn_episode_id": "7121893",
@@ -425,7 +633,11 @@
       "post_date": "2018-10-02",
       "title": "Reshaping the Way Women in the Workplace are Treated and Viewed | The Excuse of Oblivion Has Come and Gone",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710268-ep158-fempreneur-series-part-7-reshaping-the-way-women-in-the-workplace-are-treated-and-viewed-with-barbary-brunner-former-microsoft-yahoo-exec-cmo-phunware",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP158: FemPreneur Series Part 7: Reshaping the Way Women in the Workpl"
     },
     {
       "libsyn_episode_id": "7126559",
@@ -433,7 +645,11 @@
       "post_date": "2018-10-04",
       "title": "When is it Smart to Raise Money for Startup Businesses? | How Failure Often Leads to Massive Success",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0.17,
+      "bz_title": "EP159: FemPreneur Series Part 8: Barbara Corcoran Drops By to Talk How"
     },
     {
       "libsyn_episode_id": "7148987",
@@ -441,7 +657,11 @@
       "post_date": "2018-10-09",
       "title": "What is the Key to Building Successful Online Membership Sites? | Take Advantage of Recurring Revenue Through the Power of Community",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710266-ep160-fempreneur-series-part-9-what-is-the-key-to-building-a-successful-online-membership-site-with-kim-garst-social-media-expert-and-ceo-of-kg-media",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.83,
+      "bz_title": "EP160: FemPreneur Series Part 9: What is the Key to Building a Success"
     },
     {
       "libsyn_episode_id": "7158009",
@@ -449,7 +669,11 @@
       "post_date": "2018-10-11",
       "title": "10 Quick Tips on How to Scale Your Business | What Got You Here Won't Get You There",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0.25,
+      "bz_title": "EP161: FemPreneur Series Part 10: The Science of Scaling Your Company "
     },
     {
       "libsyn_episode_id": "7206578",
@@ -457,7 +681,11 @@
       "post_date": "2018-10-16",
       "title": "What to Do When Failure is Not an Option as an Entrepreneur | When the Life You've Worked So Hard For Crumbles Around You",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710264-ep162-fempreneur-series-part-11-what-to-do-when-failure-is-not-an-option-with-kimberly-ann-jimenez-digital-marketing-strategist-and-founder-of-the-business-lounge",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.75,
+      "bz_title": "EP162: FemPreneur Series Part 11: What to Do When Failure is Not an Op"
     },
     {
       "libsyn_episode_id": "7237010",
@@ -465,7 +693,11 @@
       "post_date": "2018-10-18",
       "title": "The Business Advantage of Truly Being YOU | You're Always Second Best at Being Someone Else",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710263-ep163-fempreneur-series-part-12-the-business-advantage-of-truly-being-you-with-sally-hogshead-new-york-times-best-selling-author-hall-of-fame-speaker-and-ceo-of-how-to-fascinate",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP163: FemPreneur Series Part 12: The Business Advantage of Truly Bein"
     },
     {
       "libsyn_episode_id": "7292540",
@@ -473,7 +705,11 @@
       "post_date": "2018-10-23",
       "title": "How to Take Care of Your Health as an Entrepreneur | Ancient Wisdom and Natural Remedies",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710262-ep164-dr-josh-axe-and-jordan-rubin-drop-by-to-talk-how-to-take-care-of-your-health-as-an-entrepreneur",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP164: Dr Josh Axe and Jordan Rubin Drop By to Talk How to Take Care o"
     },
     {
       "libsyn_episode_id": "7319162",
@@ -481,7 +717,11 @@
       "post_date": "2018-10-25",
       "title": "My 3 Top Books to Read for Business in 2018 and Beyond | Reading is an Investment in Your Future",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710261-ep165-why-reading-matters-part-1-my-top-3-books-of-2018-and-beyond",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP165: Why Reading Matters Part 1: My Top 3 Books of 2018 and Beyond"
     },
     {
       "libsyn_episode_id": "7375895",
@@ -489,7 +729,11 @@
       "post_date": "2018-10-30",
       "title": "How Reading Transformed My Life | Reading Isn't a Time Sacrifice, It's an Investment",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710260-ep166-why-reading-matters-part-2-how-reading-has-transformed-my-life",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP166: Why Reading Matters Part 2: How Reading Has Transformed My Life"
     },
     {
       "libsyn_episode_id": "7505420",
@@ -497,7 +741,11 @@
       "post_date": "2018-11-09",
       "title": "A Billionaire's Advice to a Tech Company Founder | How to be Multi-Passionate as an Entrepreneur",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710259-ep167-a-billionaire-s-advice-to-a-tech-company-founder-with-jeff-hoffman-serial-entrepreneur-and-billionaire-founder-of-priceline-com",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP167: A Billionaire's Advice to a Tech Company Founder with Jeff Hoff"
     },
     {
       "libsyn_episode_id": "7551059",
@@ -505,7 +753,11 @@
       "post_date": "2018-11-20",
       "title": "How to Excel at Engaging Your Employees in a More Meaningful Way | Money is NOT the Primary Motivating Factor",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710258-ep168-engaging-your-employees-in-a-more-meaningful-way-with-isaac-tolpin-high-performance-culture-expert",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.83,
+      "bz_title": "EP168: Engaging Your Employees in a More Meaningful Way with Isaac Tol"
     },
     {
       "libsyn_episode_id": "7639421",
@@ -513,7 +765,11 @@
       "post_date": "2018-11-20",
       "title": "How to Sell Information Products on the Internet | Ryan Deiss of Digital Marketer Drops in to Share His Marketing Expertise",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP169: Ryan Deiss Drops By to Talk The Difference Between One-Off Cour"
     },
     {
       "libsyn_episode_id": "7711877",
@@ -521,7 +777,11 @@
       "post_date": "2018-11-27",
       "title": "Should You Join a Mastermind Group? | A Rising Tide Raises All Ships",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710256-ep170-should-you-join-a-mastermind-group-with-aaron-walker-professional-life-and-business-coach",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP170: Should You Join a Mastermind Group? with Aaron Walker, Professi"
     },
     {
       "libsyn_episode_id": "7817402",
@@ -529,7 +789,11 @@
       "post_date": "2018-12-05",
       "title": "How to Achieve Mental Breakthrough in Your Startup | Applying What's Worked to Other Aspects of Your Life",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710255-ep171-how-to-achieve-mental-breakthrough-in-your-startup-with-jon-acuff-new-york-times-best-selling-author-and-speaker",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP171: How to Achieve Mental Breakthrough in Your Startup with Jon Acu"
     },
     {
       "libsyn_episode_id": "7898660",
@@ -537,7 +801,11 @@
       "post_date": "2019-01-03",
       "title": "How to Validate Business Idea or Startup Concept | Customer Acquisition and Funding Methodologies",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710254-ep172-how-to-validate-business-idea-or-startup-concept-with-ryan-fyfe-entrepreneur-investor-blockchain-enthusiast",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP172: How to Validate Business Idea or Startup Concept with Ryan Fyfe"
     },
     {
       "libsyn_episode_id": "8197415",
@@ -545,7 +813,11 @@
       "post_date": "2019-01-09",
       "title": "Facebook and Instagram Marketing in 2019 (And Beyond) | Leveraging Social Media for Your Business",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710253-ep173-facebook-and-instagram-marketing-in-2019-and-beyond-with-traci-reuter-author-and-founder-of-divine-social",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP173: Facebook and Instagram Marketing in 2019 (And Beyond) with Trac"
     },
     {
       "libsyn_episode_id": "8386847",
@@ -553,7 +825,11 @@
       "post_date": "2019-01-24",
       "title": "How Can I Make a Difference in the World as an Entrepreneur? | Politics and Entrepreneurship",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710252-ep174-how-can-i-make-a-difference-in-the-world-as-an-entrepreneur-with-larry-sharpe-former-governor-of-new-york-candidate-vice-presidential-candidate-and-business-consultant",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP174: How Can I Make a Difference in the World as an Entrepreneur? wi"
     },
     {
       "libsyn_episode_id": "8450045",
@@ -561,7 +837,11 @@
       "post_date": "2019-01-29",
       "title": "When to Quit Your Day Job and Pursue Your Entrepreneurial Dreams | When Money Isn't Enough",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710251-ep175-marie-forleo-drops-by-to-talk-when-to-quit-your-day-job-and-pursue-your-entrepreneurial-dreams",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP175: Marie Forleo Drops By to Talk When to Quit Your Day Job and Pur"
     },
     {
       "libsyn_episode_id": "8551457",
@@ -569,7 +849,11 @@
       "post_date": "2019-02-06",
       "title": "Basic Biohacking Guide for Entrepreneurs | Dave Asprey's Hacking 411's",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP176: Dave Asprey of Bulletproof Drops By to Talk Biohacking Tips for"
     },
     {
       "libsyn_episode_id": "8725274",
@@ -577,7 +861,11 @@
       "post_date": "2019-02-20",
       "title": "Podcast Issues with Technology | How to Record an Amazing Remote Interview",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710249-ep177-dealing-with-podcast-issues-technology-w-rock-felder-and-zach-moreno-co-founders-of-squadcast",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP177: Dealing with Podcast Issues & Technology w/Rock Felder and Zach"
     },
     {
       "libsyn_episode_id": "8892488",
@@ -585,7 +873,11 @@
       "post_date": "2019-03-05",
       "title": "Ideas to Become a Veteran Entrepreneur and How to Make the Transition | Life After Service",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0.17,
+      "bz_title": "EP178: Pursuing a Life After Military Service with Vaughn Page, Actor "
     },
     {
       "libsyn_episode_id": "8921963",
@@ -593,7 +885,11 @@
       "post_date": "2019-03-07",
       "title": "How to Choose a Business Idea Using Data | Getting Customers to Tell You What They Want",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710247-ep179-how-to-choose-a-business-idea-using-customer-data-with-ryan-levesque",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP179: How to Choose a Business Idea Using Customer Data with Ryan Lev"
     },
     {
       "libsyn_episode_id": "9023717",
@@ -601,7 +897,11 @@
       "post_date": "2019-03-15",
       "title": "Pitching Investors and Life Advice with Guy Kawasaki | Why the Actual Pitch is Overrated",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710246-ep180-pitching-investors-and-life-advice-with-guy-kawasaki-former-chief-evangelist-at-apple-author-and-vc",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP180: Pitching Investors and Life Advice with Guy Kawasaki, Former Ch"
     },
     {
       "libsyn_episode_id": "9109832",
@@ -609,7 +909,11 @@
       "post_date": "2019-03-22",
       "title": "Is It Too Late to Make Money as an Entrepreneur? | How Grant Cardone Went From Rehab to $300 Million Net Worth",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.4,
+      "bz_title": "EP181: Grant Cardone Drops By to Talk Making Money as an Entrepreneur"
     },
     {
       "libsyn_episode_id": "9197015",
@@ -617,7 +921,11 @@
       "post_date": "2019-03-29",
       "title": "The New Leadership Rules in Your Startup | Why You're Currently Killing Your Culture",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710244-ep182-the-new-rules-of-leadership-in-your-startup-with-kevin-kruse-new-york-times-best-selling-author-founder-of-leadx",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP182: The New Rules of Leadership in Your Startup with Kevin Kruse, N"
     },
     {
       "libsyn_episode_id": "9259691",
@@ -625,7 +933,11 @@
       "post_date": "2019-04-03",
       "title": "Finding Alignment & Purpose as an Entrepreneur | Never Do Things Just for the Money",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710243-ep183-finding-alignment-purpose-as-an-entrepreneur-with-lilian-garcia-former-wwe-in-ring-commentator-award-winning-recording-artist",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP183: Finding Alignment & Purpose as an Entrepreneur with Lilian Garc"
     },
     {
       "libsyn_episode_id": "9376697",
@@ -633,7 +945,11 @@
       "post_date": "2019-04-12",
       "title": "Make Sales Online with Better Copy",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710242-ep184-make-sales-online-with-better-copy-with-ray-edwards-copywriting-guru-best-selling-author",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP184: Make Sales Online with Better Copy with Ray Edwards, Copywritin"
     },
     {
       "libsyn_episode_id": "9439517",
@@ -641,7 +957,11 @@
       "post_date": "2019-04-17",
       "title": "Supporting Women Entrepreneurs Through Community | You Don't Have to \"Fit Into a Man's World\"",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710241-ep185-supporting-women-entrepreneurs-through-community-with-amy-nelson-founder-ceo-of-the-riveter",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP185: Supporting Women Entrepreneurs Through Community with Amy Nelso"
     },
     {
       "libsyn_episode_id": "9536531",
@@ -649,7 +969,11 @@
       "post_date": "2019-04-25",
       "title": "What Will the World Look Like for Future Entrepreneurs? | A Peak Into The Mind of a Silicon Valley Thought Leader",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710240-ep186-what-will-the-world-look-like-for-future-entrepreneurs-with-adeo-ressi-founder-ceo-of-founder-institute",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP186: What Will the World Look Like for Future Entrepreneurs? with Ad"
     },
     {
       "libsyn_episode_id": "9737210",
@@ -657,7 +981,11 @@
       "post_date": "2019-05-10",
       "title": "Why Blogging is Still the Best Way to Organically Grow Your Business | Owning Your Traffic",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710239-ep187-why-blogging-is-still-the-best-way-to-organically-grow-your-business-with-jessica-camerata-founder-of-my-style-vita",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP187: Why Blogging is Still the Best Way to Organically Grow Your Bus"
     },
     {
       "libsyn_episode_id": "9915734",
@@ -665,7 +993,11 @@
       "post_date": "2019-05-31",
       "title": "How to Rewire Your Brain for Business and Personal Growth | How Rapid Transformation Therapy Works",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP56: Starting Your Business"
     },
     {
       "libsyn_episode_id": "9957323",
@@ -673,7 +1005,11 @@
       "post_date": "2019-07-03",
       "title": "Tips on Growing a Two-Sided Market Business or App | Marketing & Client Acquisition",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0.29,
+      "bz_title": "EP193: Growing Your eCommerce Business By Taking Affordable Steps with"
     },
     {
       "libsyn_episode_id": "10156169",
@@ -681,7 +1017,11 @@
       "post_date": "2019-07-10",
       "title": "Building Social Impact Startups | How a Police Altercation Led to Innovation",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP160: FemPreneur Series Part 9: What is the Key to Building a Success"
     },
     {
       "libsyn_episode_id": "10156169",
@@ -689,7 +1029,11 @@
       "post_date": "2019-07-18",
       "title": "A Literal Entrepreneur School as Alternative Education | Formal Education is Evolving Through Innovation",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0.2,
+      "bz_title": "EP194: Falling into Debt as an Early Entrepreneur and How to Get Out w"
     },
     {
       "libsyn_episode_id": "10332317",
@@ -697,7 +1041,11 @@
       "post_date": "2019-08-13",
       "title": "How to Generate More Revenue Even if You Feel Stuck | Growing Your Business",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710234-ep192-achieving-revenue-breakthrough-even-if-you-feel-stuck-with-john-mitchell-founder-of-think-it-be-it",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP192: Achieving Revenue Breakthrough Even if You Feel Stuck with John"
     },
     {
       "libsyn_episode_id": "10332317",
@@ -705,7 +1053,11 @@
       "post_date": "2019-08-23",
       "title": "How to Start (and Grow) an eCommerce Business | Taking Affordable Steps",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710133-ep293-grow-your-ecommerce-business-with-ann-sieg",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.75,
+      "bz_title": "EP293: Grow your Ecommerce Business with Ann Sieg"
     },
     {
       "libsyn_episode_id": "10560236",
@@ -713,7 +1065,11 @@
       "post_date": "2019-09-05",
       "title": "Managing Debt as a Business Owner | Avoid Falling Into the Debt Trap",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0.25,
+      "bz_title": "EP202: How to Manage Your Business During a Crisis with Jennifer Leigh"
     },
     {
       "libsyn_episode_id": "13232654",
@@ -721,7 +1077,11 @@
       "post_date": "2020-04-14",
       "title": "Do You Feel Stuck? Do This!",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710234-ep192-achieving-revenue-breakthrough-even-if-you-feel-stuck-with-john-mitchell-founder-of-think-it-be-it",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP192: Achieving Revenue Breakthrough Even if You Feel Stuck with John"
     },
     {
       "libsyn_episode_id": "13894112",
@@ -729,7 +1089,11 @@
       "post_date": "2020-06-29",
       "title": "Business Crisis Management Advice During Coronavirus (COVID-19)",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710182-ep244-business-crisis-management-during-coronavirus-with-bill-douglas-ceo-of-opticwise",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.71,
+      "bz_title": "EP244: Business Crisis Management During Coronavirus with Bill Douglas"
     },
     {
       "libsyn_episode_id": "14205965",
@@ -737,7 +1101,11 @@
       "post_date": "2020-07-24",
       "title": "Is Your Business Failing? Top Tips From Mike Michalowicz",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP230: How to be More Profitable in Your Business with Mike Michalowic"
     },
     {
       "libsyn_episode_id": "14501087",
@@ -745,7 +1113,11 @@
       "post_date": "2020-08-04",
       "title": "How To Get More Lead Generation | Tips From Jeff Gothelf",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP288: Lead Generation Hacks with the Eugene Schwartz UPSYD Model"
     },
     {
       "libsyn_episode_id": "14115821",
@@ -753,7 +1125,11 @@
       "post_date": "2020-08-04",
       "title": "Small Business Owners, STOP Worrying About COMPETITION!",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710175-ep251-stop-worrying-about-the-competition",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP251: STOP Worrying About The Competition"
     },
     {
       "libsyn_episode_id": "13618910",
@@ -761,7 +1137,11 @@
       "post_date": "2020-08-14",
       "title": "The Terrifying Impact of Stress on the Body with Dr. Jason McCloskey",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP276: How to PERFECT Your Sales Funnel with Data"
     },
     {
       "libsyn_episode_id": "15618338",
@@ -769,7 +1149,11 @@
       "post_date": "2020-08-17",
       "title": "Neurofeedback Therapy at Home with the Muse S",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP277: Can This Device Rewire Your Brain in Just 4 Days?"
     },
     {
       "libsyn_episode_id": "14533529",
@@ -777,7 +1161,11 @@
       "post_date": "2020-08-17",
       "title": "Major Takeaways From The One Thing By Gary Keller",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710163-ep263-the-one-thing-by-gary-keller-major-takeaways",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP263: The One Thing: By Gary Keller - Major Takeaways"
     },
     {
       "libsyn_episode_id": "14581034",
@@ -785,7 +1173,11 @@
       "post_date": "2020-08-18",
       "title": "How to Create Powerful Habits That Will Change Your Life",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP91: The Small Tweak That Will Change Your Life and Business with Pia"
     },
     {
       "libsyn_episode_id": "14667428",
@@ -793,7 +1185,11 @@
       "post_date": "2020-08-18",
       "title": "Getting Top Talent For Your Business",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP 349: The Top 3 Reasons You're Not Getting More Clients and Customer"
     },
     {
       "libsyn_episode_id": "15482441",
@@ -801,7 +1197,11 @@
       "post_date": "2020-08-28",
       "title": "Supporting Black-Owned Business + Free Thinking with Sterling Brown",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710152-ep274-supporting-black-owned-business-free-thinking",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP274: Supporting Black-Owned Business + Free Thinking"
     },
     {
       "libsyn_episode_id": "15507536",
@@ -809,7 +1209,11 @@
       "post_date": "2020-08-28",
       "title": "How to Keep Your Holistic Health Routines While Traveling",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP280: Get Things Done ON TIME! with Clint Padgett"
     },
     {
       "libsyn_episode_id": "15403214",
@@ -817,7 +1221,11 @@
       "post_date": "2020-09-01",
       "title": "How to Read Faster And More Consistently",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710153-ep273-how-to-read-consistently-faster",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP273: How to Read Consistently + FASTER"
     },
     {
       "libsyn_episode_id": "15691739",
@@ -825,7 +1233,11 @@
       "post_date": "2020-09-02",
       "title": "How to WIN at Any Negotiation",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP29: Win the Day"
     },
     {
       "libsyn_episode_id": "15681974",
@@ -833,7 +1245,11 @@
       "post_date": "2020-09-03",
       "title": "Strategic Planning Hacks With Sean Castrina",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710148-ep278-strategic-planning-hacks-with-sean-castrina-entrepreneur-author-speaker",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP278: Strategic Planning Hacks with Sean Castrina, Entrepreneur/Autho"
     },
     {
       "libsyn_episode_id": "15794504",
@@ -841,7 +1257,11 @@
       "post_date": "2020-09-04",
       "title": "How To Get Projects Done On Time With Clint Padgett",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710146-ep280-get-things-done-on-time-with-clint-padgett",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.83,
+      "bz_title": "EP280: Get Things Done ON TIME! with Clint Padgett"
     },
     {
       "libsyn_episode_id": "15794540",
@@ -849,7 +1269,11 @@
       "post_date": "2020-09-05",
       "title": "Best Microphone For Podcasting?",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710145-ep281-best-mic-for-podcasting-shure-sm7b-vs-rode-nt",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP281: Best Mic for Podcasting? Shure SM7B vs Rode NT"
     },
     {
       "libsyn_episode_id": "15601649",
@@ -857,7 +1281,11 @@
       "post_date": "2020-09-07",
       "title": "Marketing Analytics & Sales Growth with Dr. Denise Gosnell",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP282: The Problem with Cancel Culture w/Will Witt of PragerU"
     },
     {
       "libsyn_episode_id": "15302393",
@@ -865,7 +1293,11 @@
       "post_date": "2020-09-08",
       "title": "Navigating A Career Pivot With Shelley Paxton",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.4,
+      "bz_title": "EP272: Leaving Your Job? Listen to THIS First with Shelley Paxton, Aut"
     },
     {
       "libsyn_episode_id": "16143212",
@@ -873,7 +1305,11 @@
       "post_date": "2020-09-24",
       "title": "The 12 Week Year Advice with Brian Moran",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710141-ep285-how-to-crush-productivity-with-the-12-week-year-plan-w-brian-moran",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.8,
+      "bz_title": "EP285: How to CRUSH Productivity with The 12 Week Year Plan w/Brian Mo"
     },
     {
       "libsyn_episode_id": "15948971",
@@ -881,7 +1317,11 @@
       "post_date": "2020-09-28",
       "title": "The Problem with Cancel Culture with Will Witt",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710144-ep282-the-problem-with-cancel-culture-w-will-witt-of-prageru",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP282: The Problem with Cancel Culture w/Will Witt of PragerU"
     },
     {
       "libsyn_episode_id": "16038773",
@@ -889,7 +1329,11 @@
       "post_date": "2020-09-28",
       "title": "Insert Video in Email with BombBomb w/Ethan Beute",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710143-ep283-does-embedding-video-in-email-improve-conversions-with-ethan-beute-evangelist-at-bombbomb",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.83,
+      "bz_title": "EP283: Does Embedding Video in Email Improve Conversions? with Ethan B"
     },
     {
       "libsyn_episode_id": "16252361",
@@ -897,7 +1341,11 @@
       "post_date": "2020-09-30",
       "title": "Making Podcasting, Youtube, and Content Creation FUN with Javier Mercedes",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710140-ep286-making-podcasting-youtube-and-content-creation-fun-w-javier-mercedes",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP286: Making Podcasting, YouTube, and Content Creation FUN w/Javier M"
     },
     {
       "libsyn_episode_id": "16299974",
@@ -905,7 +1353,11 @@
       "post_date": "2020-10-07",
       "title": "Lead Generation Hacks with the Eugene Schwartz UPSYD Model",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710138-ep288-lead-generation-hacks-with-the-eugene-schwartz-upsyd-model",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP288: Lead Generation Hacks with the Eugene Schwartz UPSYD Model"
     },
     {
       "libsyn_episode_id": "16329401",
@@ -913,7 +1365,11 @@
       "post_date": "2020-10-08",
       "title": "Content Repurposing Strategies with Shaina Weisinger",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710136-ep290-content-repurposing-strategies-with-shaina-weisinger",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP290: Content Repurposing Strategies with Shaina Weisinger"
     },
     {
       "libsyn_episode_id": "16348457",
@@ -921,7 +1377,11 @@
       "post_date": "2020-10-13",
       "title": "Emotional Intelligence and LEADERSHIP with Mike Robbins",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710135-ep291-emotional-intelligence-and-leadership-in-team-sports-with-mike-robbins",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP291: Emotional Intelligence and LEADERSHIP in Team Sports with Mike "
     },
     {
       "libsyn_episode_id": "16290164",
@@ -929,7 +1389,11 @@
       "post_date": "2020-10-15",
       "title": "The Different Types of Sales Funnels",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710137-ep289-different-sales-funnels-to-help-grow-your-online-business",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.75,
+      "bz_title": "EP289: Different Sales Funnels to Help GROW your Online Business"
     },
     {
       "libsyn_episode_id": "16054382",
@@ -937,7 +1401,11 @@
       "post_date": "2020-10-20",
       "title": "Shure SM58 Review",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710142-ep284-reviewing-the-shure-sm58-for-podcasting",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP284: Reviewing The Shure SM58 for Podcasting"
     },
     {
       "libsyn_episode_id": "16413062",
@@ -945,7 +1413,11 @@
       "post_date": "2020-10-23",
       "title": "How to Build an Email List FAST",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710134-ep292-3-ways-to-grow-your-email-list-fast",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.75,
+      "bz_title": "EP292: 3 Ways to Grow Your Email List FAST!!!"
     },
     {
       "libsyn_episode_id": "5054053",
@@ -953,7 +1425,11 @@
       "post_date": "2020-10-30",
       "title": "The Principles You MUST Have in Business",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "EP 330: How to Have LONG-TERM Success with Your Business w/Nick Tarasc"
     },
     {
       "libsyn_episode_id": null,
@@ -961,7 +1437,11 @@
       "post_date": "2020-11-02",
       "title": "How to Start a Podcast?",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "title+date",
+      "match_confidence": "review",
+      "title_sim": 0.5,
+      "bz_title": "Turn One Podcast Recording Into a Full Content Ecosystem (My AI Repurp"
     },
     {
       "libsyn_episode_id": null,
@@ -969,7 +1449,11 @@
       "post_date": "2021-04-09",
       "title": "How To Start A Podcast With Libsyn",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": null,
+      "match_method": "fuzzy",
+      "match_confidence": "low",
+      "title_sim": 0,
+      "bz_title": "EP 312: Rapid Revenue Growth for Your Business w/ Amira Alvarez"
     },
     {
       "libsyn_episode_id": null,
@@ -977,7 +1461,11 @@
       "post_date": "2022-01-07",
       "title": "Upload Your Podcast to Apple",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710117-ep-309-podcast-vs-youtube-advice-from-a-top-100-podcast-host-on-apple-podcasts-w-chris-van-vliet",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.67,
+      "bz_title": "EP 309: Podcast vs. YouTube Advice from a TOP 100 Podcast Host on Appl"
     },
     {
       "libsyn_episode_id": "24242031",
@@ -985,7 +1473,11 @@
       "post_date": "2022-09-23",
       "title": "Top 3 Reasons You Aren't Getting More Clients and Customers",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710076-ep-349-the-top-3-reasons-you-re-not-getting-more-clients-and-customers",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP 349: The Top 3 Reasons You're Not Getting More Clients and Customer"
     },
     {
       "libsyn_episode_id": "24399951",
@@ -993,7 +1485,11 @@
       "post_date": "2022-09-23",
       "title": "3 Marketing Strategies you MUST be doing in 2022",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710074-ep-350-3-marketing-strategies-you-must-do-in-2022",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "EP 350: 3 Marketing Strategies You MUST Do in 2022"
     },
     {
       "libsyn_episode_id": "38383775",
@@ -1001,7 +1497,11 @@
       "post_date": "2025-09-28",
       "title": "Navigating the Social Media Recession: Why Instagram Feels Like It's Dying and What to Do About It",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710072-are-we-in-a-social-media-recession-and-what-it-means-for-your-business",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 0.6,
+      "bz_title": " Are We In a Social Media Recession?  And what it means for your busin"
     },
     {
       "libsyn_episode_id": "38396270",
@@ -1009,7 +1509,11 @@
       "post_date": "2025-09-29",
       "title": "Part 2: Are We In a Social Media Recession?",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710071-part-2-are-we-in-a-social-media-recession-w-kim-jimenez",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "Part 2: Are We In a Social Media Recession? w/Kim Jimenez"
     },
     {
       "libsyn_episode_id": "38380135",
@@ -1017,7 +1521,11 @@
       "post_date": "2025-09-30",
       "title": "Why I'm Raising the Alarm on AI: Concerns, Containment, and What It Means for Your Business",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710070-why-i-m-raising-the-alarm-on-ai-concerns-containment-and-what-it-means-for-your-business",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "Why I'm Raising the Alarm on AI: Concerns, Containment, and What It Me"
     },
     {
       "libsyn_episode_id": "38424665",
@@ -1025,7 +1533,11 @@
       "post_date": "2025-10-01",
       "title": "Why You're Screwing Yourself by Ignoring Ads (And How to Fix It Without Going Bro-Mode)",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710069-why-you-re-screwing-yourself-by-ignoring-ads-and-how-to-fix-it-without-going-bro-mode",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "Why You're Screwing Yourself by Ignoring Ads (And How to Fix It Withou"
     },
     {
       "libsyn_episode_id": "38440065",
@@ -1033,7 +1545,14 @@
       "post_date": "2025-10-02",
       "title": "Do Webinars Still Work in 2025? Yes, No, Maybe So – Let's Get Real",
       "buzzsprout_episode": null,
-      "buzzsprout_url": null
+      "buzzsprout_url": "https://www.buzzsprout.com/2597359/episodes/18710068-do-webinars-still-work-in-2025-yes-no-maybe-so-let-s-get-real",
+      "match_method": "title+date",
+      "match_confidence": "high",
+      "title_sim": 1,
+      "bz_title": "Do Webinars Still Work in 2025? Yes, No, Maybe So – Let's Get Real"
     }
-  ]
+  ],
+  "matched_high": 99,
+  "matched_medium": 0,
+  "low_confidence": 13
 }
