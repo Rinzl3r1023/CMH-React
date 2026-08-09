@@ -1,0 +1,1039 @@
+{
+  "note": "Every published post carrying a libsyn embed. libsyn is dead (cancelled); match each to a Buzzsprout episode by TITLE + post_date (libsyn and Buzzsprout ids are unrelated), then the migration swaps the player. buzzsprout_episode / buzzsprout_url to be filled from the Buzzsprout feed.",
+  "posts_with_libsyn": 129,
+  "distinct_libsyn_ids": 123,
+  "posts": [
+    {
+      "libsyn_episode_id": "5487559",
+      "slug": "ep106",
+      "post_date": "2017-06-27",
+      "title": "Finding Your Authentic Self and Why It Matters | Emotional Fitness is Vastly Underrated",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5527756",
+      "slug": "ep107",
+      "post_date": "2017-07-11",
+      "title": "Can Boomers Still Launch A Successful Business? | Entrepreneurship Extends Beyond Millennials",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5588421",
+      "slug": "ep108",
+      "post_date": "2017-07-28",
+      "title": "Creating a New Niche to Compete with the Titans of Your Industry | Never Get Discouraged by Big Name Competition",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5791396",
+      "slug": "ep109",
+      "post_date": "2017-09-29",
+      "title": "Launching a Virtual Summit From Scratch | Your Cause is More Important than the Size of Your List",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5827667",
+      "slug": "ep110",
+      "post_date": "2017-10-10",
+      "title": "From Bankrupt to Sexy Boss | Are You Further Clouding Your Confusion or Strengthening Your Clarity?",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5949076",
+      "slug": "ep111",
+      "post_date": "2017-11-15",
+      "title": "Asking Your Way to the Top | Why The Ask Method is Your In-House Market Research Department",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5988568",
+      "slug": "ep112",
+      "post_date": "2017-11-28",
+      "title": "Creating Generational Wealth | The Paradigm Shift About Finance That Will Change Your Life",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6022759",
+      "slug": "ep113",
+      "post_date": "2017-12-07",
+      "title": "Breaking the Mold in Hollywood | How Technology and a Modern Approach Allowed a 28 Year Old to Make it Big",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6128512",
+      "slug": "ep114",
+      "post_date": "2018-01-08",
+      "title": "Living What You Preach | Be a Motivator, Not Just a Motivational Speaker",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6181416",
+      "slug": "ep115",
+      "post_date": "2018-01-23",
+      "title": "New Year's Resolutions - Part 1: How to Get Your Life Organized | Not Being Organized is Impacting Your Professional Successes and Your Personal Well-Being",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6189494",
+      "slug": "ep116",
+      "post_date": "2018-01-25",
+      "title": "Is Network Marketing Right For You? | Assessing Opportunities with the Right Perspective",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6232651",
+      "slug": "ep117",
+      "post_date": "2018-02-06",
+      "title": "New Year's Resolutions - Part 2: Make Reading a Habit | Why it is Essential to Continue Learning Along Your Journey",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6260118",
+      "slug": "ep118",
+      "post_date": "2018-02-14",
+      "title": "Empowering Employees to Generate the Results You Desire | The Organization is Always More Than One Person",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6268931",
+      "slug": "ep119",
+      "post_date": "2018-02-16",
+      "title": "New Year's Resolutions - Part 3: Travel More | Why Taking Quick Vacations is Imperative to an Early Stage Entrepreneur",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6286198",
+      "slug": "ep120",
+      "post_date": "2018-02-21",
+      "title": "Changing the Game in Your Industry | Bucking Traditional Avenues via Technology and Content Creation",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6319226",
+      "slug": "is-there-a-best-place-to-build-a-startup",
+      "post_date": "2018-03-01",
+      "title": "Is There a Best Place to Build a Startup? | Slowing Down to Finalize Your Idea Before Running to Market",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6340155",
+      "slug": "how-to-start-a-podcast",
+      "post_date": "2018-03-07",
+      "title": "How to Start a Podcast Business | How to Leverage the Podcasting Platform and Create Monetizing Opportunities",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6392079",
+      "slug": "how-to-set-goals-in-your-life",
+      "post_date": "2018-03-21",
+      "title": "New Year's Resolutions - Part 4: Stop Making Resolutions! | How to Set Goals in Your Life",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6415608",
+      "slug": "management-systems-and-processes",
+      "post_date": "2018-03-27",
+      "title": "Why You Need a Management Systems and Processes Mindset to Grow Your Company | Growth is More Than Just Revenue",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6442380",
+      "slug": "spend-more-time-with-family-and-friends",
+      "post_date": "2018-04-03",
+      "title": "New Year's Resolutions - Part 5: Spend More Time With Family and Friends | Why You Need Your Support System",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6498149",
+      "slug": "become-a-best-selling-author",
+      "post_date": "2018-04-18",
+      "title": "Become a Best Selling Author Without Actually Writing a Book | Establish Yourself as an Influencer in Your Space",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6502097",
+      "slug": "where-should-i-focus-on-my-business",
+      "post_date": "2018-04-19",
+      "title": "Where Should I Focus On My Business? | Growing a Business Successfully is About Framework",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6517167",
+      "slug": "food-truck-business",
+      "post_date": "2018-04-24",
+      "title": "From a Single Food Truck Business to a Multi-Million Dollar Franchise | How Two Cousins Launched a Lobster Dynasty",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6554482",
+      "slug": "entrepreneur-hobbies",
+      "post_date": "2018-05-03",
+      "title": "New Year's Resolutions - Part 6: You Can't Lose Sight of Your Entrepreneur Hobbies | The Benefit to Disengaging and Coming Back with Fresh Perspective",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6572194",
+      "slug": "how-to-raise-money",
+      "post_date": "2018-05-18",
+      "title": "How to Raise Money and Compete with Major Corporations | Leaving a Comfy Job at Google to Cause Disruption",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6554482",
+      "slug": "live-an-amazing-life",
+      "post_date": "2018-05-18",
+      "title": "New Year's Resolutions - Part 7: How to Save More Money, Spend Less and Live an Amazing Life | Planning to Succeed in Your Personal Life",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6597688",
+      "slug": "reclaim-your-health-naturally",
+      "post_date": "2018-05-23",
+      "title": "How to Reclaim Your Health Naturally | Why Pharmaceutical Drugs Aren't Always the Answer",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6627958",
+      "slug": "entrepreneur-burnout",
+      "post_date": "2018-05-28",
+      "title": "Recover From Entrepreneur Burnout | The Man Who Helped Me Get My Life Back",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6673420",
+      "slug": "lucid-dreaming",
+      "post_date": "2018-06-06",
+      "title": "Is Lucid Dreaming an Entrepreneur Hack? | Dream Manipulation and Subliminal Truths About Life",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6684211",
+      "slug": "live-a-healthy-life",
+      "post_date": "2018-06-08",
+      "title": "New Year's Resolutions - Part 8: Lose Weight and Live a Healthy Life | Health, Happiness and Vitality",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6698756",
+      "slug": "learn-how-to-be-more-creative",
+      "post_date": "2018-06-12",
+      "title": "Can You Learn How to Be More Creative? | Continuing The Left Brain, Right Brain Debate",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6714848",
+      "slug": "seo-is-still-at-the-core-of-your-marketing-efforts",
+      "post_date": "2018-06-18",
+      "title": "Why SEO is Still at the Core of Your Marketing Efforts | Adopting a More Holistic Approach to Marketing",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6724143",
+      "slug": "meditation-and-float-therapy-benefits",
+      "post_date": "2018-06-27",
+      "title": "Meditation and Float Therapy Benefits | Being Intentional About Clarity and Lowering Stress Levels",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6739682",
+      "slug": "being-entrepreneurial-in-a-9-to-5",
+      "post_date": "2018-07-02",
+      "title": "Being Entrepreneurial in a 9 to 5 | Viewing Opportunities as Chances to Grow",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6796627",
+      "slug": "how-to-focus",
+      "post_date": "2018-07-12",
+      "title": "How to Focus on What Matters In Your Business | Building One Bridge at a Time",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6814298",
+      "slug": "going-after-your-dreams-in-life",
+      "post_date": "2018-07-17",
+      "title": "Going After Your Dreams in Life | Sacrificing On Your Ambitions is More Costly Than You May Think",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6831687",
+      "slug": "how-to-get-your-small-business-to-compete-with-bigger-companies-today",
+      "post_date": "2018-07-20",
+      "title": "How to Get Your Small Business to Compete With Bigger Companies Today | Leveraging Authority Marketing Strategies",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6843946",
+      "slug": "how-to-create-company-culture",
+      "post_date": "2018-07-23",
+      "title": "How to Create Company Culture Where People Love to Work | Employees are People, Not Numbers",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6871588",
+      "slug": "when-do-you-need-a-business-coach",
+      "post_date": "2018-08-01",
+      "title": "When Do You Need a Business Coach? | Inside Look at a Coaching Session",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6882682",
+      "slug": "when-to-say-no-to-new-opportunities",
+      "post_date": "2018-08-02",
+      "title": "When to Say No to New Opportunities | Keeping Your Thing The Main Thing",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6912819",
+      "slug": "how-to-scale-a-service-based-business",
+      "post_date": "2018-08-13",
+      "title": "How to Scale a Service Based Business Without Losing Quality | Evolution of the Technician is Critical",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6936276",
+      "slug": "outsourcing",
+      "post_date": "2018-08-16",
+      "title": "Outsourcing Basics for Early Stage Entrepreneurs | You Don't Have to Wear All the Hats Forever",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6965645",
+      "slug": "overcome-setbacks",
+      "post_date": "2018-09-12",
+      "title": "10 Tips to Overcome Setbacks in Life | Life Has Bigger Plans Than You Do",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6975596",
+      "slug": "leadership",
+      "post_date": "2018-09-12",
+      "title": "My Top 5 Rules for Leadership in a Startup | The Concept of Balanced Leadership",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "6994623",
+      "slug": "starting-an-ecommerce-business",
+      "post_date": "2018-09-18",
+      "title": "How to Avoid Mistakes Starting an ECommerce Business | Talking ECommerce with Ezra Firestone",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7007134",
+      "slug": "rewiring-your-brain-for-total-transformation",
+      "post_date": "2018-09-18",
+      "title": "Rewiring Your Brain for Total Transformation | The Benefits of Rapid Transformational Therapy",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7030141",
+      "slug": "quitting-your-job",
+      "post_date": "2018-09-18",
+      "title": "Successfully Quitting Your Job to Start Your Own Business | And How to Make Money From Day 1",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7061102",
+      "slug": "retail-business",
+      "post_date": "2018-09-18",
+      "title": "Is It Possible to Build a Retail Business Without Investment Dollars? | When Investors Don't Make Sense for Your Company",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7066752",
+      "slug": "retirement",
+      "post_date": "2018-09-19",
+      "title": "I'm Not Ready for Retirement, What Now? | The Path of the Modern Elder",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7076389",
+      "slug": "self-publishing",
+      "post_date": "2018-09-21",
+      "title": "Breaking Down Traditional Publishing Versus Self Publishing a Book | The Pros and Cons of Writing a Book",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7091522",
+      "slug": "leap-of-faith",
+      "post_date": "2018-09-25",
+      "title": "Taking a Calculated Leap of Faith | When Business Aspirations Defy Conventional Wisdom",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7100641",
+      "slug": "video-for-business",
+      "post_date": "2018-09-27",
+      "title": "A Beginner's Guide on How to Use Video for Business | Companies Grow 48% Faster When Using Video",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7121893",
+      "slug": "women-in-the-workplace",
+      "post_date": "2018-10-02",
+      "title": "Reshaping the Way Women in the Workplace are Treated and Viewed | The Excuse of Oblivion Has Come and Gone",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7126559",
+      "slug": "raise-money-for-startup",
+      "post_date": "2018-10-04",
+      "title": "When is it Smart to Raise Money for Startup Businesses? | How Failure Often Leads to Massive Success",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7148987",
+      "slug": "online-membership-sites",
+      "post_date": "2018-10-09",
+      "title": "What is the Key to Building Successful Online Membership Sites? | Take Advantage of Recurring Revenue Through the Power of Community",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7158009",
+      "slug": "how-to-scale-your-business",
+      "post_date": "2018-10-11",
+      "title": "10 Quick Tips on How to Scale Your Business | What Got You Here Won't Get You There",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7206578",
+      "slug": "failure-is-not-an-option",
+      "post_date": "2018-10-16",
+      "title": "What to Do When Failure is Not an Option as an Entrepreneur | When the Life You've Worked So Hard For Crumbles Around You",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7237010",
+      "slug": "business-advantage",
+      "post_date": "2018-10-18",
+      "title": "The Business Advantage of Truly Being YOU | You're Always Second Best at Being Someone Else",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7292540",
+      "slug": "take-care-of-your-health",
+      "post_date": "2018-10-23",
+      "title": "How to Take Care of Your Health as an Entrepreneur | Ancient Wisdom and Natural Remedies",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7319162",
+      "slug": "top-books-to-read",
+      "post_date": "2018-10-25",
+      "title": "My 3 Top Books to Read for Business in 2018 and Beyond | Reading is an Investment in Your Future",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7375895",
+      "slug": "reading-transformed-my-life",
+      "post_date": "2018-10-30",
+      "title": "How Reading Transformed My Life | Reading Isn't a Time Sacrifice, It's an Investment",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7505420",
+      "slug": "tech-company",
+      "post_date": "2018-11-09",
+      "title": "A Billionaire's Advice to a Tech Company Founder | How to be Multi-Passionate as an Entrepreneur",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7551059",
+      "slug": "engaging-your-employees",
+      "post_date": "2018-11-20",
+      "title": "How to Excel at Engaging Your Employees in a More Meaningful Way | Money is NOT the Primary Motivating Factor",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7639421",
+      "slug": "information-products",
+      "post_date": "2018-11-20",
+      "title": "How to Sell Information Products on the Internet | Ryan Deiss of Digital Marketer Drops in to Share His Marketing Expertise",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7711877",
+      "slug": "join-a-mastermind-group",
+      "post_date": "2018-11-27",
+      "title": "Should You Join a Mastermind Group? | A Rising Tide Raises All Ships",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7817402",
+      "slug": "mental-breakthrough",
+      "post_date": "2018-12-05",
+      "title": "How to Achieve Mental Breakthrough in Your Startup | Applying What's Worked to Other Aspects of Your Life",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "7898660",
+      "slug": "validate-business-idea",
+      "post_date": "2019-01-03",
+      "title": "How to Validate Business Idea or Startup Concept | Customer Acquisition and Funding Methodologies",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8197415",
+      "slug": "facebook-and-instagram-marketing",
+      "post_date": "2019-01-09",
+      "title": "Facebook and Instagram Marketing in 2019 (And Beyond) | Leveraging Social Media for Your Business",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8386847",
+      "slug": "how-can-i-make-a-difference-in-the-world",
+      "post_date": "2019-01-24",
+      "title": "How Can I Make a Difference in the World as an Entrepreneur? | Politics and Entrepreneurship",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8450045",
+      "slug": "quit-your-day-job",
+      "post_date": "2019-01-29",
+      "title": "When to Quit Your Day Job and Pursue Your Entrepreneurial Dreams | When Money Isn't Enough",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8551457",
+      "slug": "biohacking-guide-for-entrepreneurs",
+      "post_date": "2019-02-06",
+      "title": "Basic Biohacking Guide for Entrepreneurs | Dave Asprey's Hacking 411's",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8725274",
+      "slug": "podcast-issues",
+      "post_date": "2019-02-20",
+      "title": "Podcast Issues with Technology | How to Record an Amazing Remote Interview",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8892488",
+      "slug": "veteran-entrepreneur",
+      "post_date": "2019-03-05",
+      "title": "Ideas to Become a Veteran Entrepreneur and How to Make the Transition | Life After Service",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "8921963",
+      "slug": "choose-a-business",
+      "post_date": "2019-03-07",
+      "title": "How to Choose a Business Idea Using Data | Getting Customers to Tell You What They Want",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9023717",
+      "slug": "pitching-investors",
+      "post_date": "2019-03-15",
+      "title": "Pitching Investors and Life Advice with Guy Kawasaki | Why the Actual Pitch is Overrated",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9109832",
+      "slug": "make-money-as-an-entrepreneur",
+      "post_date": "2019-03-22",
+      "title": "Is It Too Late to Make Money as an Entrepreneur? | How Grant Cardone Went From Rehab to $300 Million Net Worth",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9197015",
+      "slug": "leadership-rules",
+      "post_date": "2019-03-29",
+      "title": "The New Leadership Rules in Your Startup | Why You're Currently Killing Your Culture",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9259691",
+      "slug": "purpose",
+      "post_date": "2019-04-03",
+      "title": "Finding Alignment & Purpose as an Entrepreneur | Never Do Things Just for the Money",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9376697",
+      "slug": "make-sales-online",
+      "post_date": "2019-04-12",
+      "title": "Make Sales Online with Better Copy",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9439517",
+      "slug": "women-entrepreneurs",
+      "post_date": "2019-04-17",
+      "title": "Supporting Women Entrepreneurs Through Community | You Don't Have to \"Fit Into a Man's World\"",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9536531",
+      "slug": "future-entrepreneurs",
+      "post_date": "2019-04-25",
+      "title": "What Will the World Look Like for Future Entrepreneurs? | A Peak Into The Mind of a Silicon Valley Thought Leader",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9737210",
+      "slug": "blogging",
+      "post_date": "2019-05-10",
+      "title": "Why Blogging is Still the Best Way to Organically Grow Your Business | Owning Your Traffic",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9915734",
+      "slug": "rewire-your-brain",
+      "post_date": "2019-05-31",
+      "title": "How to Rewire Your Brain for Business and Personal Growth | How Rapid Transformation Therapy Works",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "9957323",
+      "slug": "two-sided-market",
+      "post_date": "2019-07-03",
+      "title": "Tips on Growing a Two-Sided Market Business or App | Marketing & Client Acquisition",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "10156169",
+      "slug": "social-impact-startups",
+      "post_date": "2019-07-10",
+      "title": "Building Social Impact Startups | How a Police Altercation Led to Innovation",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "10156169",
+      "slug": "entrepreneur-school",
+      "post_date": "2019-07-18",
+      "title": "A Literal Entrepreneur School as Alternative Education | Formal Education is Evolving Through Innovation",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "10332317",
+      "slug": "generate-more-revenue",
+      "post_date": "2019-08-13",
+      "title": "How to Generate More Revenue Even if You Feel Stuck | Growing Your Business",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "10332317",
+      "slug": "ecommerce-business",
+      "post_date": "2019-08-23",
+      "title": "How to Start (and Grow) an eCommerce Business | Taking Affordable Steps",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "10560236",
+      "slug": "debt",
+      "post_date": "2019-09-05",
+      "title": "Managing Debt as a Business Owner | Avoid Falling Into the Debt Trap",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "13232654",
+      "slug": "do-you-feel-stuck",
+      "post_date": "2020-04-14",
+      "title": "Do You Feel Stuck? Do This!",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "13894112",
+      "slug": "covid19-business-crisis-management-advice",
+      "post_date": "2020-06-29",
+      "title": "Business Crisis Management Advice During Coronavirus (COVID-19)",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "14205965",
+      "slug": "top-business-tips-mike-michalowicz",
+      "post_date": "2020-07-24",
+      "title": "Is Your Business Failing? Top Tips From Mike Michalowicz",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "14501087",
+      "slug": "lead-generation",
+      "post_date": "2020-08-04",
+      "title": "How To Get More Lead Generation | Tips From Jeff Gothelf",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "14115821",
+      "slug": "stop-worrying-about-competition",
+      "post_date": "2020-08-04",
+      "title": "Small Business Owners, STOP Worrying About COMPETITION!",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "13618910",
+      "slug": "impact-of-stress",
+      "post_date": "2020-08-14",
+      "title": "The Terrifying Impact of Stress on the Body with Dr. Jason McCloskey",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15618338",
+      "slug": "neurofeedback-therapy-muse",
+      "post_date": "2020-08-17",
+      "title": "Neurofeedback Therapy at Home with the Muse S",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "14533529",
+      "slug": "one-thing-gary-keller",
+      "post_date": "2020-08-17",
+      "title": "Major Takeaways From The One Thing By Gary Keller",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "14581034",
+      "slug": "create-powerful-habits-mark-green",
+      "post_date": "2020-08-18",
+      "title": "How to Create Powerful Habits That Will Change Your Life",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "14667428",
+      "slug": "top-talent-for-your-business",
+      "post_date": "2020-08-18",
+      "title": "Getting Top Talent For Your Business",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15482441",
+      "slug": "supporting-black-owned-business-free-thinking",
+      "post_date": "2020-08-28",
+      "title": "Supporting Black-Owned Business + Free Thinking with Sterling Brown",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15507536",
+      "slug": "keep-your-holistic-health-routines-while-traveling",
+      "post_date": "2020-08-28",
+      "title": "How to Keep Your Holistic Health Routines While Traveling",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15403214",
+      "slug": "read-faster-and-more-consistently",
+      "post_date": "2020-09-01",
+      "title": "How to Read Faster And More Consistently",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15691739",
+      "slug": "win-at-any-negotiation",
+      "post_date": "2020-09-02",
+      "title": "How to WIN at Any Negotiation",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15681974",
+      "slug": "strategic-planning-hacks",
+      "post_date": "2020-09-03",
+      "title": "Strategic Planning Hacks With Sean Castrina",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15794504",
+      "slug": "projects-done-on-time",
+      "post_date": "2020-09-04",
+      "title": "How To Get Projects Done On Time With Clint Padgett",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15794540",
+      "slug": "best-microphone-for-podcasting",
+      "post_date": "2020-09-05",
+      "title": "Best Microphone For Podcasting?",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15601649",
+      "slug": "sales-growth",
+      "post_date": "2020-09-07",
+      "title": "Marketing Analytics & Sales Growth with Dr. Denise Gosnell",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15302393",
+      "slug": "navigating-a-career-pivot",
+      "post_date": "2020-09-08",
+      "title": "Navigating A Career Pivot With Shelley Paxton",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16143212",
+      "slug": "the-12-week-year-advice",
+      "post_date": "2020-09-24",
+      "title": "The 12 Week Year Advice with Brian Moran",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "15948971",
+      "slug": "cancel-culture-problems",
+      "post_date": "2020-09-28",
+      "title": "The Problem with Cancel Culture with Will Witt",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16038773",
+      "slug": "insert-video-in-email-with-bombbomb",
+      "post_date": "2020-09-28",
+      "title": "Insert Video in Email with BombBomb w/Ethan Beute",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16252361",
+      "slug": "making-podcasting-youtube-and-content-creation-fun",
+      "post_date": "2020-09-30",
+      "title": "Making Podcasting, Youtube, and Content Creation FUN with Javier Mercedes",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16299974",
+      "slug": "lead-generation-hacks",
+      "post_date": "2020-10-07",
+      "title": "Lead Generation Hacks with the Eugene Schwartz UPSYD Model",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16329401",
+      "slug": "content-repurposing-strategies",
+      "post_date": "2020-10-08",
+      "title": "Content Repurposing Strategies with Shaina Weisinger",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16348457",
+      "slug": "emotional-intelligence-and-leadership",
+      "post_date": "2020-10-13",
+      "title": "Emotional Intelligence and LEADERSHIP with Mike Robbins",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16290164",
+      "slug": "sales-funnels",
+      "post_date": "2020-10-15",
+      "title": "The Different Types of Sales Funnels",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16054382",
+      "slug": "shure-sm58-review",
+      "post_date": "2020-10-20",
+      "title": "Shure SM58 Review",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "16413062",
+      "slug": "build-an-email-list-fast",
+      "post_date": "2020-10-23",
+      "title": "How to Build an Email List FAST",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "5054053",
+      "slug": "principles-you-must-have-in-business",
+      "post_date": "2020-10-30",
+      "title": "The Principles You MUST Have in Business",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": null,
+      "slug": "how-to-start-a-podcast-2",
+      "post_date": "2020-11-02",
+      "title": "How to Start a Podcast?",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": null,
+      "slug": "how-to-start-a-podcast-with-libsyn",
+      "post_date": "2021-04-09",
+      "title": "How To Start A Podcast With Libsyn",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": null,
+      "slug": "upload-your-podcast-to-apple",
+      "post_date": "2022-01-07",
+      "title": "Upload Your Podcast to Apple",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "24242031",
+      "slug": "top-3-reasons-you-arent-getting-more-clients-and-customers",
+      "post_date": "2022-09-23",
+      "title": "Top 3 Reasons You Aren't Getting More Clients and Customers",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "24399951",
+      "slug": "3-marketing-strategies-you-must-be-doing-in-2022",
+      "post_date": "2022-09-23",
+      "title": "3 Marketing Strategies you MUST be doing in 2022",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "38383775",
+      "slug": "navigating-the-social-media-recession",
+      "post_date": "2025-09-28",
+      "title": "Navigating the Social Media Recession: Why Instagram Feels Like It's Dying and What to Do About It",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "38396270",
+      "slug": "social-media-recession-part-2",
+      "post_date": "2025-09-29",
+      "title": "Part 2: Are We In a Social Media Recession?",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "38380135",
+      "slug": "how-to-adapt-to-ai-in-business",
+      "post_date": "2025-09-30",
+      "title": "Why I'm Raising the Alarm on AI: Concerns, Containment, and What It Means for Your Business",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "38424665",
+      "slug": "why-youre-screwing-yourself-by-ignoring-ads",
+      "post_date": "2025-10-01",
+      "title": "Why You're Screwing Yourself by Ignoring Ads (And How to Fix It Without Going Bro-Mode)",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    },
+    {
+      "libsyn_episode_id": "38440065",
+      "slug": "do-webinars-still-work",
+      "post_date": "2025-10-02",
+      "title": "Do Webinars Still Work in 2025? Yes, No, Maybe So – Let's Get Real",
+      "buzzsprout_episode": null,
+      "buzzsprout_url": null
+    }
+  ]
+}
