@@ -35,4 +35,7 @@ yarn-error.log*
 /public/post-covers
 # generated at build by scripts/gen-site-images.mjs (derived from /public/images sources)
 /public/images/gen
-content/posts/**/cover.png
+# NOTE: content/posts/**/cover.png is now COMMITTED. The Index covers (Direction B)
+# are rendered with headless Chromium (scripts/gen-covers.mjs, `npm run gen:covers`),
+# which the build host has no browser for — so they ship as committed assets and
+# sync-covers reads them at build. Re-run gen:covers locally when a post is added.
