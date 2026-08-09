@@ -69,6 +69,7 @@ export async function generateMetadata({
   if (!post) return {};
   return pageMetadata({
     title: post.title,
+    seoTitle: post.seoTitle,
     description: post.excerpt,
     path: `/${post.slug}`,
     type: 'article',

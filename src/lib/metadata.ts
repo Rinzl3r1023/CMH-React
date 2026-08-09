@@ -3,6 +3,9 @@ import { SITE_NAME, SITE_URL, OG_IMAGE_PATH, absoluteUrl, canonicalUrl } from '.
 
 type PageMetaInput = {
   title: string;
+  /** Overrides the <title> tag only (og/twitter keep `title`/`ogTitle`). Used to
+   *  preserve a post's original indexed SEO title while the h1 uses a clean one. */
+  seoTitle?: string;
   description: string;
   /** Route path for this page, e.g. "/about". Used for canonical + og:url. */
   path: string;
@@ -31,7 +34,8 @@ export function pageMetadata(input: PageMetaInput): Metadata {
   const image = absoluteUrl(input.image || OG_IMAGE_PATH);
   return {
     metadataBase: new URL(SITE_URL),
-    title: input.title,
+    // <title> tag: the original SEO title when present (parity), else the title.
+    title: input.seoTitle || input.title,
     description: input.description,
     alternates: { canonical: url },
     // String form emits exactly <meta name="robots" content="noindex">.

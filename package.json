@@ -5,22 +5,25 @@
   "description": "Chris Michael Harris — WordPress to React migration",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/sync-covers.mjs && node scripts/gen-site-images.mjs",
+    "prebuild": "node scripts/gen-covers.mjs && node scripts/sync-covers.mjs && node scripts/gen-site-images.mjs",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "sync:covers": "node scripts/sync-covers.mjs",
     "migrate:images": "node scripts/migrate-images.mjs",
     "postbuild": "node scripts/validate-schema.mjs",
-    "validate:schema": "node scripts/validate-schema.mjs"
+    "validate:schema": "node scripts/validate-schema.mjs",
+    "gen:covers": "node scripts/gen-covers.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.0",
+    "@resvg/resvg-js": "^2.6.2",
     "gray-matter": "^4.0.3",
     "next": "16.2.12",
     "next-mdx-remote": "^5.0.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "satori": "^0.29.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

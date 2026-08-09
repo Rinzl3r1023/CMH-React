@@ -35,3 +35,4 @@ yarn-error.log*
 /public/post-covers
 # generated at build by scripts/gen-site-images.mjs (derived from /public/images sources)
 /public/images/gen
+content/posts/**/cover.png

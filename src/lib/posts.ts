@@ -16,6 +16,10 @@ export type FaqItem = { q?: string; a?: string };
 export type PostMeta = {
   slug: string;
   title: string;
+  /** Full original WP SEO title (with the `| subtitle`), used for the <title>
+   *  tag only — preserves the indexed title while the h1/card use the clean
+   *  primary `title`. Undefined when the title had no `| subtitle`. */
+  seoTitle?: string;
   date: string; // ISO yyyy-mm-dd — used for sorting/display
   /** Full ISO 8601 publish date from the WP export, for schema. NEVER file mtime (§5). */
   datePublished: string;
@@ -114,6 +118,7 @@ function toMeta(slug: string, data: Record<string, unknown>, covers: Record<stri
   return {
     slug: fmSlug,
     title: String(data.title ?? slug),
+    seoTitle: data.seoTitle ? String(data.seoTitle) : undefined,
     date,
     datePublished,
     dateModified,
