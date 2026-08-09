@@ -14,6 +14,9 @@ type PageMetaInput = {
   image?: string;
   /** "website" (default) or "article" for posts. */
   type?: 'website' | 'article';
+  /** When true, emit <meta name="robots" content="noindex">. Pair with excluding
+   *  the page from sitemap.xml (see sitemap.ts). */
+  noindex?: boolean;
 };
 
 // Builds a complete, correct Metadata object for a page. This is the single
@@ -31,6 +34,8 @@ export function pageMetadata(input: PageMetaInput): Metadata {
     title: input.title,
     description: input.description,
     alternates: { canonical: url },
+    // String form emits exactly <meta name="robots" content="noindex">.
+    ...(input.noindex ? { robots: 'noindex' } : {}),
     openGraph: {
       title: input.ogTitle || input.title,
       description: input.ogDescription || input.description,

@@ -35,6 +35,10 @@ export type PostMeta = {
   cta: 'full' | 'dispatch-only';
   /** True for migration placeholders that still need real body content (Phase 2). */
   placeholder: boolean;
+  /** `noindex: true` in frontmatter -> emits <meta name="robots" content="noindex">
+   *  AND excludes the post from sitemap.xml (a noindexed URL in the sitemap is a
+   *  mixed signal). Defaults to false = indexed. */
+  noindex: boolean;
 };
 
 export type Post = PostMeta & {
@@ -122,6 +126,7 @@ function toMeta(slug: string, data: Record<string, unknown>, covers: Record<stri
     articleSection,
     cta: data.cta === 'dispatch-only' ? 'dispatch-only' : 'full',
     placeholder: Boolean(data.placeholder),
+    noindex: Boolean(data.noindex),
   };
 }
 
