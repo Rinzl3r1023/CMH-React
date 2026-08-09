@@ -72,6 +72,19 @@ function cleanBody(md) {
   md = delinkLinks(md, new RegExp(String.raw`(?:www\.)?chrismichaelharris\.com\/(?:${DEAD404.join('|')})\b`, 'i'), 'xpost-404-delink');
   md = delinkLinks(md, new RegExp(String.raw`(?:www\.)?chrismichaelharris\.com\/(?:${ACTIVE.join('|')}|consultation)\b`, 'i'), 'affiliate-delink');
   md = delinkLinks(md, /(?:www\.)?chrismichaelharris\.com/i, 'residual-cmh-delink');
+  // Cross-brand samcart referrals the kimberlyannjimenez.com rule missed (different
+  // host): "The Business Lounge" is a live product -> repoint to its real URL;
+  // any other samcart product is retired cross-brand -> de-link (keep text).
+  md = md.replace(/\[([^\]]*Business Lounge[^\]]*)\]\(https?:\/\/[^)]*samcart\.com[^)]*\)/gi, (m, t) => (bump('samcart-lounge-repoint'), `[${t}](https://thebusinesslounge.co/)`));
+  md = md.replace(/\[([^\]]*)\]\(https?:\/\/[^)]*samcart\.com[^)]*\)/gi, (m, t) => (bump('samcart-delink'), t));
+  // "Today's Sponsor:" chrome pointing at a retired/vanity cmh path — as a linked OR
+  // plain-text bare URL, with or without scheme (the https-anchored rules can't see
+  // these). The whole sponsor line is stale once the funnel's gone -> drop it.
+  md = md.replace(/^\**\s*Today.s Sponsor:.*[Cc]hrismichaelharris\.com\/[A-Za-z0-9_-]+.*$/gim, () => (bump('sponsor-vanity'), ''));
+  // retired "VIP Room" outro line (bare vanity URL) -> drop
+  md = md.replace(/^\*?\s*To learn more about The VIP Room[^\n]*$/gim, () => (bump('vip-outro'), ''));
+  // scheme-less cmh markdown links (http omitted, so residual-cmh missed them) -> de-link
+  md = md.replace(/\[([^\]]*)\]\((?!https?:\/\/)(?:www\.)?[Cc]hrismichaelharris\.com[^)]*\)/g, (m, t) => (bump('scheme-less-cmh-delink'), t));
   // Older episode posts carry subscribe/social boilerplate as RELATIVE cmh vanity
   // shortlinks (/spotify, /thevip, /lounge…) — the domain was stripped, so the
   // residual-cmh rule above misses them and they 404 on the new site. De-link them
