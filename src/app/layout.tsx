@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     template: `%s`,
   },
   applicationName: SITE_NAME,
+  // RSS autodiscovery — aggregators find /feed/ from any page (§SEO).
+  alternates: { types: { 'application/rss+xml': `${SITE_URL}/feed/` } },
 };
 
 // Fonts are self-hosted from /public/fonts — the exact static instances

@@ -15,6 +15,7 @@ import DispatchInline from '@/components/DispatchInline';
 import CallCTA from '@/components/CallCTA';
 import KeyTakeaways from '@/components/KeyTakeaways';
 import FaqBlock from '@/components/FaqBlock';
+import RelatedPosts from '@/components/RelatedPosts';
 
 // Split the body so the mid-article Dispatch lands after the 3rd section (or
 // ~50% down for shorter posts). Splits only on top-level h2s outside code fences.
@@ -177,6 +178,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </div>
 
         <FaqBlock items={post.faq} />
+        <RelatedPosts slug={post.slug} />
         {post.cta === 'full' && <CallCTA />}
       </article>
 
