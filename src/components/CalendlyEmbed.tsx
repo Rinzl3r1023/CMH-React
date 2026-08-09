@@ -65,13 +65,14 @@ function loadCalendly(): Promise<void> {
 function brandedUrl(base: string): string {
   try {
     const u = new URL(base);
+    // Exact param set from Calendly's builder (Chris-confirmed).
+    u.searchParams.set('background_color', '06060A');
+    u.searchParams.set('text_color', 'ffffff');
+    u.searchParams.set('primary_color', 'e8a33d');
     u.searchParams.set('hide_gdpr_banner', '1');
     // The modal header already says "Book a Strategy Call" — drop Calendly's own
     // event-details block so the calendar starts at the top of the panel.
     u.searchParams.set('hide_event_type_details', '1');
-    u.searchParams.set('background_color', '06060A');
-    u.searchParams.set('text_color', 'EDEAE4');
-    u.searchParams.set('primary_color', 'E8A33D');
     return u.toString();
   } catch {
     return base;
