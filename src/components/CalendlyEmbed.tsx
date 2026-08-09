@@ -66,7 +66,7 @@ function brandedUrl(base: string): string {
   try {
     const u = new URL(base);
     // Exact param set from Calendly's builder (Chris-confirmed).
-    u.searchParams.set('background_color', '06060A');
+    u.searchParams.set('background_color', '0d0b10');
     u.searchParams.set('text_color', 'ffffff');
     u.searchParams.set('primary_color', 'e8a33d');
     u.searchParams.set('hide_gdpr_banner', '1');

@@ -6,7 +6,7 @@
   width: 100%;
   /* Match Calendly's dark background so any space below a content-sized iframe is
      seamless rather than a gap. */
-  background: #06060a;
+  background: #0d0b10;
 }
 
 /* Our own scroll container. When the iframe auto-resizes past the panel, THIS
@@ -52,7 +52,7 @@
   gap: 14px;
   padding: 32px;
   text-align: center;
-  background: #06060a;
+  background: #0d0b10;
   color: #a8a199;
   font-family: 'Manrope', sans-serif;
   font-size: 14.5px;
