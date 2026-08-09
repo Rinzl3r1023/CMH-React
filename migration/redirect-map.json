@@ -35,6 +35,11 @@
     "statusCode": 301
   },
   {
+    "source": "/contact",
+    "destination": "/#work-with-me",
+    "statusCode": 301
+  },
+  {
     "source": "/privacy-policy-slf",
     "destination": "/privacy/",
     "statusCode": 301
@@ -161,11 +166,6 @@
   },
   {
     "source": "/confirmation",
-    "destination": "/",
-    "statusCode": 301
-  },
-  {
-    "source": "/contact",
     "destination": "/",
     "statusCode": 301
   },

@@ -1,0 +1,125 @@
+<style>
+.legalDoc { position:relative; z-index:2; max-width:760px; margin:0 auto; padding:72px clamp(20px,5vw,44px) 40px; }
+.legalDoc .eyebrow { display:inline-flex; align-items:center; gap:11px; font-family:'Manrope',sans-serif; font-weight:600; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#F0A93C; margin:0 0 26px; }
+.legalDoc .eyebrow span { width:7px; height:7px; background:#F0A93C; box-shadow:0 0 14px 3px rgba(240,169,60,.9); }
+.legalDoc h1 { font-family:'Fraunces',serif; font-weight:300; font-size:clamp(38px,6vw,58px); line-height:1.03; letter-spacing:-.03em; margin:0 0 16px; }
+.legalDoc .updated { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; color:#8A8378; margin:0 0 8px; }
+.legalDoc .lede { font-size:18px; line-height:1.62; color:#C7C1B8; margin:20px 0 8px; }
+.legalDoc h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(22px,3.2vw,27px); line-height:1.2; letter-spacing:-.02em; color:#FFD79A; margin:52px 0 14px; }
+.legalDoc p { font-size:16.5px; line-height:1.68; color:#A8A199; margin:0 0 16px; }
+.legalDoc ul { margin:0 0 16px; padding-left:22px; }
+.legalDoc li { font-size:16.5px; line-height:1.6; color:#A8A199; margin:0 0 9px; }
+.legalDoc strong { color:#EDEAE4; font-weight:600; }
+.legalDoc a { color:#F0A93C; }
+.legalDoc a:hover { color:#FFD79A; }
+.legalDoc .divider { height:1px; background:rgba(240,169,60,.14); margin:48px 0 8px; }
+.legalDoc .callout { border:1px solid rgba(240,169,60,.28); background:rgba(240,169,60,.05); padding:22px 24px; margin:24px 0; }
+.legalDoc .callout p:last-child { margin-bottom:0; }
+</style>
+
+  <nav style="position:sticky; top:0; z-index:50; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(18px,4vw,44px);">
+      <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4; min-width:0;">
+        <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
+        <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:clamp(11px,1.4vw,13px); letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Chris Michael Harris</span>
+      </a>
+      <div class="navLinks">
+        <a href="/" class="navlink" style="color:#9C958A;">Home</a>
+        <a href="/about/" class="navlink" style="color:#9C958A;">About</a>
+        <a href="/#work-with-me" class="navlink" style="color:#9C958A;">Work With Me</a>
+        <a href="/blog/" class="navlink" style="color:#9C958A;">The Show</a>
+        <a href="/dispatch/" class="navlink" style="color:#9C958A;">The Dispatch</a>
+        <a href="#capture" data-book-call="" class="edge navlink" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 30-min strategy call</a>
+      </div>
+      <button type="button" class="navToggle" data-nav-toggle="" aria-label="Toggle navigation" aria-expanded="false" style="align-items:center; justify-content:center; gap:7px; flex-direction:column; width:44px; height:44px; background:transparent; border:1px solid rgba(240,169,60,.4); cursor:pointer; padding:0;">
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+      </button>
+    </div>
+    <div class="mobileMenu" data-mobile-menu="" style="flex-direction:column; gap:2px; padding:8px clamp(18px,4vw,44px) 20px; border-top:1px solid rgba(240,169,60,.14);">
+      <a href="/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">Home</a>
+      <a href="/about/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">About</a>
+      <a href="/#work-with-me" class="navlink" data-nav-close="" style="padding:14px 0; font-size:13px; color:#A8A199;">Work With Me</a>
+      <a href="/blog/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Show</a>
+      <a href="/dispatch/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Dispatch</a>
+      <a href="#capture" data-book-call="" data-nav-close="" class="btn" style="margin-top:10px; display:inline-flex; align-items:center; justify-content:center; padding:16px 20px; background:#F0A93C; color:#06060A;">Book a 30-min call</a>
+    </div>
+  </nav>
+
+  <main class="legalDoc">
+    <p class="eyebrow"><span></span>Privacy</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: August 9, 2026</p>
+    <p class="lede">This explains what information this site collects, why, and the handful of services that touch it. Plain language, no surprises — I collect as little as I can and I don’t sell it.</p>
+    <div class="divider"></div>
+      <h2>Who this is</h2>
+      <p>This site, <strong>chrismichaelharris.com</strong>, is run by Chris Michael Harris (“I,” “me,” “my”). It publishes free content — the podcast, videos, and written posts — and offers a weekly email called The Dispatch. Using the site means you’re okay with what’s described here.</p>
+      <h2>What I collect</h2>
+      <p>Only what you hand over or what a visit necessarily generates:</p>
+      <ul>
+        <li><strong>Your email address</strong> — and your name, if you give it — when you subscribe to The Dispatch.</li>
+        <li><strong>What you send when you book a call</strong> — name, email, and anything you type into the scheduling form.</li>
+        <li><strong>Basic technical data</strong> every site sees: IP address, browser and device type, and which pages you viewed. This comes from the server logs of the host, not from tracking you around the web.</li>
+      </ul>
+      <h2>How I use it</h2>
+      <p>To send you The Dispatch if you asked for it, to reply to you, to schedule and hold calls, and to keep the site working and secure. That’s the whole list. I don’t sell or rent your information, and I don’t share it except with the service providers below who help run the site.</p>
+      <h2>The services that touch your data</h2>
+      <p>A few trusted tools handle specific jobs. Each only gets what it needs, and each has its own privacy policy:</p>
+      <ul>
+        <li><strong>Kit</strong> — stores your email address and sends The Dispatch.</li>
+        <li><strong>Calendly</strong> — handles call scheduling and the details you enter to book.</li>
+        <li><strong>Railway</strong> — hosts the site and keeps the standard server logs above.</li>
+        <li><strong>YouTube</strong> — videos are embedded from YouTube; playing one lets YouTube set its own cookies.</li>
+        <li><strong>Buzzsprout</strong> — hosts and serves the podcast audio; playing an episode lets Buzzsprout set its own cookies.</li>
+      </ul>
+      <h2>Cookies, embeds, and tracking</h2>
+      <p>The site itself doesn’t run advertising trackers or retargeting pixels, and it doesn’t follow you across other websites. The only cookies that get set are functional ones and the ones the embedded players above (YouTube, Buzzsprout) create when you actually press play. You can block or clear cookies in your browser settings; the site still works if you do.</p>
+      <p>The site honors <strong>Do Not Track</strong> — there’s no cross-site tracking here to switch off in the first place.</p>
+      <h2>Keeping it, and keeping it safe</h2>
+      <p>I keep your information for as long as it’s useful for the reason you gave it — your Dispatch subscription lasts until you unsubscribe, for instance. I use reasonable, commercially standard measures to protect it, but no method of sending or storing data online is ever 100% secure, so I can’t promise absolute security.</p>
+      <h2>Your choices</h2>
+      <p>You can unsubscribe from The Dispatch at any time using the link at the bottom of every email, and that stops the emails immediately. Want to know what I hold about you, or want it deleted? Just ask — see <a href="#contact">Contact</a> below.</p>
+      <h2>Visitors outside the United States</h2>
+      <p>The site is operated from the United States, and the services above process data there. If you’re visiting from elsewhere, your information is transferred to and handled in the U.S. Using the site and giving me your information means you’re okay with that transfer.</p>
+      <h2>Links to other sites</h2>
+      <p>Some pages link out to sites I don’t control. Their privacy practices are their own — it’s worth reading the policy of any site you head to from here.</p>
+      <h2>Children</h2>
+      <p>This site is meant for adults and isn’t directed at anyone under 13. I don’t knowingly collect information from children under 13. If you believe a child has given me information, contact me and I’ll remove it.</p>
+      <h2>Changes to this policy</h2>
+      <p>If the tools or practices change, I’ll update this page and move the “Last updated” date. Continuing to use the site after a change means you accept the updated policy.</p>
+      <h2>Contact</h2>
+      <p id="contact">Questions about your privacy, or want your data changed or removed? Reply to any email I send you, or reach out through the contact options on the site, and I’ll take care of it.</p>
+  </main>
+
+  <footer style="position:relative; padding:64px 44px 48px; border-top:1px solid rgba(240,169,60,.16);">
+    <div style="max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:44px; flex-wrap:wrap;">
+      <div style="max-width:340px;">
+        <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:11px;">CMH</span>
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#EDEAE4;">Chris Michael Harris</span>
+        </div>
+        <p style="font-size:14.5px; line-height:1.65; margin:0; color:#8A8378;">I keep up with AI and marketing, so you don't have to. For business owners who'd rather move forward than chase every new thing.</p>
+      </div>
+      <div style="display:flex; gap:70px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Explore</span>
+          <a href="/" style="font-size:14.5px; color:#A8A199;">Home</a>
+          <a href="/about/" style="font-size:14.5px; color:#A8A199;">About</a>
+          <a href="/#work-with-me" style="font-size:14.5px; color:#A8A199;">Work With Me</a>
+          <a href="/blog/" style="font-size:14.5px; color:#A8A199;">The Show</a>
+          <a href="/dispatch/" style="font-size:14.5px; color:#A8A199;">The Dispatch</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Elsewhere</span>
+          <a href="https://www.youtube.com/@HeyCMH" style="font-size:14.5px; color:#A8A199;">YouTube</a>
+          <a href="https://thebusinesslounge.co/" style="font-size:14.5px; color:#A8A199;">The Business Lounge</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Legal</span>
+          <a href="/privacy/" style="font-size:14.5px; color:#A8A199;">Privacy</a>
+          <a href="/terms/" style="font-size:14.5px; color:#A8A199;">Terms</a>
+        </div>
+      </div>
+    <div style="max-width:1180px; margin:48px auto 0; padding-top:26px; border-top:1px solid rgba(240,169,60,.12); font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; color:#8A8378; letter-spacing:.04em;">© 2026 Chris Michael Harris — keeping an eye on what's next.</div>
+  </footer>
