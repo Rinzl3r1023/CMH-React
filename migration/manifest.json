@@ -1,0 +1,2107 @@
+{
+  "generated_from": "chrismichaelharris-marketingcoach.WordPress.2026-08-08.xml",
+  "note": "published posts only (trash + drafts excluded). category is a best-guess from title/slug — Chris corrects. post_date is load-bearing: publish dates come from THIS field, never file mtime.",
+  "count": 210,
+  "posts": [
+    {
+      "title": "The Biggest AI Mistake Business Owners Are Making (And What to Do Instead)",
+      "slug": "3-layer-ai-architecture",
+      "url": "https://chrismichaelharris.com/3-layer-ai-architecture/",
+      "post_date": "2026-06-05 11:06:10",
+      "word_count": 1690,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "AI Lead Follow-Up: How I Research and Reply in Minutes",
+      "slug": "ai-lead-follow-up",
+      "url": "https://chrismichaelharris.com/ai-lead-follow-up/",
+      "post_date": "2026-04-03 09:29:46",
+      "word_count": 1708,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Repurpose Content With AI (Without Sounding Like AI)",
+      "slug": "repurpose-content-with-ai",
+      "url": "https://chrismichaelharris.com/repurpose-content-with-ai/",
+      "post_date": "2026-03-28 10:03:00",
+      "word_count": 1775,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Build a Website With Claude: 4 Sites in 2 Hours, No Code",
+      "slug": "build-a-website-with-claude",
+      "url": "https://chrismichaelharris.com/build-a-website-with-claude/",
+      "post_date": "2026-03-19 12:11:00",
+      "word_count": 1597,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "AI Client Management System: Never Forget a Client Again",
+      "slug": "ai-client-management-system",
+      "url": "https://chrismichaelharris.com/ai-client-management-system/",
+      "post_date": "2026-03-13 10:15:00",
+      "word_count": 1573,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Connect Claude to ClickUp With MCP Access (and Run Your Whole Business)",
+      "slug": "connect-claude-to-clickup",
+      "url": "https://chrismichaelharris.com/connect-claude-to-clickup/",
+      "post_date": "2026-03-07 08:01:00",
+      "word_count": 1862,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Annual Planning With Claude: How I Built Our Entire 2026 Plan",
+      "slug": "annual-planning-with-claude",
+      "url": "https://chrismichaelharris.com/annual-planning-with-claude/",
+      "post_date": "2026-02-28 07:21:00",
+      "word_count": 2067,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Build an Executive Coach With Claude AI (My Full Build)",
+      "slug": "claude-ai-executive-coach",
+      "url": "https://chrismichaelharris.com/claude-ai-executive-coach/",
+      "post_date": "2026-02-19 08:14:00",
+      "word_count": 1786,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "The Future of AI for Business Owners: 6 Eras Ahead",
+      "slug": "future-of-ai-for-business-owners",
+      "url": "https://chrismichaelharris.com/future-of-ai-for-business-owners/",
+      "post_date": "2025-11-13 10:15:00",
+      "word_count": 1792,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "ChatGPT Ads: The Next Big Advertising Opportunity?",
+      "slug": "chatgpt-ads",
+      "url": "https://chrismichaelharris.com/chatgpt-ads/",
+      "post_date": "2025-10-23 10:57:00",
+      "word_count": 1475,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Create Content That Converts to Sales (Not Just Likes)",
+      "slug": "content-that-converts-to-sales",
+      "url": "https://chrismichaelharris.com/content-that-converts-to-sales/",
+      "post_date": "2025-10-14 11:27:00",
+      "word_count": 1448,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Know, Like, and Trust: Your Edge in the AI Era",
+      "slug": "know-like-and-trust",
+      "url": "https://chrismichaelharris.com/know-like-and-trust/",
+      "post_date": "2025-10-08 08:49:00",
+      "word_count": 1677,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Why You're Screwing Yourself by Ignoring Ads (And How to Fix It Without Going Bro-Mode)",
+      "slug": "why-youre-screwing-yourself-by-ignoring-ads",
+      "url": "https://chrismichaelharris.com/why-youre-screwing-yourself-by-ignoring-ads/",
+      "post_date": "2025-10-01 10:55:49",
+      "word_count": 1118,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Why I'm Raising the Alarm on AI: Concerns, Containment, and What It Means for Your Business",
+      "slug": "how-to-adapt-to-ai-in-business",
+      "url": "https://chrismichaelharris.com/how-to-adapt-to-ai-in-business/",
+      "post_date": "2025-09-30 15:38:08",
+      "word_count": 1079,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Part 2: Are We In a Social Media Recession?",
+      "slug": "social-media-recession-part-2",
+      "url": "https://chrismichaelharris.com/social-media-recession-part-2/",
+      "post_date": "2025-09-29 13:51:02",
+      "word_count": 1436,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Navigating the Social Media Recession: Why Instagram Feels Like It's Dying and What to Do About It",
+      "slug": "navigating-the-social-media-recession",
+      "url": "https://chrismichaelharris.com/navigating-the-social-media-recession/",
+      "post_date": "2025-09-28 15:07:08",
+      "word_count": 1224,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Is SEO Dead? What to do if you still have a blog",
+      "slug": "seo-dead",
+      "url": "https://chrismichaelharris.com/seo-dead/",
+      "post_date": "2025-09-25 16:29:17",
+      "word_count": 1199,
+      "markup_era": "Gutenberg",
+      "embed": "none",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Use vidIQ for Months of YouTube Content Ideas",
+      "slug": "vidiq-content-ideas",
+      "url": "https://chrismichaelharris.com/vidiq-content-ideas/",
+      "post_date": "2025-06-30 07:30:00",
+      "word_count": 1451,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "The OPA Method: How to Grow Using Other People's Audiences",
+      "slug": "opa-method",
+      "url": "https://chrismichaelharris.com/opa-method/",
+      "post_date": "2025-06-26 09:09:00",
+      "word_count": 1585,
+      "markup_era": "Gutenberg",
+      "embed": "none",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Test Facebook Ads Without Wasting Your Budget",
+      "slug": "how-to-test-facebook-ads",
+      "url": "https://chrismichaelharris.com/how-to-test-facebook-ads/",
+      "post_date": "2025-04-01 11:12:00",
+      "word_count": 1656,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "",
+      "slug": "email-follow-up-automation",
+      "url": "https://chrismichaelharris.com/email-follow-up-automation/",
+      "post_date": "2022-10-22 10:13:00",
+      "word_count": 1968,
+      "markup_era": "Gutenberg",
+      "embed": "none",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "3 Marketing Strategies you MUST be doing in 2022",
+      "slug": "3-marketing-strategies-you-must-be-doing-in-2022",
+      "url": "https://chrismichaelharris.com/3-marketing-strategies-you-must-be-doing-in-2022/",
+      "post_date": "2022-09-23 08:00:00",
+      "word_count": 1031,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Upload Your Podcast to Apple",
+      "slug": "upload-your-podcast-to-apple",
+      "url": "https://chrismichaelharris.com/upload-your-podcast-to-apple/",
+      "post_date": "2022-01-07 02:57:28",
+      "word_count": 368,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "META will change Marketing Forever! Metaverse Explained",
+      "slug": "metaverse-explained",
+      "url": "https://chrismichaelharris.com/metaverse-explained/",
+      "post_date": "2021-12-13 09:48:12",
+      "word_count": 856,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How To Schedule Instagram Posts | Later Tutorial",
+      "slug": "how-to-schedule-instagram-posts-later-tutorial",
+      "url": "https://chrismichaelharris.com/how-to-schedule-instagram-posts-later-tutorial/",
+      "post_date": "2021-11-05 06:47:27",
+      "word_count": 658,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Facebook Ads Strategy 2021",
+      "slug": "facebook-ads-strategy-2021",
+      "url": "https://chrismichaelharris.com/facebook-ads-strategy-2021/",
+      "post_date": "2021-11-04 09:35:51",
+      "word_count": 589,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Generate More Web Traffic?",
+      "slug": "how-to-generate-more-web-traffic-today",
+      "url": "https://chrismichaelharris.com/how-to-generate-more-web-traffic-today/",
+      "post_date": "2021-10-28 21:17:48",
+      "word_count": 982,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How To Edit A Podcast FAST In Under Five Minutes",
+      "slug": "how-to-edit-a-podcast-in-five-minutes",
+      "url": "https://chrismichaelharris.com/how-to-edit-a-podcast-in-five-minutes/",
+      "post_date": "2021-04-23 12:32:26",
+      "word_count": 491,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How To Start A Podcast With Libsyn",
+      "slug": "how-to-start-a-podcast-with-libsyn",
+      "url": "https://chrismichaelharris.com/how-to-start-a-podcast-with-libsyn/",
+      "post_date": "2021-04-09 09:50:50",
+      "word_count": 1035,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How To Build A Sales Page That Converts",
+      "slug": "how-to-build-a-sales-page-that-converts",
+      "url": "https://chrismichaelharris.com/how-to-build-a-sales-page-that-converts/",
+      "post_date": "2021-01-21 09:17:17",
+      "word_count": 570,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "5 Things I Wish I Knew Before Starting A Podcast",
+      "slug": "5-things-i-wish-i-knew-before-starting-a-podcast",
+      "url": "https://chrismichaelharris.com/5-things-i-wish-i-knew-before-starting-a-podcast/",
+      "post_date": "2020-12-17 12:12:55",
+      "word_count": 822,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Start a Podcast?",
+      "slug": "how-to-start-a-podcast-2",
+      "url": "https://chrismichaelharris.com/how-to-start-a-podcast-2/",
+      "post_date": "2020-11-02 04:18:58",
+      "word_count": 1198,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How To Make Youtube Thumbnails with Canva [Canva Tutorial 2020]",
+      "slug": "youtube-thumbnails-with-canva",
+      "url": "https://chrismichaelharris.com/youtube-thumbnails-with-canva/",
+      "post_date": "2020-10-27 18:07:54",
+      "word_count": 996,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Build an Email List FAST",
+      "slug": "build-an-email-list-fast",
+      "url": "https://chrismichaelharris.com/build-an-email-list-fast/",
+      "post_date": "2020-10-23 17:16:54",
+      "word_count": 1033,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "The Different Types of Sales Funnels",
+      "slug": "sales-funnels",
+      "url": "https://chrismichaelharris.com/sales-funnels/",
+      "post_date": "2020-10-15 01:49:01",
+      "word_count": 1044,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Content Repurposing Strategies with Shaina Weisinger",
+      "slug": "content-repurposing-strategies",
+      "url": "https://chrismichaelharris.com/content-repurposing-strategies/",
+      "post_date": "2020-10-08 17:00:04",
+      "word_count": 481,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Lead Generation Hacks with the Eugene Schwartz UPSYD Model",
+      "slug": "lead-generation-hacks",
+      "url": "https://chrismichaelharris.com/lead-generation-hacks/",
+      "post_date": "2020-10-07 15:17:51",
+      "word_count": 182,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Making Podcasting, Youtube, and Content Creation FUN with Javier Mercedes",
+      "slug": "making-podcasting-youtube-and-content-creation-fun",
+      "url": "https://chrismichaelharris.com/making-podcasting-youtube-and-content-creation-fun/",
+      "post_date": "2020-09-30 10:31:21",
+      "word_count": 212,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Insert Video in Email with BombBomb w/Ethan Beute",
+      "slug": "insert-video-in-email-with-bombbomb",
+      "url": "https://chrismichaelharris.com/insert-video-in-email-with-bombbomb/",
+      "post_date": "2020-09-28 18:04:32",
+      "word_count": 334,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Marketing Analytics & Sales Growth with Dr. Denise Gosnell",
+      "slug": "sales-growth",
+      "url": "https://chrismichaelharris.com/sales-growth/",
+      "post_date": "2020-09-07 03:17:49",
+      "word_count": 804,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Is a Podcast a Good Marketing Strategy?",
+      "slug": "podcast-good-marketing-strategy",
+      "url": "https://chrismichaelharris.com/podcast-good-marketing-strategy/",
+      "post_date": "2020-08-24 04:02:53",
+      "word_count": 919,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How To Get More Lead Generation | Tips From Jeff Gothelf",
+      "slug": "lead-generation",
+      "url": "https://chrismichaelharris.com/lead-generation/",
+      "post_date": "2020-08-04 03:17:40",
+      "word_count": 711,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "The ONE Online Marketing Advice You Need | Jay Abraham",
+      "slug": "online-marketing-advice",
+      "url": "https://chrismichaelharris.com/online-marketing-advice/",
+      "post_date": "2020-06-10 02:55:23",
+      "word_count": 283,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Why Instagram Marketing Sucks at Growing Your Business",
+      "slug": "instagram-marketing",
+      "url": "https://chrismichaelharris.com/instagram-marketing/",
+      "post_date": "2020-05-04 06:30:57",
+      "word_count": 1197,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Start (and Grow) an eCommerce Business | Taking Affordable Steps",
+      "slug": "ecommerce-business",
+      "url": "https://chrismichaelharris.com/ecommerce-business/",
+      "post_date": "2019-08-23 18:40:59",
+      "word_count": 1593,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Tips on Growing a Two-Sided Market Business or App | Marketing & Client Acquisition",
+      "slug": "two-sided-market",
+      "url": "https://chrismichaelharris.com/two-sided-market/",
+      "post_date": "2019-07-03 17:17:22",
+      "word_count": 2383,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Why Blogging is Still the Best Way to Organically Grow Your Business | Owning Your Traffic",
+      "slug": "blogging",
+      "url": "https://chrismichaelharris.com/blogging/",
+      "post_date": "2019-05-10 17:55:50",
+      "word_count": 2411,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Make Sales Online with Better Copy",
+      "slug": "make-sales-online",
+      "url": "https://chrismichaelharris.com/make-sales-online/",
+      "post_date": "2019-04-12 17:56:56",
+      "word_count": 2612,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Podcast Issues with Technology | How to Record an Amazing Remote Interview",
+      "slug": "podcast-issues",
+      "url": "https://chrismichaelharris.com/podcast-issues/",
+      "post_date": "2019-02-20 21:08:21",
+      "word_count": 68,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Facebook and Instagram Marketing in 2019 (And Beyond) | Leveraging Social Media for Your Business",
+      "slug": "facebook-and-instagram-marketing",
+      "url": "https://chrismichaelharris.com/facebook-and-instagram-marketing/",
+      "post_date": "2019-01-09 15:04:34",
+      "word_count": 3375,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Sell Information Products on the Internet | Ryan Deiss of Digital Marketer Drops in to Share His Marketing Expertise",
+      "slug": "information-products",
+      "url": "https://chrismichaelharris.com/information-products/",
+      "post_date": "2018-11-20 19:44:52",
+      "word_count": 78,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "When is it Smart to Raise Money for Startup Businesses? | How Failure Often Leads to Massive Success",
+      "slug": "raise-money-for-startup",
+      "url": "https://chrismichaelharris.com/raise-money-for-startup/",
+      "post_date": "2018-10-04 00:01:39",
+      "word_count": 2358,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Avoid Mistakes Starting an ECommerce Business | Talking ECommerce with Ezra Firestone",
+      "slug": "starting-an-ecommerce-business",
+      "url": "https://chrismichaelharris.com/starting-an-ecommerce-business/",
+      "post_date": "2018-09-18 13:51:34",
+      "word_count": 71,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Get Your Small Business to Compete With Bigger Companies Today | Leveraging Authority Marketing Strategies",
+      "slug": "how-to-get-your-small-business-to-compete-with-bigger-companies-today",
+      "url": "https://chrismichaelharris.com/how-to-get-your-small-business-to-compete-with-bigger-companies-today/",
+      "post_date": "2018-07-20 19:58:33",
+      "word_count": 1873,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Why SEO is Still at the Core of Your Marketing Efforts | Adopting a More Holistic Approach to Marketing",
+      "slug": "seo-is-still-at-the-core-of-your-marketing-efforts",
+      "url": "https://chrismichaelharris.com/seo-is-still-at-the-core-of-your-marketing-efforts/",
+      "post_date": "2018-06-18 14:46:11",
+      "word_count": 1870,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "How to Start a Podcast Business | How to Leverage the Podcasting Platform and Create Monetizing Opportunities",
+      "slug": "how-to-start-a-podcast",
+      "url": "https://chrismichaelharris.com/how-to-start-a-podcast/",
+      "post_date": "2018-03-07 12:14:34",
+      "word_count": 6000,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Changing the Game in Your Industry | Bucking Traditional Avenues via Technology and Content Creation",
+      "slug": "ep120",
+      "url": "https://chrismichaelharris.com/ep120/",
+      "post_date": "2018-02-21 13:24:18",
+      "word_count": 393,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "Is Network Marketing Right For You? | Assessing Opportunities with the Right Perspective",
+      "slug": "ep116",
+      "url": "https://chrismichaelharris.com/ep116/",
+      "post_date": "2018-01-25 14:51:44",
+      "word_count": 261,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "ai-marketing"
+    },
+    {
+      "title": "The Ideal Client Avatar Sweet Spot: How to Stop Targeting Everyone and Start Attracting the Right People",
+      "slug": "ideal-client-avatar-sweet-spot",
+      "url": "https://chrismichaelharris.com/ideal-client-avatar-sweet-spot/",
+      "post_date": "2025-03-10 11:04:00",
+      "word_count": 1986,
+      "markup_era": "Gutenberg",
+      "embed": "none",
+      "category": "business-ops"
+    },
+    {
+      "title": "Top 3 Reasons You Aren't Getting More Clients and Customers",
+      "slug": "top-3-reasons-you-arent-getting-more-clients-and-customers",
+      "url": "https://chrismichaelharris.com/top-3-reasons-you-arent-getting-more-clients-and-customers/",
+      "post_date": "2022-09-23 02:01:04",
+      "word_count": 1887,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Is $1000 Enough to Start A Business?",
+      "slug": "is-1000-enough-to-start-a-business",
+      "url": "https://chrismichaelharris.com/is-1000-enough-to-start-a-business/",
+      "post_date": "2021-10-31 21:20:32",
+      "word_count": 989,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "When Should I Make My First Hire?",
+      "slug": "when-should-i-make-my-first-hire",
+      "url": "https://chrismichaelharris.com/when-should-i-make-my-first-hire/",
+      "post_date": "2021-09-20 23:07:50",
+      "word_count": 980,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Start a New Business? Or Get a Job?",
+      "slug": "start-a-new-business-or-get-a-job",
+      "url": "https://chrismichaelharris.com/start-a-new-business-or-get-a-job/",
+      "post_date": "2021-09-15 21:22:55",
+      "word_count": 1285,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "The Ultimate Guide to Outsourcing This 2021",
+      "slug": "guide-to-outsourcing-using-trello",
+      "url": "https://chrismichaelharris.com/guide-to-outsourcing-using-trello/",
+      "post_date": "2021-02-15 03:40:09",
+      "word_count": 671,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Hire a Virtual Assistant (And Take Back Your Life)",
+      "slug": "hiring-a-virtual-assistant-outsourcing",
+      "url": "https://chrismichaelharris.com/hiring-a-virtual-assistant-outsourcing/",
+      "post_date": "2021-02-11 05:46:22",
+      "word_count": 487,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "The Ultimate Guide to Get Your First Client",
+      "slug": "the-ultimate-guide-to-get-your-first-client",
+      "url": "https://chrismichaelharris.com/the-ultimate-guide-to-get-your-first-client/",
+      "post_date": "2021-01-25 02:56:45",
+      "word_count": 621,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "4 Steps To Validate Your Business Idea Before Launching",
+      "slug": "steps-to-validate-business-idea",
+      "url": "https://chrismichaelharris.com/steps-to-validate-business-idea/",
+      "post_date": "2021-01-12 11:52:46",
+      "word_count": 516,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Top 5 Mistakes When Starting a Business in 2021 | Avoid These While YOU CAN!",
+      "slug": "5-mistakes-when-starting-business",
+      "url": "https://chrismichaelharris.com/5-mistakes-when-starting-business/",
+      "post_date": "2021-01-08 12:11:24",
+      "word_count": 630,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "5 KEYS To Find Best Business Ideas for 2021",
+      "slug": "best-business-ideas-2021",
+      "url": "https://chrismichaelharris.com/best-business-ideas-2021/",
+      "post_date": "2020-12-23 10:17:32",
+      "word_count": 528,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "The Principles You MUST Have in Business",
+      "slug": "principles-you-must-have-in-business",
+      "url": "https://chrismichaelharris.com/principles-you-must-have-in-business/",
+      "post_date": "2020-10-30 06:56:55",
+      "word_count": 582,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "The Problem with Cancel Culture with Will Witt",
+      "slug": "cancel-culture-problems",
+      "url": "https://chrismichaelharris.com/cancel-culture-problems/",
+      "post_date": "2020-09-28 17:54:00",
+      "word_count": 463,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Strategic Planning Hacks With Sean Castrina",
+      "slug": "strategic-planning-hacks",
+      "url": "https://chrismichaelharris.com/strategic-planning-hacks/",
+      "post_date": "2020-09-03 04:54:52",
+      "word_count": 688,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to WIN at Any Negotiation",
+      "slug": "win-at-any-negotiation",
+      "url": "https://chrismichaelharris.com/win-at-any-negotiation/",
+      "post_date": "2020-09-02 06:07:30",
+      "word_count": 1847,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Supporting Black-Owned Business + Free Thinking with Sterling Brown",
+      "slug": "supporting-black-owned-business-free-thinking",
+      "url": "https://chrismichaelharris.com/supporting-black-owned-business-free-thinking/",
+      "post_date": "2020-08-28 05:02:54",
+      "word_count": 576,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "What Does Scaling a Business ACTUALLY Look Like?",
+      "slug": "scaling-your-business",
+      "url": "https://chrismichaelharris.com/scaling-your-business/",
+      "post_date": "2020-08-21 02:54:08",
+      "word_count": 992,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Getting Top Talent For Your Business",
+      "slug": "top-talent-for-your-business",
+      "url": "https://chrismichaelharris.com/top-talent-for-your-business/",
+      "post_date": "2020-08-18 02:46:47",
+      "word_count": 789,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Small Business Owners, STOP Worrying About COMPETITION!",
+      "slug": "stop-worrying-about-competition",
+      "url": "https://chrismichaelharris.com/stop-worrying-about-competition/",
+      "post_date": "2020-08-04 03:33:33",
+      "word_count": 1019,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Is Your Business Failing? Top Tips From Mike Michalowicz",
+      "slug": "top-business-tips-mike-michalowicz",
+      "url": "https://chrismichaelharris.com/top-business-tips-mike-michalowicz/",
+      "post_date": "2020-07-24 21:22:44",
+      "word_count": 1431,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Business Crisis Management Advice During Coronavirus (COVID-19)",
+      "slug": "covid19-business-crisis-management-advice",
+      "url": "https://chrismichaelharris.com/covid19-business-crisis-management-advice/",
+      "post_date": "2020-06-29 04:12:16",
+      "word_count": 1249,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Entrepreneur Life: A Message to My Younger Self",
+      "slug": "message-to-my-younger-self",
+      "url": "https://chrismichaelharris.com/message-to-my-younger-self/",
+      "post_date": "2020-06-17 03:15:23",
+      "word_count": 414,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Coronavirus Small Business Warriors",
+      "slug": "coronavirus-warriors",
+      "url": "https://chrismichaelharris.com/coronavirus-warriors/",
+      "post_date": "2020-06-15 23:26:04",
+      "word_count": 403,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "Get Customers Hooked",
+      "slug": "get-customers-hooked",
+      "url": "https://chrismichaelharris.com/get-customers-hooked/",
+      "post_date": "2020-06-01 05:36:44",
+      "word_count": 1834,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "2020 Business Reading List",
+      "slug": "2020-business-reading-list",
+      "url": "https://chrismichaelharris.com/2020-business-reading-list/",
+      "post_date": "2020-04-15 18:51:30",
+      "word_count": 569,
+      "markup_era": "Divi",
+      "embed": "none",
+      "category": "business-ops"
+    },
+    {
+      "title": "Managing Debt as a Business Owner | Avoid Falling Into the Debt Trap",
+      "slug": "debt",
+      "url": "https://chrismichaelharris.com/debt/",
+      "post_date": "2019-09-05 12:13:31",
+      "word_count": 2506,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Generate More Revenue Even if You Feel Stuck | Growing Your Business",
+      "slug": "generate-more-revenue",
+      "url": "https://chrismichaelharris.com/generate-more-revenue/",
+      "post_date": "2019-08-13 17:53:05",
+      "word_count": 1321,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "A Literal Entrepreneur School as Alternative Education | Formal Education is Evolving Through Innovation",
+      "slug": "entrepreneur-school",
+      "url": "https://chrismichaelharris.com/entrepreneur-school/",
+      "post_date": "2019-07-18 14:02:49",
+      "word_count": 1658,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Building Social Impact Startups | How a Police Altercation Led to Innovation",
+      "slug": "social-impact-startups",
+      "url": "https://chrismichaelharris.com/social-impact-startups/",
+      "post_date": "2019-07-10 18:19:21",
+      "word_count": 2079,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "What Will the World Look Like for Future Entrepreneurs? | A Peak Into The Mind of a Silicon Valley Thought Leader",
+      "slug": "future-entrepreneurs",
+      "url": "https://chrismichaelharris.com/future-entrepreneurs/",
+      "post_date": "2019-04-25 19:12:43",
+      "word_count": 2150,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Supporting Women Entrepreneurs Through Community | You Don't Have to \"Fit Into a Man's World\"",
+      "slug": "women-entrepreneurs",
+      "url": "https://chrismichaelharris.com/women-entrepreneurs/",
+      "post_date": "2019-04-17 21:50:50",
+      "word_count": 74,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Is It Too Late to Make Money as an Entrepreneur? | How Grant Cardone Went From Rehab to $300 Million Net Worth",
+      "slug": "make-money-as-an-entrepreneur",
+      "url": "https://chrismichaelharris.com/make-money-as-an-entrepreneur/",
+      "post_date": "2019-03-22 18:44:27",
+      "word_count": 87,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Pitching Investors and Life Advice with Guy Kawasaki | Why the Actual Pitch is Overrated",
+      "slug": "pitching-investors",
+      "url": "https://chrismichaelharris.com/pitching-investors/",
+      "post_date": "2019-03-15 17:34:16",
+      "word_count": 70,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Choose a Business Idea Using Data | Getting Customers to Tell You What They Want",
+      "slug": "choose-a-business",
+      "url": "https://chrismichaelharris.com/choose-a-business/",
+      "post_date": "2019-03-07 18:56:36",
+      "word_count": 2078,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Ideas to Become a Veteran Entrepreneur and How to Make the Transition | Life After Service",
+      "slug": "veteran-entrepreneur",
+      "url": "https://chrismichaelharris.com/veteran-entrepreneur/",
+      "post_date": "2019-03-05 20:00:46",
+      "word_count": 2400,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How Can I Make a Difference in the World as an Entrepreneur? | Politics and Entrepreneurship",
+      "slug": "how-can-i-make-a-difference-in-the-world",
+      "url": "https://chrismichaelharris.com/how-can-i-make-a-difference-in-the-world/",
+      "post_date": "2019-01-24 18:10:15",
+      "word_count": 82,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Validate Business Idea or Startup Concept | Customer Acquisition and Funding Methodologies",
+      "slug": "validate-business-idea",
+      "url": "https://chrismichaelharris.com/validate-business-idea/",
+      "post_date": "2019-01-03 16:45:52",
+      "word_count": 2413,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "A Billionaire's Advice to a Tech Company Founder | How to be Multi-Passionate as an Entrepreneur",
+      "slug": "tech-company",
+      "url": "https://chrismichaelharris.com/tech-company/",
+      "post_date": "2018-11-09 16:54:25",
+      "word_count": 71,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How Reading Transformed My Life | Reading Isn't a Time Sacrifice, It's an Investment",
+      "slug": "reading-transformed-my-life",
+      "url": "https://chrismichaelharris.com/reading-transformed-my-life/",
+      "post_date": "2018-10-30 18:58:41",
+      "word_count": 74,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "My 3 Top Books to Read for Business in 2018 and Beyond | Reading is an Investment in Your Future",
+      "slug": "top-books-to-read",
+      "url": "https://chrismichaelharris.com/top-books-to-read/",
+      "post_date": "2018-10-25 17:20:24",
+      "word_count": 2117,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "The Business Advantage of Truly Being YOU | You're Always Second Best at Being Someone Else",
+      "slug": "business-advantage",
+      "url": "https://chrismichaelharris.com/business-advantage/",
+      "post_date": "2018-10-18 18:49:03",
+      "word_count": 1927,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "What to Do When Failure is Not an Option as an Entrepreneur | When the Life You've Worked So Hard For Crumbles Around You",
+      "slug": "failure-is-not-an-option",
+      "url": "https://chrismichaelharris.com/failure-is-not-an-option/",
+      "post_date": "2018-10-16 14:21:22",
+      "word_count": 2079,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "10 Quick Tips on How to Scale Your Business | What Got You Here Won't Get You There",
+      "slug": "how-to-scale-your-business",
+      "url": "https://chrismichaelharris.com/how-to-scale-your-business/",
+      "post_date": "2018-10-11 16:59:19",
+      "word_count": 94,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "What is the Key to Building Successful Online Membership Sites? | Take Advantage of Recurring Revenue Through the Power of Community",
+      "slug": "online-membership-sites",
+      "url": "https://chrismichaelharris.com/online-membership-sites/",
+      "post_date": "2018-10-09 20:07:58",
+      "word_count": 91,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "A Beginner's Guide on How to Use Video for Business | Companies Grow 48% Faster When Using Video",
+      "slug": "video-for-business",
+      "url": "https://chrismichaelharris.com/video-for-business/",
+      "post_date": "2018-09-27 18:22:39",
+      "word_count": 2923,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Taking a Calculated Leap of Faith | When Business Aspirations Defy Conventional Wisdom",
+      "slug": "leap-of-faith",
+      "url": "https://chrismichaelharris.com/leap-of-faith/",
+      "post_date": "2018-09-25 20:10:32",
+      "word_count": 1809,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Breaking Down Traditional Publishing Versus Self Publishing a Book | The Pros and Cons of Writing a Book",
+      "slug": "self-publishing",
+      "url": "https://chrismichaelharris.com/self-publishing/",
+      "post_date": "2018-09-21 19:54:25",
+      "word_count": 2967,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "I'm Not Ready for Retirement, What Now? | The Path of the Modern Elder",
+      "slug": "retirement",
+      "url": "https://chrismichaelharris.com/retirement/",
+      "post_date": "2018-09-19 18:33:21",
+      "word_count": 1633,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Is It Possible to Build a Retail Business Without Investment Dollars? | When Investors Don't Make Sense for Your Company",
+      "slug": "retail-business",
+      "url": "https://chrismichaelharris.com/retail-business/",
+      "post_date": "2018-09-18 14:28:41",
+      "word_count": 3451,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Successfully Quitting Your Job to Start Your Own Business | And How to Make Money From Day 1",
+      "slug": "quitting-your-job",
+      "url": "https://chrismichaelharris.com/quitting-your-job/",
+      "post_date": "2018-09-18 14:22:08",
+      "word_count": 4004,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Outsourcing Basics for Early Stage Entrepreneurs | You Don't Have to Wear All the Hats Forever",
+      "slug": "outsourcing",
+      "url": "https://chrismichaelharris.com/outsourcing/",
+      "post_date": "2018-08-16 19:47:11",
+      "word_count": 2989,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Scale a Service Based Business Without Losing Quality | Evolution of the Technician is Critical",
+      "slug": "how-to-scale-a-service-based-business",
+      "url": "https://chrismichaelharris.com/how-to-scale-a-service-based-business/",
+      "post_date": "2018-08-13 15:30:50",
+      "word_count": 3961,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "When Do You Need a Business Coach? | Inside Look at a Coaching Session",
+      "slug": "when-do-you-need-a-business-coach",
+      "url": "https://chrismichaelharris.com/when-do-you-need-a-business-coach/",
+      "post_date": "2018-08-01 14:51:11",
+      "word_count": 2475,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Create Company Culture Where People Love to Work | Employees are People, Not Numbers",
+      "slug": "how-to-create-company-culture",
+      "url": "https://chrismichaelharris.com/how-to-create-company-culture/",
+      "post_date": "2018-07-23 21:06:48",
+      "word_count": 2374,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Being Entrepreneurial in a 9 to 5 | Viewing Opportunities as Chances to Grow",
+      "slug": "being-entrepreneurial-in-a-9-to-5",
+      "url": "https://chrismichaelharris.com/being-entrepreneurial-in-a-9-to-5/",
+      "post_date": "2018-07-02 15:48:28",
+      "word_count": 1771,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "How to Raise Money and Compete with Major Corporations | Leaving a Comfy Job at Google to Cause Disruption",
+      "slug": "how-to-raise-money",
+      "url": "https://chrismichaelharris.com/how-to-raise-money/",
+      "post_date": "2018-05-18 12:34:42",
+      "word_count": 1682,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "New Year's Resolutions - Part 6: You Can't Lose Sight of Your Entrepreneur Hobbies | The Benefit to Disengaging and Coming Back with Fresh Perspective",
+      "slug": "entrepreneur-hobbies",
+      "url": "https://chrismichaelharris.com/entrepreneur-hobbies/",
+      "post_date": "2018-05-03 20:49:32",
+      "word_count": 644,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "From a Single Food Truck Business to a Multi-Million Dollar Franchise | How Two Cousins Launched a Lobster Dynasty",
+      "slug": "food-truck-business",
+      "url": "https://chrismichaelharris.com/food-truck-business/",
+      "post_date": "2018-04-24 13:00:21",
+      "word_count": 1959,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Become a Best Selling Author Without Actually Writing a Book | Establish Yourself as an Influencer in Your Space",
+      "slug": "become-a-best-selling-author",
+      "url": "https://chrismichaelharris.com/become-a-best-selling-author/",
+      "post_date": "2018-04-18 23:47:30",
+      "word_count": 2259,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Is There a Best Place to Build a Startup? | Slowing Down to Finalize Your Idea Before Running to Market",
+      "slug": "is-there-a-best-place-to-build-a-startup",
+      "url": "https://chrismichaelharris.com/is-there-a-best-place-to-build-a-startup/",
+      "post_date": "2018-03-01 18:53:21",
+      "word_count": 2526,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "New Year's Resolutions - Part 3: Travel More | Why Taking Quick Vacations is Imperative to an Early Stage Entrepreneur",
+      "slug": "ep119",
+      "url": "https://chrismichaelharris.com/ep119/",
+      "post_date": "2018-02-16 15:04:34",
+      "word_count": 197,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Empowering Employees to Generate the Results You Desire | The Organization is Always More Than One Person",
+      "slug": "ep118",
+      "url": "https://chrismichaelharris.com/ep118/",
+      "post_date": "2018-02-14 11:44:53",
+      "word_count": 285,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Creating Generational Wealth | The Paradigm Shift About Finance That Will Change Your Life",
+      "slug": "ep112",
+      "url": "https://chrismichaelharris.com/ep112/",
+      "post_date": "2017-11-28 15:51:37",
+      "word_count": 324,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "Can Boomers Still Launch A Successful Business? | Entrepreneurship Extends Beyond Millennials",
+      "slug": "ep107",
+      "url": "https://chrismichaelharris.com/ep107/",
+      "post_date": "2017-07-11 14:48:24",
+      "word_count": 602,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "business-ops"
+    },
+    {
+      "title": "The Mastery Growth Curve: Why You Feel Like an Imposter (and What to Do)",
+      "slug": "mastery-growth-curve",
+      "url": "https://chrismichaelharris.com/mastery-growth-curve/",
+      "post_date": "2025-10-29 10:45:00",
+      "word_count": 1700,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "5 Steps to a GREAT Annual Plan | Goal Setting 2021",
+      "slug": "steps-to-great-annual-plan",
+      "url": "https://chrismichaelharris.com/steps-to-great-annual-plan/",
+      "post_date": "2021-01-31 23:43:27",
+      "word_count": 618,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "Achieve Your Goals | Ultimate Business Roadmap [FREE TEMPLATE]",
+      "slug": "building-your-business",
+      "url": "https://chrismichaelharris.com/building-your-business/",
+      "post_date": "2021-01-06 14:27:31",
+      "word_count": 505,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "Top Eight Successful Habits For Successful People",
+      "slug": "top-successful-habits",
+      "url": "https://chrismichaelharris.com/top-successful-habits/",
+      "post_date": "2020-10-29 13:45:53",
+      "word_count": 1165,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "Emotional Intelligence and LEADERSHIP with Mike Robbins",
+      "slug": "emotional-intelligence-and-leadership",
+      "url": "https://chrismichaelharris.com/emotional-intelligence-and-leadership/",
+      "post_date": "2020-10-13 01:54:12",
+      "word_count": 334,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "The SECRET to Find & LIVE Your Purpose with Dov Baron",
+      "slug": "live-your-purpose",
+      "url": "https://chrismichaelharris.com/live-your-purpose/",
+      "post_date": "2020-08-25 09:53:23",
+      "word_count": 616,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "How to Create Powerful Habits That Will Change Your Life",
+      "slug": "create-powerful-habits-mark-green",
+      "url": "https://chrismichaelharris.com/create-powerful-habits-mark-green/",
+      "post_date": "2020-08-18 01:10:17",
+      "word_count": 523,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "personal-development"
+    },
+    {
+      "title": "Finding Alignment & Purpose as an Entrepreneur | Never Do Things Just for the Money",
+      "slug": "purpose",
+      "url": "https://chrismichaelharris.com/purpose/",
+      "post_date": "2019-04-03 17:21:13",
+      "word_count": 88,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "The New Leadership Rules in Your Startup | Why You're Currently Killing Your Culture",
+      "slug": "leadership-rules",
+      "url": "https://chrismichaelharris.com/leadership-rules/",
+      "post_date": "2019-03-29 18:56:44",
+      "word_count": 74,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "When to Quit Your Day Job and Pursue Your Entrepreneurial Dreams | When Money Isn't Enough",
+      "slug": "quit-your-day-job",
+      "url": "https://chrismichaelharris.com/quit-your-day-job/",
+      "post_date": "2019-01-29 22:51:30",
+      "word_count": 2791,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "How to Achieve Mental Breakthrough in Your Startup | Applying What's Worked to Other Aspects of Your Life",
+      "slug": "mental-breakthrough",
+      "url": "https://chrismichaelharris.com/mental-breakthrough/",
+      "post_date": "2018-12-05 19:47:13",
+      "word_count": 2021,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "How to Excel at Engaging Your Employees in a More Meaningful Way | Money is NOT the Primary Motivating Factor",
+      "slug": "engaging-your-employees",
+      "url": "https://chrismichaelharris.com/engaging-your-employees/",
+      "post_date": "2018-11-20 19:19:57",
+      "word_count": 65,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "My Top 5 Rules for Leadership in a Startup | The Concept of Balanced Leadership",
+      "slug": "leadership",
+      "url": "https://chrismichaelharris.com/leadership/",
+      "post_date": "2018-09-12 17:11:07",
+      "word_count": 2910,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "10 Tips to Overcome Setbacks in Life | Life Has Bigger Plans Than You Do",
+      "slug": "overcome-setbacks",
+      "url": "https://chrismichaelharris.com/overcome-setbacks/",
+      "post_date": "2018-09-12 17:05:33",
+      "word_count": 3838,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "Going After Your Dreams in Life | Sacrificing On Your Ambitions is More Costly Than You May Think",
+      "slug": "going-after-your-dreams-in-life",
+      "url": "https://chrismichaelharris.com/going-after-your-dreams-in-life/",
+      "post_date": "2018-07-17 17:56:59",
+      "word_count": 1954,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "How to Focus on What Matters In Your Business | Building One Bridge at a Time",
+      "slug": "how-to-focus",
+      "url": "https://chrismichaelharris.com/how-to-focus/",
+      "post_date": "2018-07-12 17:56:27",
+      "word_count": 1911,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "Can You Learn How to Be More Creative? | Continuing The Left Brain, Right Brain Debate",
+      "slug": "learn-how-to-be-more-creative",
+      "url": "https://chrismichaelharris.com/learn-how-to-be-more-creative/",
+      "post_date": "2018-06-12 23:02:51",
+      "word_count": 2034,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "Recover From Entrepreneur Burnout | The Man Who Helped Me Get My Life Back",
+      "slug": "entrepreneur-burnout",
+      "url": "https://chrismichaelharris.com/entrepreneur-burnout/",
+      "post_date": "2018-05-28 19:17:36",
+      "word_count": 1726,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "New Year's Resolutions - Part 7: How to Save More Money, Spend Less and Live an Amazing Life | Planning to Succeed in Your Personal Life",
+      "slug": "live-an-amazing-life",
+      "url": "https://chrismichaelharris.com/live-an-amazing-life/",
+      "post_date": "2018-05-18 17:29:13",
+      "word_count": 1853,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "Where Should I Focus On My Business? | Growing a Business Successfully is About Framework",
+      "slug": "where-should-i-focus-on-my-business",
+      "url": "https://chrismichaelharris.com/where-should-i-focus-on-my-business/",
+      "post_date": "2018-04-19 22:26:43",
+      "word_count": 1780,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "New Year's Resolutions - Part 5: Spend More Time With Family and Friends | Why You Need Your Support System",
+      "slug": "spend-more-time-with-family-and-friends",
+      "url": "https://chrismichaelharris.com/spend-more-time-with-family-and-friends/",
+      "post_date": "2018-04-03 22:12:57",
+      "word_count": 1523,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "Why You Need a Management Systems and Processes Mindset to Grow Your Company | Growth is More Than Just Revenue",
+      "slug": "management-systems-and-processes",
+      "url": "https://chrismichaelharris.com/management-systems-and-processes/",
+      "post_date": "2018-03-27 18:17:43",
+      "word_count": 3165,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "New Year's Resolutions - Part 4: Stop Making Resolutions! | How to Set Goals in Your Life",
+      "slug": "how-to-set-goals-in-your-life",
+      "url": "https://chrismichaelharris.com/how-to-set-goals-in-your-life/",
+      "post_date": "2018-03-21 15:10:37",
+      "word_count": 2747,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "New Year's Resolutions - Part 2: Make Reading a Habit | Why it is Essential to Continue Learning Along Your Journey",
+      "slug": "ep117",
+      "url": "https://chrismichaelharris.com/ep117/",
+      "post_date": "2018-02-06 20:15:00",
+      "word_count": 176,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "Living What You Preach | Be a Motivator, Not Just a Motivational Speaker",
+      "slug": "ep114",
+      "url": "https://chrismichaelharris.com/ep114/",
+      "post_date": "2018-01-08 17:42:32",
+      "word_count": 286,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "personal-development"
+    },
+    {
+      "title": "How to Keep Your Holistic Health Routines While Traveling",
+      "slug": "keep-your-holistic-health-routines-while-traveling",
+      "url": "https://chrismichaelharris.com/keep-your-holistic-health-routines-while-traveling/",
+      "post_date": "2020-08-28 05:06:24",
+      "word_count": 1136,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "health"
+    },
+    {
+      "title": "The Terrifying Impact of Stress on the Body with Dr. Jason McCloskey",
+      "slug": "impact-of-stress",
+      "url": "https://chrismichaelharris.com/impact-of-stress/",
+      "post_date": "2020-08-14 03:21:59",
+      "word_count": 2453,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "health"
+    },
+    {
+      "title": "How To Lose Your Stress In Under 3 Minutes",
+      "slug": "lose-stress-in-3-minutes",
+      "url": "https://chrismichaelharris.com/lose-stress-in-3-minutes/",
+      "post_date": "2020-06-24 03:12:23",
+      "word_count": 277,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "health"
+    },
+    {
+      "title": "How to Rewire Your Brain for Business and Personal Growth | How Rapid Transformation Therapy Works",
+      "slug": "rewire-your-brain",
+      "url": "https://chrismichaelharris.com/rewire-your-brain/",
+      "post_date": "2019-05-31 10:25:08",
+      "word_count": 2188,
+      "markup_era": "Divi",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "Basic Biohacking Guide for Entrepreneurs | Dave Asprey's Hacking 411's",
+      "slug": "biohacking-guide-for-entrepreneurs",
+      "url": "https://chrismichaelharris.com/biohacking-guide-for-entrepreneurs/",
+      "post_date": "2019-02-06 19:51:37",
+      "word_count": 2711,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "How to Take Care of Your Health as an Entrepreneur | Ancient Wisdom and Natural Remedies",
+      "slug": "take-care-of-your-health",
+      "url": "https://chrismichaelharris.com/take-care-of-your-health/",
+      "post_date": "2018-10-23 19:26:05",
+      "word_count": 2411,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "Rewiring Your Brain for Total Transformation | The Benefits of Rapid Transformational Therapy",
+      "slug": "rewiring-your-brain-for-total-transformation",
+      "url": "https://chrismichaelharris.com/rewiring-your-brain-for-total-transformation/",
+      "post_date": "2018-09-18 14:07:18",
+      "word_count": 78,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "Meditation and Float Therapy Benefits | Being Intentional About Clarity and Lowering Stress Levels",
+      "slug": "meditation-and-float-therapy-benefits",
+      "url": "https://chrismichaelharris.com/meditation-and-float-therapy-benefits/",
+      "post_date": "2018-06-27 18:54:12",
+      "word_count": 1659,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "New Year's Resolutions - Part 8: Lose Weight and Live a Healthy Life | Health, Happiness and Vitality",
+      "slug": "live-a-healthy-life",
+      "url": "https://chrismichaelharris.com/live-a-healthy-life/",
+      "post_date": "2018-06-08 18:49:30",
+      "word_count": 1679,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "Is Lucid Dreaming an Entrepreneur Hack? | Dream Manipulation and Subliminal Truths About Life",
+      "slug": "lucid-dreaming",
+      "url": "https://chrismichaelharris.com/lucid-dreaming/",
+      "post_date": "2018-06-06 14:11:29",
+      "word_count": 2222,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "How to Reclaim Your Health Naturally | Why Pharmaceutical Drugs Aren't Always the Answer",
+      "slug": "reclaim-your-health-naturally",
+      "url": "https://chrismichaelharris.com/reclaim-your-health-naturally/",
+      "post_date": "2018-05-23 16:25:12",
+      "word_count": 1172,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "Finding Your Authentic Self and Why It Matters | Emotional Fitness is Vastly Underrated",
+      "slug": "ep106",
+      "url": "https://chrismichaelharris.com/ep106/",
+      "post_date": "2017-06-27 22:14:52",
+      "word_count": 741,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "health"
+    },
+    {
+      "title": "The Garmin Vivosmart 5: How It Compares to the Vivosmart 4 and the Venu SQ",
+      "slug": "the-garmin-vivosmart-5-compares-to-the-vivosmart-4-and-venu-sq",
+      "url": "https://chrismichaelharris.com/the-garmin-vivosmart-5-compares-to-the-vivosmart-4-and-venu-sq/",
+      "post_date": "2022-07-18 23:19:13",
+      "word_count": 1390,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Garmin Venu SQ Review + Unboxing | Track Health and Fitness Using Your Smartwatch",
+      "slug": "garmin-venu-sq-review-unboxing-track-health-and-fitness",
+      "url": "https://chrismichaelharris.com/garmin-venu-sq-review-unboxing-track-health-and-fitness/",
+      "post_date": "2022-06-23 22:16:27",
+      "word_count": 807,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Voxer Walkie Talkie App Review 2022 | How My Coaching Communication Works",
+      "slug": "voxer-walkie-talkie-app-review-2022",
+      "url": "https://chrismichaelharris.com/voxer-walkie-talkie-app-review-2022/",
+      "post_date": "2022-06-14 10:27:08",
+      "word_count": 909,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Nutrisense Review | Optimize Your Glucose Levels FAST",
+      "slug": "nutrisense-review",
+      "url": "https://chrismichaelharris.com/nutrisense-review/",
+      "post_date": "2022-05-06 08:18:12",
+      "word_count": 1024,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Mitopure Review | Is It Worth It?",
+      "slug": "mitopure-review",
+      "url": "https://chrismichaelharris.com/mitopure-review/",
+      "post_date": "2022-04-28 09:53:09",
+      "word_count": 763,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Typeform Review | Create Engaging Forms, Quizzes, and Surveys to Grow Your List",
+      "slug": "typeform-review",
+      "url": "https://chrismichaelharris.com/typeform-review/",
+      "post_date": "2022-04-08 11:28:08",
+      "word_count": 1083,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Lucidchart Review | Map Out Your Marketing Funnels",
+      "slug": "lucidchart-review",
+      "url": "https://chrismichaelharris.com/lucidchart-review/",
+      "post_date": "2022-03-31 08:43:39",
+      "word_count": 961,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Joovv Red Light Therapy Review | Does it ACTUALLY Work?",
+      "slug": "joovv-red-light-therapy-review",
+      "url": "https://chrismichaelharris.com/joovv-red-light-therapy-review/",
+      "post_date": "2022-03-08 08:18:47",
+      "word_count": 794,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Audio Technica ATR 2500x Review￼",
+      "slug": "audio-technica-atr-2500x-review",
+      "url": "https://chrismichaelharris.com/audio-technica-atr-2500x-review/",
+      "post_date": "2022-02-15 20:15:40",
+      "word_count": 1024,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Do BLUE LIGHT GLASSES work? MY EXPERIENCE",
+      "slug": "blue-light-glasses-review",
+      "url": "https://chrismichaelharris.com/blue-light-glasses-review/",
+      "post_date": "2021-02-08 03:29:50",
+      "word_count": 441,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "I TRIED VIOME! (Viome Review 2021)",
+      "slug": "viome-review-2021",
+      "url": "https://chrismichaelharris.com/viome-review-2021/",
+      "post_date": "2021-02-05 03:12:45",
+      "word_count": 525,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "The SECRET to My Productivity | Full Focus Planner by Michael Hyatt",
+      "slug": "full-focus-planner-review-2021",
+      "url": "https://chrismichaelharris.com/full-focus-planner-review-2021/",
+      "post_date": "2021-02-02 01:42:59",
+      "word_count": 800,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Rode Procaster Review",
+      "slug": "rode-procaster-review",
+      "url": "https://chrismichaelharris.com/rode-procaster-review/",
+      "post_date": "2020-11-10 15:04:03",
+      "word_count": 1013,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Audio-Technica ATR2100X USB Microphone Review",
+      "slug": "audio-technica-atr2100x-usb-microphone-review",
+      "url": "https://chrismichaelharris.com/audio-technica-atr2100x-usb-microphone-review/",
+      "post_date": "2020-11-05 09:47:24",
+      "word_count": 821,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Shure SM58 Review",
+      "slug": "shure-sm58-review",
+      "url": "https://chrismichaelharris.com/shure-sm58-review/",
+      "post_date": "2020-10-20 23:36:55",
+      "word_count": 862,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Garmin Vivosmart 4 Review",
+      "slug": "garmin-vivosmart-4-review",
+      "url": "https://chrismichaelharris.com/garmin-vivosmart-4-review/",
+      "post_date": "2020-10-20 16:05:22",
+      "word_count": 766,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Best Microphone For Podcasting?",
+      "slug": "best-microphone-for-podcasting",
+      "url": "https://chrismichaelharris.com/best-microphone-for-podcasting/",
+      "post_date": "2020-09-05 04:23:25",
+      "word_count": 1262,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Neurofeedback Therapy at Home with the Muse S",
+      "slug": "neurofeedback-therapy-muse",
+      "url": "https://chrismichaelharris.com/neurofeedback-therapy-muse/",
+      "post_date": "2020-08-17 07:04:35",
+      "word_count": 1835,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "gear-reviews"
+    },
+    {
+      "title": "Do Webinars Still Work in 2025? Yes, No, Maybe So – Let's Get Real",
+      "slug": "do-webinars-still-work",
+      "url": "https://chrismichaelharris.com/do-webinars-still-work/",
+      "post_date": "2025-10-02 10:33:22",
+      "word_count": 1169,
+      "markup_era": "Gutenberg",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "How to Differentiate Your Offer and Win in a Crowded Market",
+      "slug": "how-to-differentiate-your-offer",
+      "url": "https://chrismichaelharris.com/how-to-differentiate-your-offer/",
+      "post_date": "2025-03-25 11:18:00",
+      "word_count": 1947,
+      "markup_era": "Gutenberg",
+      "embed": "none",
+      "category": "other"
+    },
+    {
+      "title": "What Are Market Sophistication Levels (And Which One Are You In)?",
+      "slug": "market-sophistication-levels",
+      "url": "https://chrismichaelharris.com/market-sophistication-levels/",
+      "post_date": "2025-03-25 09:09:00",
+      "word_count": 1906,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Why I Sold My Ooler + What I'm Using Instead",
+      "slug": "why-i-sold-my-ooler",
+      "url": "https://chrismichaelharris.com/why-i-sold-my-ooler/",
+      "post_date": "2022-06-30 23:37:51",
+      "word_count": 1146,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Loom Screen Recorder Tutorial for Beginners | Better than Screencast-o-Matic?",
+      "slug": "loom-screen-recorder-tutorial-for-beginners",
+      "url": "https://chrismichaelharris.com/loom-screen-recorder-tutorial-for-beginners/",
+      "post_date": "2022-05-15 22:43:09",
+      "word_count": 837,
+      "markup_era": "Gutenberg",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "What is the best website builder for beginners? Wordpress vs Wix vs SquareSpace",
+      "slug": "what-is-the-best-website-builder-for-beginners-wordpress-vs-wix-vs-squarespace",
+      "url": "https://chrismichaelharris.com/what-is-the-best-website-builder-for-beginners-wordpress-vs-wix-vs-squarespace/",
+      "post_date": "2022-01-04 05:25:43",
+      "word_count": 712,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Calendly Updates (What's New?)",
+      "slug": "calendly-updates-whats-new-2",
+      "url": "https://chrismichaelharris.com/calendly-updates-whats-new-2/",
+      "post_date": "2021-12-01 05:49:44",
+      "word_count": 1089,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "How to Set Up Google Analytics | Tutorial for Beginners",
+      "slug": "how-to-set-up-google-analytics-tutorial-for-beginners",
+      "url": "https://chrismichaelharris.com/how-to-set-up-google-analytics-tutorial-for-beginners/",
+      "post_date": "2021-11-14 20:28:31",
+      "word_count": 424,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Evaluate Your Competition: The 6-Step Guide You MUST Follow",
+      "slug": "evaluate-your-competition",
+      "url": "https://chrismichaelharris.com/evaluate-your-competition/",
+      "post_date": "2021-01-17 20:25:34",
+      "word_count": 637,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Think and Grow Rich Takeaways",
+      "slug": "think-and-grow-rich-takeaways",
+      "url": "https://chrismichaelharris.com/think-and-grow-rich-takeaways/",
+      "post_date": "2020-11-11 16:32:46",
+      "word_count": 1439,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Calendly Tutorial",
+      "slug": "calendly-tutorial",
+      "url": "https://chrismichaelharris.com/calendly-tutorial/",
+      "post_date": "2020-11-05 10:15:21",
+      "word_count": 1066,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Proven One Click Upsell Strategy",
+      "slug": "proven-one-click-upsell-strategy",
+      "url": "https://chrismichaelharris.com/proven-one-click-upsell-strategy/",
+      "post_date": "2020-10-26 03:24:10",
+      "word_count": 657,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "The 12 Week Year Advice with Brian Moran",
+      "slug": "the-12-week-year-advice",
+      "url": "https://chrismichaelharris.com/the-12-week-year-advice/",
+      "post_date": "2020-09-24 23:19:05",
+      "word_count": 303,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Navigating A Career Pivot With Shelley Paxton",
+      "slug": "navigating-a-career-pivot",
+      "url": "https://chrismichaelharris.com/navigating-a-career-pivot/",
+      "post_date": "2020-09-08 08:18:59",
+      "word_count": 554,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "How To Get Projects Done On Time With Clint Padgett",
+      "slug": "projects-done-on-time",
+      "url": "https://chrismichaelharris.com/projects-done-on-time/",
+      "post_date": "2020-09-04 01:16:45",
+      "word_count": 1142,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "How to Read Faster And More Consistently",
+      "slug": "read-faster-and-more-consistently",
+      "url": "https://chrismichaelharris.com/read-faster-and-more-consistently/",
+      "post_date": "2020-09-01 08:22:08",
+      "word_count": 1057,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Major Takeaways From The One Thing By Gary Keller",
+      "slug": "one-thing-gary-keller",
+      "url": "https://chrismichaelharris.com/one-thing-gary-keller/",
+      "post_date": "2020-08-17 10:42:33",
+      "word_count": 811,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Productive Day In My Life",
+      "slug": "productive-day-in-my-life",
+      "url": "https://chrismichaelharris.com/productive-day-in-my-life/",
+      "post_date": "2020-06-26 04:38:53",
+      "word_count": 804,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Why NOW is THE Time to be Location Independent: Remote Working Tips",
+      "slug": "remote-working-tips",
+      "url": "https://chrismichaelharris.com/remote-working-tips/",
+      "post_date": "2020-06-08 03:30:04",
+      "word_count": 373,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "We Made $50,000 In New York | Sak's Story",
+      "slug": "saks-story",
+      "url": "https://chrismichaelharris.com/saks-story/",
+      "post_date": "2020-05-27 05:27:00",
+      "word_count": 1115,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "The Truth About Success",
+      "slug": "the-truth-about-success",
+      "url": "https://chrismichaelharris.com/the-truth-about-success/",
+      "post_date": "2020-05-22 02:14:31",
+      "word_count": 582,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "What The Keys to Success Look Like",
+      "slug": "what-the-keys-to-success-look-like",
+      "url": "https://chrismichaelharris.com/what-the-keys-to-success-look-like/",
+      "post_date": "2020-05-13 03:12:08",
+      "word_count": 941,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Are You Ready to Take My 30-Day Reading Challenge?",
+      "slug": "30-day-reading-challenge",
+      "url": "https://chrismichaelharris.com/30-day-reading-challenge/",
+      "post_date": "2020-04-16 18:30:41",
+      "word_count": 453,
+      "markup_era": "Divi",
+      "embed": "none",
+      "category": "other"
+    },
+    {
+      "title": "Do You Feel Stuck? Do This!",
+      "slug": "do-you-feel-stuck",
+      "url": "https://chrismichaelharris.com/do-you-feel-stuck/",
+      "post_date": "2020-04-14 07:42:49",
+      "word_count": 1437,
+      "markup_era": "Divi",
+      "embed": "YouTube",
+      "category": "other"
+    },
+    {
+      "title": "Should You Join a Mastermind Group? | A Rising Tide Raises All Ships",
+      "slug": "join-a-mastermind-group",
+      "url": "https://chrismichaelharris.com/join-a-mastermind-group/",
+      "post_date": "2018-11-27 23:13:22",
+      "word_count": 78,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "Reshaping the Way Women in the Workplace are Treated and Viewed | The Excuse of Oblivion Has Come and Gone",
+      "slug": "women-in-the-workplace",
+      "url": "https://chrismichaelharris.com/women-in-the-workplace/",
+      "post_date": "2018-10-02 19:38:00",
+      "word_count": 2773,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "When to Say No to New Opportunities | Keeping Your Thing The Main Thing",
+      "slug": "when-to-say-no-to-new-opportunities",
+      "url": "https://chrismichaelharris.com/when-to-say-no-to-new-opportunities/",
+      "post_date": "2018-08-02 21:36:07",
+      "word_count": 2364,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "New Year's Resolutions - Part 1: How to Get Your Life Organized | Not Being Organized is Impacting Your Professional Successes and Your Personal Well-Being",
+      "slug": "ep115",
+      "url": "https://chrismichaelharris.com/ep115/",
+      "post_date": "2018-01-23 14:29:48",
+      "word_count": 188,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "Breaking the Mold in Hollywood | How Technology and a Modern Approach Allowed a 28 Year Old to Make it Big",
+      "slug": "ep113",
+      "url": "https://chrismichaelharris.com/ep113/",
+      "post_date": "2017-12-07 18:14:13",
+      "word_count": 812,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "Asking Your Way to the Top | Why The Ask Method is Your In-House Market Research Department",
+      "slug": "ep111",
+      "url": "https://chrismichaelharris.com/ep111/",
+      "post_date": "2017-11-15 16:27:04",
+      "word_count": 292,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "From Bankrupt to Sexy Boss | Are You Further Clouding Your Confusion or Strengthening Your Clarity?",
+      "slug": "ep110",
+      "url": "https://chrismichaelharris.com/ep110/",
+      "post_date": "2017-10-10 18:23:19",
+      "word_count": 418,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "Launching a Virtual Summit From Scratch | Your Cause is More Important than the Size of Your List",
+      "slug": "ep109",
+      "url": "https://chrismichaelharris.com/ep109/",
+      "post_date": "2017-09-29 17:02:33",
+      "word_count": 352,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    },
+    {
+      "title": "Creating a New Niche to Compete with the Titans of Your Industry | Never Get Discouraged by Big Name Competition",
+      "slug": "ep108",
+      "url": "https://chrismichaelharris.com/ep108/",
+      "post_date": "2017-07-28 16:03:13",
+      "word_count": 347,
+      "markup_era": "Classic",
+      "embed": "libsyn",
+      "category": "other"
+    }
+  ]
+}
