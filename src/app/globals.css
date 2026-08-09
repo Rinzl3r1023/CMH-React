@@ -53,16 +53,22 @@ a:hover { color:#FFD79A; }
 .cut { clip-path:polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%); }
 .brk { position:absolute; width:11px; height:11px; border-color:rgba(240,169,60,.55); }
 
-/* Ridgeline motif (Home "Where I coach", Motif C). A generated terrain band —
-   the only organic shape in the system, everything else is grid + circle — sits
-   in each card's upper .art region, behind nothing (content lives in .pad below),
-   so legibility is never in question. hazeDrift is disabled under reduced-motion
-   by the global rule further down. .spec is the community card's bullet list. */
+/* Circuit motif (Home "Where I coach", Motif E — the Tron redraw of the
+   ridgeline). Right-angle traces (.tr) on a dark board with glowing nodes (.nd),
+   held in each card's upper .art region so no text sits over it. Community is a
+   branching network you route through yourself; coaching is one trace running
+   straight to a single node with a pulse travelling it (traceRun). Both animations
+   are disabled under prefers-reduced-motion by the global rule further down.
+   Values extracted verbatim from the mock bundle. */
 .art { position:relative; overflow:hidden; background:#07070C; border-bottom:1px solid rgba(255,255,255,.08); flex:none; height:clamp(150px,18vw,192px); }
+.artL { height:clamp(158px,20vw,206px); }
 .pad { padding:clamp(30px,3.6vw,42px) clamp(26px,3.2vw,36px); display:flex; flex-direction:column; flex:1; }
 .spec { display:flex; gap:11px; align-items:flex-start; font-size:clamp(15px,1.9vw,16px); color:#D9D3CA; line-height:1.55; }
 .spec > span { color:#F0A93C; flex:none; }
-@keyframes hazeDrift { 0%,100% { transform:translateX(0); } 50% { transform:translateX(3%); } }
+.tr { position:absolute; background:rgba(240,169,60,.5); }
+.nd { position:absolute; background:#FFE7BC; box-shadow:0 0 12px 3px rgba(240,169,60,.75); }
+@keyframes twinkle { 0%,100% { opacity:.4; } 50% { opacity:1; } }
+@keyframes traceRun { 0% { transform:translateY(0); opacity:0; } 12% { opacity:1; } 88% { opacity:1; } 100% { transform:translateY(-100%); opacity:0; } }
 
 input::placeholder { color:#8A8378; }
 input:focus { outline:2px solid #F0A93C !important; outline-offset:-2px !important; }
@@ -82,7 +88,9 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 
 /* layout utilities */
 .g3 { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-.g2wide { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+/* Home coaching doors. Mock ratio 1fr 1.55fr (.pair) — coaching wider, carrying
+   the richer card (testimonial); community stays compact. Used only there. */
+.g2wide { display:grid; grid-template-columns:1fr 1.55fr; gap:24px; }
 .g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
 .rail { display:grid; grid-template-columns:repeat(3,1fr); }
 .heroSplit { display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(36px,5vw,64px); align-items:center; }
