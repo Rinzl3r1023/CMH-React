@@ -174,6 +174,31 @@ export function getFeaturedPost(): PostMeta | null {
   return all.find((p) => p.featured && !p.noindex) ?? all.find((p) => !p.noindex) ?? all[0] ?? null;
 }
 
+// Related posts for the end of an article (internal linking, §SEO). Candidates are
+// INDEXED posts only (never link into the noindex archive) other than the current
+// one; scored by shared keywords (weighted) then same category, tie-broken by
+// recency. Every post carries a `category`, so even keyword-less posts get
+// meaningful same-topic matches; if nothing shares a signal it falls back to the
+// most recent indexed posts, so the block is never empty. Shows on every post
+// (including noindex ones) but only ever links out to indexed posts.
+export function getRelatedPosts(slug: string, limit = 4): PostMeta[] {
+  const all = getAllPosts();
+  const current = all.find((p) => p.slug === slug);
+  const candidates = all.filter((p) => !p.noindex && p.slug !== slug);
+  if (!current) return candidates.slice(0, limit);
+  const curKw = new Set((current.keywords ?? []).map((k) => k.toLowerCase()));
+  const curCat = (current.articleSection ?? '').toLowerCase();
+  return candidates
+    .map((p) => {
+      const shared = (p.keywords ?? []).filter((k) => curKw.has(k.toLowerCase())).length;
+      const sameCat = curCat && (p.articleSection ?? '').toLowerCase() === curCat ? 1 : 0;
+      return { p, score: shared * 3 + sameCat * 2 };
+    })
+    .sort((a, b) => b.score - a.score || (a.p.date < b.p.date ? 1 : a.p.date > b.p.date ? -1 : 0))
+    .slice(0, limit)
+    .map((s) => s.p);
+}
+
 // Posts for the grid: exclude the featured (hero) post AND noindexed posts.
 // noindexed posts are reachable at their URL but not promoted in browse — so the
 // on-site archive matches what search indexes (§ noindex pass). This is the single
