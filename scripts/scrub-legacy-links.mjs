@@ -38,6 +38,9 @@ const XPOST = {
 const ACTIVE = ['shopify', '99designs', 'belay', 'itunes', 'pandora', 'va', 'onlinejobs'];
 const DEAD404 = ['the-garmin-vivosmart-5-compares-to-the-vivosmart-4-and-venu-sq', 'why-i-sold-my-ooler', 'garmin-venu-sq-review-unboxing-track-health-and-fitness', 'voxer-walkie-talkie-app-review-2022', 'ep79'];
 const RETIRED_BLOCK = ['startupu', 'elite', 'thevip'];
+// cmh vanity shortlink namespace stored as RELATIVE paths (/spotify …) in older
+// episode subscribe/social/affiliate boilerplate — all 404 on the new site.
+const RELDEAD = new Set(['spotify', 'castbox', 'thevip', 'vip', 'lounge', 'bschool', 'get-slf', 'slf', 'onnit', 'uber', '99designs', 'freshbooks', 'belay', 'audible', 'listen', 'launch', 'itunes', 'pandora', 'stitcher', 'twitter', 'facebook', 'instagram', 'linkedin', 'youtube', 'va', 'elite', 'startupu']);
 
 const stats = {};
 const bump = (k) => (stats[k] = (stats[k] || 0) + 1);
@@ -69,6 +72,22 @@ function cleanBody(md) {
   md = delinkLinks(md, new RegExp(String.raw`(?:www\.)?chrismichaelharris\.com\/(?:${DEAD404.join('|')})\b`, 'i'), 'xpost-404-delink');
   md = delinkLinks(md, new RegExp(String.raw`(?:www\.)?chrismichaelharris\.com\/(?:${ACTIVE.join('|')}|consultation)\b`, 'i'), 'affiliate-delink');
   md = delinkLinks(md, /(?:www\.)?chrismichaelharris\.com/i, 'residual-cmh-delink');
+  // Older episode posts carry subscribe/social boilerplate as RELATIVE cmh vanity
+  // shortlinks (/spotify, /thevip, /lounge…) — the domain was stripped, so the
+  // residual-cmh rule above misses them and they 404 on the new site. De-link them
+  // (keep the anchor text). /epNNN cross-posts: normalise to /epNNN/ if migrated,
+  // else de-link. calendly/kimberlyannjimenez are already handled above.
+  md = md.replace(/\[([^\]]*)\]\(\/([a-zA-Z0-9_-]+)\/?\)/g, (m, text, seg) => {
+    const s = seg.toLowerCase();
+    if (RELDEAD.has(s)) { bump('rel-shortlink-delink'); return text; }
+    if (/^ep\d+$/.test(s)) {
+      if (fs.existsSync(path.join(POSTS, s))) { bump('rel-ep-normalize'); return `[${text}](/${s}/)`; }
+      bump('rel-ep-404-delink'); return text;
+    }
+    return m;
+  });
+  // dead external podcast directories (defunct services) -> de-link (keep text)
+  md = delinkLinks(md, /(?:www\.)?(?:stitcher\.com|play\.google\.com\/music|itun\.es)/i, 'dead-directory-delink');
   md = md.replace(/^##\s*\(CANVA Tutorial 2020\)\s*$/gim, () => (bump('stray-heading'), ''));
   md = md.replace(/\[\s*\]\([^)]*\)/g, '').replace(/^\s*[>*-]\s*$/gm, '').replace(/[ \t]+$/gm, '').replace(/\n{3,}/g, '\n\n');
   return md.trim() + '\n';
