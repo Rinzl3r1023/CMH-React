@@ -22,7 +22,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
     >
       <div
         style={{
-          aspectRatio: '16/10',
+          aspectRatio: '16/9',
           background: post.cover
             ? undefined
             : 'repeating-linear-gradient(90deg, rgba(240,169,60,.08) 0 1px, transparent 1px 34px), repeating-linear-gradient(180deg, rgba(240,169,60,.08) 0 1px, transparent 1px 34px)',
@@ -30,6 +30,9 @@ export default function PostCard({ post }: { post: PostMeta }) {
           alignItems: 'flex-end',
           padding: post.cover ? 0 : 14,
           borderBottom: '1px solid rgba(237,234,228,.13)',
+          // min-width:0 so the cover can shrink with its column; overflow:hidden
+          // clips the scaled image to the box instead of bleeding past the left edge.
+          minWidth: 0,
           overflow: 'hidden',
         }}
       >

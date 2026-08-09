@@ -77,6 +77,12 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 .heroSplit { display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(36px,5vw,64px); align-items:center; }
 .postGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
 .cardGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+/* Grid children default to min-width:auto and refuse to shrink below their
+   content, so the cover keeps its intrinsic width while the column can't — the
+   overflow is clipped from the LEFT edge, eating the first character ("CMH" ->
+   "MH", titles losing their opening letter on mobile). min-width:0 lets the
+   column shrink; the cover's own min-width:0 + overflow:hidden contain it. */
+.cardGrid > * { min-width:0; }
 .featSplit { display:grid; grid-template-columns:1.25fr 1fr; min-width:0; }
 .featSplit > * { min-width:0; }
 
