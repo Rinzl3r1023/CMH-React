@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './fonts.css';
 import './globals.css';
 import ClientEnhancer from '@/components/ClientEnhancer';
+import BookCallController from '@/components/BookCallController';
 import Analytics from '@/components/Analytics';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <ClientEnhancer />
+        <BookCallController />
         <Analytics />
       </body>
     </html>
