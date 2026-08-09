@@ -4,16 +4,39 @@
   min-width: 320px;
   min-height: 0;
   width: 100%;
+  /* Match Calendly's dark background so any space below a content-sized iframe is
+     seamless rather than a gap. */
+  background: #06060a;
 }
 
-/* Calendly injects its iframe here; pin it to fill the modal body. */
-.host {
+/* Our own scroll container. When the iframe auto-resizes past the panel, THIS
+   scrolls — and its scrollbar is hidden, so the jarring white iframe scrollbar is
+   gone without clipping any content. When the iframe fits (the common case after
+   hide_event_type_details), nothing scrolls at all. */
+.scroll {
   position: absolute;
   inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+.scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* WebKit/Blink */
+}
+
+/* Calendly injects its iframe here. Height is left to Calendly (init) + our
+   page_height handler (auto-resize) — NOT forced to 100%, so the iframe can size
+   to its content instead of scrolling internally. */
+.host {
+  width: 100%;
+  min-height: 100%;
 }
 .host :global(iframe) {
+  display: block;
   width: 100% !important;
-  height: 100% !important;
   border: 0;
 }
 
