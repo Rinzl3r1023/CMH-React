@@ -5,7 +5,7 @@ import { compileMDX } from 'next-mdx-remote/rsc';
 import '../post.css';
 import { fragment, rootStyle } from '@/lib/pageHtml';
 import { getAllSlugs, getPost } from '@/lib/posts';
-import { getVideosByIds } from '@/lib/youtube';
+import { getVideosByIds, liveYouTubeId } from '@/lib/youtube';
 import { pageMetadata } from '@/lib/metadata';
 import HtmlFragment from '@/components/HtmlFragment';
 import ResponsiveImage from '@/components/ResponsiveImage';
@@ -97,10 +97,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       ]
     : [(await compileMDX({ source: post.body, options: { parseFrontmatter: false } })).content, null];
 
+  // A dead/denylisted id emits no embed and no VideoObject (fail-closed, §4.2).
+  const videoId = liveYouTubeId(post.youtubeId);
   // VideoObject metadata (title/duration/uploadDate) comes from the shared
   // YouTube cache — reuses the videos.list path, no second API integration (§4.2).
   // Fails closed: no key/metadata -> no VideoObject node, no video link.
-  const videoMeta = post.youtubeId ? (await getVideosByIds([post.youtubeId]))[post.youtubeId] : undefined;
+  const videoMeta = videoId ? (await getVideosByIds([videoId]))[videoId] : undefined;
   const graph = postGraph({
     slug: post.slug,
     title: post.title,
@@ -113,8 +115,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     keywords: post.keywords,
     faq: post.faq,
     howto: post.howto,
-    video: post.youtubeId
-      ? { id: post.youtubeId, title: videoMeta?.title, description: videoMeta?.description, durationIso: videoMeta?.durationIso, uploadDate: videoMeta?.uploadDate, thumbnail: videoMeta?.thumbnail }
+    video: videoId
+      ? { id: videoId, title: videoMeta?.title, description: videoMeta?.description, durationIso: videoMeta?.durationIso, uploadDate: videoMeta?.uploadDate, thumbnail: videoMeta?.thumbnail }
       : undefined,
   });
 
@@ -153,11 +155,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         )}
 
-        {/* youtube_id present -> embed renders in the post body (§2.2) */}
-        {post.youtubeId && (
+        {/* live youtube_id -> single embed (§2.2); dead/denylisted ids render nothing */}
+        {videoId && (
           <div className="ytEmbed">
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${post.youtubeId}`}
+              src={`https://www.youtube-nocookie.com/embed/${videoId}`}
               title={post.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

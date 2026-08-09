@@ -23,6 +23,19 @@ export type ShowVideo = {
   thumbnail: string | null;
 };
 
+// Video IDs verified removed/private (during migration + any found dead since). A
+// dead id must emit NO embed and NO VideoObject — fail-closed, the same posture as
+// the CTAs. The migration already stripped these from frontmatter, so this guards
+// against link-rot and copy-paste regressions rather than a current defect. The
+// VideoObject is independently fail-closed (it only emits when the API returns
+// metadata); this makes the *embed* fail-closed too. Append ids here as they die.
+export const DEAD_YOUTUBE_IDS = new Set<string>([
+  'sAUsYvHjd7M', 'M2BA3EtlZ6Q', '3cVNh7itw1k', 'UMbk0F37r64',
+  'At6MrBxSKWc', 'GXx-v3Ah51U', 'Ic27_U6R6UI', 'gjqLMi8G4lk',
+]);
+/** A youtube id only if it isn't on the dead denylist — else undefined (no embed, no schema). */
+export const liveYouTubeId = (id?: string): string | undefined => (id && !DEAD_YOUTUBE_IDS.has(id) ? id : undefined);
+
 const MIN_LONGFORM_SECONDS = 180; // > 3:00 is long-form; ≤3:00 is a Short (§4.2)
 const SHELF_LIMIT = 25; // featured + up to 24; the flat shelf pages the rest via "Load more"
 const CANDIDATES_PER_SOURCE = 50; // one playlistItems page — ample to fill the shelf after filtering
