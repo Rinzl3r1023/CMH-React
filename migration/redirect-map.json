@@ -673,5 +673,10 @@
     "source": "/webinar-error",
     "destination": "/",
     "statusCode": 301
+  },
+  {
+    "source": "/the-biggest-ai-mistake-business-owners-are-making-and-what-to-do-instead",
+    "destination": "/3-layer-ai-architecture/",
+    "statusCode": 301
   }
 ]
