@@ -38,6 +38,10 @@ export function dispatchGraph(opts: { name: string; description?: string }): Nod
   return clean([...siteNodes(), webPageNode({ url: pageUrl('/dispatch'), name: opts.name, description: opts.description })]);
 }
 
+export function legalGraph(opts: { path: '/privacy' | '/terms'; name: string; description?: string }): Node[] {
+  return clean([...siteNodes(), webPageNode({ url: pageUrl(opts.path), name: opts.name, description: opts.description })]);
+}
+
 export function blogGraph(opts: {
   page: number;
   name: string;

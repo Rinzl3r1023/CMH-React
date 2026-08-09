@@ -1,0 +1,121 @@
+<style>
+.legalDoc { position:relative; z-index:2; max-width:760px; margin:0 auto; padding:72px clamp(20px,5vw,44px) 40px; }
+.legalDoc .eyebrow { display:inline-flex; align-items:center; gap:11px; font-family:'Manrope',sans-serif; font-weight:600; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#F0A93C; margin:0 0 26px; }
+.legalDoc .eyebrow span { width:7px; height:7px; background:#F0A93C; box-shadow:0 0 14px 3px rgba(240,169,60,.9); }
+.legalDoc h1 { font-family:'Fraunces',serif; font-weight:300; font-size:clamp(38px,6vw,58px); line-height:1.03; letter-spacing:-.03em; margin:0 0 16px; }
+.legalDoc .updated { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.08em; color:#8A8378; margin:0 0 8px; }
+.legalDoc .lede { font-size:18px; line-height:1.62; color:#C7C1B8; margin:20px 0 8px; }
+.legalDoc h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(22px,3.2vw,27px); line-height:1.2; letter-spacing:-.02em; color:#FFD79A; margin:52px 0 14px; }
+.legalDoc p { font-size:16.5px; line-height:1.68; color:#A8A199; margin:0 0 16px; }
+.legalDoc ul { margin:0 0 16px; padding-left:22px; }
+.legalDoc li { font-size:16.5px; line-height:1.6; color:#A8A199; margin:0 0 9px; }
+.legalDoc strong { color:#EDEAE4; font-weight:600; }
+.legalDoc a { color:#F0A93C; }
+.legalDoc a:hover { color:#FFD79A; }
+.legalDoc .divider { height:1px; background:rgba(240,169,60,.14); margin:48px 0 8px; }
+.legalDoc .callout { border:1px solid rgba(240,169,60,.28); background:rgba(240,169,60,.05); padding:22px 24px; margin:24px 0; }
+.legalDoc .callout p:last-child { margin-bottom:0; }
+</style>
+
+  <nav style="position:sticky; top:0; z-index:50; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(18px,4vw,44px);">
+      <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4; min-width:0;">
+        <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
+        <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:clamp(11px,1.4vw,13px); letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Chris Michael Harris</span>
+      </a>
+      <div class="navLinks">
+        <a href="/" class="navlink" style="color:#9C958A;">Home</a>
+        <a href="/about/" class="navlink" style="color:#9C958A;">About</a>
+        <a href="/#work-with-me" class="navlink" style="color:#9C958A;">Work With Me</a>
+        <a href="/blog/" class="navlink" style="color:#9C958A;">The Show</a>
+        <a href="/dispatch/" class="navlink" style="color:#9C958A;">The Dispatch</a>
+        <a href="#capture" data-book-call="" class="edge navlink" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 30-min strategy call</a>
+      </div>
+      <button type="button" class="navToggle" data-nav-toggle="" aria-label="Toggle navigation" aria-expanded="false" style="align-items:center; justify-content:center; gap:7px; flex-direction:column; width:44px; height:44px; background:transparent; border:1px solid rgba(240,169,60,.4); cursor:pointer; padding:0;">
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+      </button>
+    </div>
+    <div class="mobileMenu" data-mobile-menu="" style="flex-direction:column; gap:2px; padding:8px clamp(18px,4vw,44px) 20px; border-top:1px solid rgba(240,169,60,.14);">
+      <a href="/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">Home</a>
+      <a href="/about/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">About</a>
+      <a href="/#work-with-me" class="navlink" data-nav-close="" style="padding:14px 0; font-size:13px; color:#A8A199;">Work With Me</a>
+      <a href="/blog/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Show</a>
+      <a href="/dispatch/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Dispatch</a>
+      <a href="#capture" data-book-call="" data-nav-close="" class="btn" style="margin-top:10px; display:inline-flex; align-items:center; justify-content:center; padding:16px 20px; background:#F0A93C; color:#06060A;">Book a 30-min call</a>
+    </div>
+  </nav>
+
+  <main class="legalDoc">
+    <p class="eyebrow"><span></span>Terms</p>
+    <h1>Terms of Use</h1>
+    <p class="updated">Last updated: August 9, 2026</p>
+    <p class="lede">The ground rules for using this site and its content. Nothing exotic — mostly common sense written down.</p>
+    <div class="divider"></div>
+      <h2>Agreeing to these terms</h2>
+      <p>By visiting or using <strong>chrismichaelharris.com</strong> (the “site”), you agree to these terms. If you don’t agree with part of them, please don’t use the site.</p>
+      <h2>What you get here</h2>
+      <p>The site gives you free content — the podcast, videos, and written posts — and the option to subscribe to The Dispatch or book a call with me. Paid coaching or consulting, if we work together, is arranged separately and covered by its own agreement, described below.</p>
+      <h2>Using the site</h2>
+      <p>Use the site for your own lawful, personal purposes. Don’t try to break, overload, or misuse it, scrape it wholesale, or use it in a way that interferes with anyone else’s use. I can change, pause, or retire any part of the site at any time.</p>
+      <h2>What’s mine</h2>
+      <p>The site and its content — writing, video, audio, design, and branding — belong to Chris Michael Harris, or to the people I license from, and are protected by copyright and trademark law. Enjoy it, share links to it, quote a bit with credit. Don’t republish it wholesale or use my name, logo, or brand to sell or endorse something without my written okay.</p>
+      <h2>The Dispatch and other emails</h2>
+      <p>If you subscribe, I’ll email you The Dispatch and the occasional related note. Every email has an unsubscribe link, and using it stops the emails for good.</p>
+      <h2>Coaching and paid work</h2>
+      <p>Booking a call through the site is just that — a conversation. If we decide to work together, the actual engagement (what’s included, what it costs, and how refunds work) is governed by the separate written agreement we sign at that time. That agreement, not this page, controls the paid work.</p>
+      <h2>Results, examples, and testimonials</h2>
+      <div class="callout">
+        <p>Some pages here share specific outcomes — a client who went <strong>four to one</strong> on their return, someone now <strong>charging more than they ever have</strong>. Those are real, and they’re individual. They’re what a particular person experienced in their particular situation — not a promise of what you’ll get.</p>
+        <p>Your results depend on your business, your market, and how much of the work you actually do — all of which matter far more than anything I can say. Nothing on this site is a guarantee of income, growth, or any specific outcome. Treat every example as one person’s story and make your own decisions accordingly.</p>
+      </div>
+      <h2>No professional advice</h2>
+      <p>The content here is educational — my experience and opinion, shared to be useful. It isn’t financial, legal, tax, or professional advice for your specific situation. Before you make a big decision, talk to a qualified professional who knows your circumstances.</p>
+      <h2>The site is provided “as is”</h2>
+      <p>I work to keep the site accurate and available, but I can’t promise it’s error-free, uninterrupted, or free of every issue. The site and its content are provided “as is” and “as available,” without warranties of any kind, whether stated or implied.</p>
+      <h2>Limits on liability</h2>
+      <p>To the fullest extent the law allows, Chris Michael Harris isn’t liable for any indirect, incidental, or consequential losses — lost profits, lost data, or the like — arising from your use of, or inability to use, the site or its content. Some places don’t allow certain limits, so parts of this may not apply to you.</p>
+      <h2>Your responsibility</h2>
+      <p>You agree to cover me from claims and costs that come out of your misuse of the site or your breach of these terms.</p>
+      <h2>Links to other sites</h2>
+      <p>The site links to third-party sites and services I don’t control and am not responsible for. Visiting them is at your own discretion, under their terms, not mine.</p>
+      <h2>Which laws apply</h2>
+      <p>These terms are governed by the laws of the State of Texas, without regard to conflict-of-law rules. If any part of these terms is found unenforceable, the rest stays in effect.</p>
+      <h2>Changes to these terms</h2>
+      <p>I may update these terms as the site changes. When I do, I’ll update the “Last updated” date above. Continuing to use the site after a change means you accept the new terms.</p>
+      <h2>Contact</h2>
+      <p>Questions about these terms? Email me at <a href="mailto:privacy@chrismichaelharris.com">privacy@chrismichaelharris.com</a>, reply to any email I send you, or reach out through the contact options on the site.</p>
+  </main>
+
+  <footer style="position:relative; padding:64px 44px 48px; border-top:1px solid rgba(240,169,60,.16);">
+    <div style="max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:44px; flex-wrap:wrap;">
+      <div style="max-width:340px;">
+        <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; font-family:'Manrope',sans-serif; font-weight:600; font-size:11px;">CMH</span>
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#EDEAE4;">Chris Michael Harris</span>
+        </div>
+        <p style="font-size:14.5px; line-height:1.65; margin:0; color:#8A8378;">I keep up with AI and marketing, so you don't have to. For business owners who'd rather move forward than chase every new thing.</p>
+      </div>
+      <div style="display:flex; gap:70px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Explore</span>
+          <a href="/" style="font-size:14.5px; color:#A8A199;">Home</a>
+          <a href="/about/" style="font-size:14.5px; color:#A8A199;">About</a>
+          <a href="/#work-with-me" style="font-size:14.5px; color:#A8A199;">Work With Me</a>
+          <a href="/blog/" style="font-size:14.5px; color:#A8A199;">The Show</a>
+          <a href="/dispatch/" style="font-size:14.5px; color:#A8A199;">The Dispatch</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Elsewhere</span>
+          <a href="https://www.youtube.com/@HeyCMH" style="font-size:14.5px; color:#A8A199;">YouTube</a>
+          <a href="https://thebusinesslounge.co/" style="font-size:14.5px; color:#A8A199;">The Business Lounge</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope',sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Legal</span>
+          <a href="/privacy/" style="font-size:14.5px; color:#A8A199;">Privacy</a>
+          <a href="/terms/" style="font-size:14.5px; color:#A8A199;">Terms</a>
+        </div>
+      </div>
+    <div style="max-width:1180px; margin:48px auto 0; padding-top:26px; border-top:1px solid rgba(240,169,60,.12); font-family:'Manrope',sans-serif; font-weight:600; font-size:11.5px; color:#8A8378; letter-spacing:.04em;">© 2026 Chris Michael Harris — keeping an eye on what's next.</div>
+  </footer>

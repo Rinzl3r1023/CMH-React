@@ -8,7 +8,7 @@ import { getAllPosts, getGridPosts } from '@/lib/posts';
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   // Trailing-slash canonical URLs (match the served paths).
-  const staticRoutes = ['/', '/about', '/dispatch', '/blog'].map((p) => ({
+  const staticRoutes = ['/', '/about', '/dispatch', '/blog', '/privacy', '/terms'].map((p) => ({
     url: canonicalUrl(p),
     lastModified: now,
   }));
