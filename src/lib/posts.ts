@@ -165,11 +165,16 @@ export function getAllSlugs(): string[] {
 // The one post marked featured:true, else the newest (§2.2).
 export function getFeaturedPost(): PostMeta | null {
   const all = getAllPosts();
-  return all.find((p) => p.featured) ?? all[0] ?? null;
+  // The hero must be an indexed post — never surface a noindexed one as the lead.
+  return all.find((p) => p.featured && !p.noindex) ?? all.find((p) => !p.noindex) ?? all[0] ?? null;
 }
 
-// Posts for the grid, excluding the featured one that gets the hero block.
+// Posts for the grid: exclude the featured (hero) post AND noindexed posts.
+// noindexed posts are reachable at their URL but not promoted in browse — so the
+// on-site archive matches what search indexes (§ noindex pass). This is the single
+// source the grid, Load more (counts items.length), /blog/page/N, and the sitemap
+// all derive from, so the filtered count stays consistent everywhere.
 export function getGridPosts(): PostMeta[] {
   const featured = getFeaturedPost();
-  return getAllPosts().filter((p) => p.slug !== featured?.slug);
+  return getAllPosts().filter((p) => p.slug !== featured?.slug && !p.noindex);
 }
