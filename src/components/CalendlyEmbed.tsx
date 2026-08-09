@@ -5,9 +5,23 @@ import styles from './CalendlyEmbed.module.css';
 
 declare global {
   interface Window {
-    Calendly?: { initInlineWidget: (opts: { url: string; parentElement: HTMLElement }) => void };
+    Calendly?: {
+      initInlineWidget: (opts: {
+        url: string;
+        parentElement: HTMLElement;
+        // Removes the "Powered by Calendly" ribbon on paid plans. Toggling
+        // branding off in account settings does NOT remove it from an inline
+        // embed — only this param does.
+        branding?: boolean;
+      }) => void;
+    };
   }
 }
+
+// If Calendly hasn't signalled a render within this window, stop spinning and
+// offer the new-tab fallback instead. Covers a slow script load AND a widget
+// that inits but never paints.
+const READY_TIMEOUT_MS = 10000;
 
 const WIDGET_SRC = 'https://assets.calendly.com/assets/external/widget.js';
 
@@ -66,34 +80,59 @@ export default function CalendlyEmbed({ url }: { url: string }) {
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
-    let cancelled = false;
     setStatus('loading');
+    let settled = false; // ready OR error has fired — whichever comes first wins
+
+    const toError = () => {
+      if (settled) return;
+      settled = true;
+      setStatus('error');
+      // Fall back to the scheduler in a new tab. Best-effort (a popup blocker may
+      // stop the auto-open) — the visible link below is the guaranteed path, so
+      // the CTA is never a dead end.
+      try {
+        window.open(url, '_blank', 'noopener');
+      } catch {
+        /* link below covers it */
+      }
+    };
+
+    // Calendly posts a window message once the inline widget has actually
+    // rendered (the first `calendly.*` event, e.g. event_type_viewed). Keep the
+    // spinner up until then — clearing on initInlineWidget() alone leaves the
+    // panel blank for the seconds the iframe takes to paint, which reads as broken.
+    const onMessage = (e: MessageEvent) => {
+      const ev = (e.data as { event?: unknown } | null)?.event;
+      if (typeof ev === 'string' && ev.indexOf('calendly.') === 0) {
+        if (settled) return;
+        settled = true;
+        setStatus('ready');
+      }
+    };
+    window.addEventListener('message', onMessage);
+
+    // Never spin forever: if no render within the window, show the fallback.
+    const timer = window.setTimeout(toError, READY_TIMEOUT_MS);
+
     loadCalendly()
       .then(() => {
-        if (cancelled) return;
+        if (settled) return;
         const host = hostRef.current;
         if (window.Calendly && host) {
           host.innerHTML = '';
-          window.Calendly.initInlineWidget({ url: brandedUrl(url), parentElement: host });
-          setStatus('ready');
+          // branding:false removes the "Powered by Calendly" ribbon (paid plans).
+          window.Calendly.initInlineWidget({ url: brandedUrl(url), parentElement: host, branding: false });
+          // Stay in 'loading' — the message listener (or the timeout) resolves it.
         } else {
-          throw new Error('calendly unavailable');
+          toError();
         }
       })
-      .catch(() => {
-        if (cancelled) return;
-        setStatus('error');
-        // Fall back to the scheduler in a new tab. Best-effort (a popup blocker may
-        // stop the auto-open) — the visible link below is the guaranteed path, so
-        // the CTA is never a dead end.
-        try {
-          window.open(url, '_blank', 'noopener');
-        } catch {
-          /* link below covers it */
-        }
-      });
+      .catch(toError);
+
     return () => {
-      cancelled = true;
+      settled = true; // stop late listeners/timers from flipping state after unmount
+      window.removeEventListener('message', onMessage);
+      window.clearTimeout(timer);
       if (hostRef.current) hostRef.current.innerHTML = '';
     };
   }, [url]);
