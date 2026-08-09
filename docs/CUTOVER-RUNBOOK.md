@@ -38,6 +38,7 @@ Email runs through SiteGround and **must not break**. The apex `A` change does *
   Each should resolve to **SiteGround** independently of the apex.
 - **→ VERIFY:** both have their own `A`/`CNAME` rows in the zone. Because they're explicit subdomain records, changing the apex `A` **cannot** affect them — subdomains don't inherit the apex A. If either is *missing* an explicit record and only works via a wildcard `*` record, note it: a wildcard could shift with other changes. (It won't be touched by the apex edit, but confirm no wildcard is in play.)
 - **Do not** touch these two rows during cutover.
+- **Note:** both subdomain sites are **dead / unused** — the verification here is purely to confirm the apex change doesn't disturb them unexpectedly, not because they need to keep working. They can be **decommissioned after the 30-day rollback window closes** (delete the records + the multisite installs then, not now — leave the whole SiteGround state frozen during the window, see 4.3).
 
 ### 0.4 — Get a way to reach WordPress after DNS moves (your concern #3, rollback window)
 Once DNS points at Railway, `chrismichaelharris.com` no longer reaches WordPress — but you need WP reachable for the **30-day rollback window** (and to pull anything you missed). Get **one** of these now and confirm it loads the WP admin/site:
@@ -65,7 +66,21 @@ Once DNS points at Railway, `chrismichaelharris.com` no longer reaches WordPress
 - Load `https://cmh-react-production.up.railway.app/` and spot-check: home, `/blog/`, one post, `/feed/`, `/sitemap.xml`, `/robots.txt`. All 200, covers render, one video embed per post.
 - **→ VERIFY:** GA4 + Ads env vars are live (they are), and the latest deploy is green.
 
-### 0.8 — Pre-stage Cloudflare SSL mode (prevents the redirect loop)
+### 0.8 — Verify `NEXT_PUBLIC_SITE_URL` in Railway (do this before the DNS change, then rebuild)
+`SITE_URL` is the origin for **every canonical, the sitemap, the RSS feed, and every schema `@id`/`url`**. It's a `NEXT_PUBLIC_*` var, so it's **inlined at build time** — it cannot be fixed by just resolving DNS; the app has to be **rebuilt** with the right value. If it's currently set to the Railway URL, then the moment the real domain resolves, every canonical and schema node ships pointing at `*.up.railway.app` — an active SEO problem (self-referencing canonicals to the wrong host, split signals), not cosmetic.
+- Railway → service → **Variables**. Check `NEXT_PUBLIC_SITE_URL`:
+  - **Correct:** either **unset** (the code defaults to `https://chrismichaelharris.com`) **or** explicitly `https://chrismichaelharris.com` (no trailing slash, `https`, apex/no-www).
+  - **Wrong:** anything containing `up.railway.app` or `http://`.
+- If wrong/missing-and-you-want-it-explicit: set it to `https://chrismichaelharris.com`, then **trigger a fresh deploy** so it's inlined.
+- **→ VERIFY on the Railway URL, before touching DNS:**
+  ```
+  curl -s https://cmh-react-production.up.railway.app/sitemap.xml | grep -m1 "<loc>"
+  curl -s https://cmh-react-production.up.railway.app/feed/ | grep -m1 "<link>"
+  curl -s https://cmh-react-production.up.railway.app/ | grep -o 'rel="canonical" href="[^"]*"' | head -1
+  ```
+  All three must print **`https://chrismichaelharris.com/...`**, NOT the railway host. If they show the railway host, fix the var + redeploy and re-check — **do not start the DNS change until this passes.**
+
+### 0.9 — Pre-stage Cloudflare SSL mode (prevents the redirect loop)
 - Cloudflare → **SSL/TLS → Overview → set encryption mode to `Full (strict)`.** Do this **now**, before proxying.
 - Why: with mode **Flexible**, Cloudflare talks to the origin over HTTP while the origin (Railway) forces HTTPS → **infinite redirect loop**, the classic Cloudflare-in-front-of-a-host failure. `Full (strict)` makes Cloudflare↔Railway HTTPS end-to-end and validates Railway's cert. This is the proxy caveat resolved.
 
@@ -115,7 +130,7 @@ Do apex and www together. **Proxy OFF (grey cloud / DNS-only) for now** — Rail
 ### 3.3 — Turn the Cloudflare proxy ON (your item #4)
 Grey-cloud was only for cert issuance. Now enable the CDN/WAF/DDoS/caching — a real gain given Railway is single-region `us-west2`.
 - Cloudflare DNS → toggle **apex and www to Proxied (orange cloud).**
-- Confirm **SSL/TLS mode is `Full (strict)`** (set in 0.8).
+- Confirm **SSL/TLS mode is `Full (strict)`** (set in 0.9).
 - Recommended while you're there: **Always Use HTTPS = On**; **Auto Minify off** (Next already optimizes); caching leave default (Next sets cache headers; don't "Cache Everything" the HTML or you'll serve stale pages — the default "Standard" respects origin headers).
 - **→ VERIFY (this is the loop check):**
   ```
@@ -143,8 +158,13 @@ Grey-cloud was only for cert issuance. Now enable the CDN/WAF/DDoS/caching — a
 ### 4.2 — Analytics / Ads
 - Confirm GA4 realtime shows traffic on the live domain; confirm the Google Ads conversion tag fires (test a Calendly-modal open / form submit).
 
-### 4.3 — Keep WordPress alive 30 days
-- Do **not** cancel SiteGround or delete the WP install during the rollback window. Keep the temp URL working. After ~30 days of stable rankings/traffic, decommission.
+### 4.3 — Keep WordPress alive **and frozen** for 30 days
+- Do **not** cancel SiteGround or delete the WP install during the rollback window. Keep the temp URL working. After ~30 days of stable rankings/traffic, decommission (and delete the now-dead `programs.`/`courses.` records + installs then).
+- ⚠️ **Do NOT migrate SiteGround accounts/servers during the window.** A new SiteGround account is planned — **hold it.** Rollback works by pointing DNS back at the SiteGround server that hosts WordPress *right now* (the IP captured in 0.1). If WordPress moves to a new server mid-window, that IP changes and **your rollback target moves out from under you** — the captured baseline would point at the old, now-empty server. Correct order:
+  1. **Cut over** (this runbook).
+  2. **Hold the current SiteGround as-is for 30 days** — same account, same server, temp URL live.
+  3. **After** the window closes and the new site is proven, **then** migrate/close SiteGround.
+- If the account move is truly unavoidable mid-window: it invalidates the rollback plan, so first re-capture the new server IP, confirm WP serves there via a fresh temp URL, and update 0.1's baseline — treat it as re-doing pre-flight. Cleaner to just wait.
 
 ---
 
