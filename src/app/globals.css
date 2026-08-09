@@ -98,6 +98,15 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
 .mobileMenu { display:none; }
 .pipeTrack { position:relative; height:150px; }
 .pipeNodes { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; }
+/* Per-node horizontal padding masks the pipe wire behind each node — it exists
+   ONLY for the desktop row layout. Scoped to >860px so it never reaches the
+   mobile column layout (where the wire is hidden and the nodes stack), which is
+   what made the three steps drift progressively right. */
+@media (min-width:861px) {
+  .pipeNodes > div:nth-child(1) { padding-right:18px; }
+  .pipeNodes > div:nth-child(2) { padding-inline:18px; }
+  .pipeNodes > div:nth-child(3) { padding-left:18px; }
+}
 
 @media (max-width:1180px) { .g4 { grid-template-columns:1fr 1fr; } }
 @media (max-width:1040px) { .postGrid { grid-template-columns:1fr 1fr; } .cardGrid { grid-template-columns:1fr 1fr; } }
