@@ -29,6 +29,10 @@ export type PostMeta = {
   /** Schema-only frontmatter (optional). */
   keywords?: string[];
   articleSection?: string;
+  /** Which post-template CTAs render: 'full' = mid-article Dispatch + end call;
+   *  'dispatch-only' = just the mid-article Dispatch (off-positioning posts).
+   *  Defaults to 'full'. */
+  cta: 'full' | 'dispatch-only';
   /** True for migration placeholders that still need real body content (Phase 2). */
   placeholder: boolean;
 };
@@ -36,7 +40,9 @@ export type PostMeta = {
 export type Post = PostMeta & {
   body: string;
   wordCount: number;
-  /** Dormant until the AEO rewrite writes real Q&A / ordered steps into the body (§4.3/§4.4). */
+  /** Dormant content blocks — rendered only when frontmatter provides them, so the
+   *  AEO rewrite just fills them in. faq also feeds the FAQPage schema (§4.3). */
+  takeaways?: string[];
   faq?: FaqItem[];
   howto?: unknown;
 };
@@ -114,6 +120,7 @@ function toMeta(slug: string, data: Record<string, unknown>, covers: Record<stri
     cover: covers[fmSlug] ?? null,
     keywords,
     articleSection,
+    cta: data.cta === 'dispatch-only' ? 'dispatch-only' : 'full',
     placeholder: Boolean(data.placeholder),
   };
 }
@@ -140,9 +147,10 @@ export function getPost(slug: string): Post | null {
   if (!raw) return null;
   const covers = readCoverManifest();
   const wordCount = raw.body.trim() ? raw.body.trim().split(/\s+/).filter(Boolean).length : 0;
+  const takeaways = Array.isArray(raw.data.takeaways) ? raw.data.takeaways.map((t) => String(t)).filter(Boolean) : undefined;
   const faq = Array.isArray(raw.data.faq) ? (raw.data.faq as FaqItem[]) : undefined;
   const howto = raw.data.howto;
-  return { ...toMeta(slug, raw.data, covers), body: raw.body, wordCount, faq, howto };
+  return { ...toMeta(slug, raw.data, covers), body: raw.body, wordCount, takeaways, faq, howto };
 }
 
 export function getAllSlugs(): string[] {
