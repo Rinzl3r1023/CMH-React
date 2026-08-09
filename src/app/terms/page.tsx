@@ -4,6 +4,12 @@ import { pageMetadata } from '@/lib/metadata';
 import JsonLd from '@/components/JsonLd';
 import { legalGraph } from '@/lib/schema/graphs';
 
+// NEEDS CONFIRMATION before this is treated as final: the "Which laws apply"
+// section sets governing law to Texas (the CMH LLC's state). Chris is personally
+// based in Arkansas and the LLC's standing is unsettled. Confirm Texas vs.
+// Arkansas and update the fragment (src/pages-html/terms.inner.html, generated
+// by scratchpad/gen-legal.mjs) accordingly. Kept out of the shipped HTML on
+// purpose — this note stays server-side.
 export const metadata: Metadata = pageMetadata({
   title: 'Terms of Use — Chris Michael Harris',
   description:
