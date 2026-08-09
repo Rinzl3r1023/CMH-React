@@ -66,6 +66,9 @@ function brandedUrl(base: string): string {
   try {
     const u = new URL(base);
     u.searchParams.set('hide_gdpr_banner', '1');
+    // The modal header already says "Book a Strategy Call" — drop Calendly's own
+    // event-details block so the calendar starts at the top of the panel.
+    u.searchParams.set('hide_event_type_details', '1');
     u.searchParams.set('background_color', '06060A');
     u.searchParams.set('text_color', 'EDEAE4');
     u.searchParams.set('primary_color', 'E8A33D');
@@ -97,16 +100,27 @@ export default function CalendlyEmbed({ url }: { url: string }) {
       }
     };
 
-    // Calendly posts a window message once the inline widget has actually
-    // rendered (the first `calendly.*` event, e.g. event_type_viewed). Keep the
-    // spinner up until then — clearing on initInlineWidget() alone leaves the
-    // panel blank for the seconds the iframe takes to paint, which reads as broken.
+    // Calendly posts window messages once the inline widget has rendered. Two
+    // things ride on them:
+    //   1. The first `calendly.*` event (e.g. event_type_viewed) clears the
+    //      spinner — clearing on initInlineWidget() alone leaves the panel blank
+    //      for the seconds the iframe takes to paint, which reads as broken.
+    //   2. `calendly.page_height` carries the content height — we size the iframe
+    //      to it (auto-resize) so it never scrolls internally. That removes the
+    //      white iframe scrollbar; our own scroll container (hidden bar) handles
+    //      any overflow instead, and shorter content leaves a seamless dark gap.
     const onMessage = (e: MessageEvent) => {
-      const ev = (e.data as { event?: unknown } | null)?.event;
-      if (typeof ev === 'string' && ev.indexOf('calendly.') === 0) {
-        if (settled) return;
+      const data = e.data as { event?: unknown; payload?: { height?: unknown } } | null;
+      const ev = data?.event;
+      if (typeof ev !== 'string' || ev.indexOf('calendly.') !== 0) return;
+      if (!settled) {
         settled = true;
+        window.clearTimeout(timer);
         setStatus('ready');
+      }
+      if (ev === 'calendly.page_height' && typeof data?.payload?.height === 'string') {
+        const iframe = hostRef.current?.querySelector('iframe');
+        if (iframe) iframe.style.height = data.payload.height;
       }
     };
     window.addEventListener('message', onMessage);
@@ -139,7 +153,9 @@ export default function CalendlyEmbed({ url }: { url: string }) {
 
   return (
     <div className={styles.wrap}>
-      <div ref={hostRef} className={styles.host} />
+      <div className={styles.scroll}>
+        <div ref={hostRef} className={styles.host} />
+      </div>
       {status === 'loading' ? (
         <div className={styles.state}>
           <div className={styles.spinner} aria-hidden="true" />
