@@ -73,6 +73,7 @@ export async function generateMetadata({
     path: `/${post.slug}`,
     type: 'article',
     image: post.cover?.src,
+    noindex: post.noindex,
   });
 }
 

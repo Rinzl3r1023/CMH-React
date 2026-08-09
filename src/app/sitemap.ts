@@ -19,10 +19,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     blogPages.push({ url: canonicalUrl(`/blog/page/${n}`), lastModified: now });
   }
 
-  const posts = getAllPosts().map((post) => ({
-    url: canonicalUrl(`/${post.slug}`),
-    lastModified: post.date ? new Date(post.date) : now,
-  }));
+  // Exclude noindex posts — a noindexed URL sitting in the sitemap is a mixed
+  // signal to crawlers.
+  const posts = getAllPosts()
+    .filter((post) => !post.noindex)
+    .map((post) => ({
+      url: canonicalUrl(`/${post.slug}`),
+      lastModified: post.date ? new Date(post.date) : now,
+    }));
 
   return [...staticRoutes, ...blogPages, ...posts];
 }

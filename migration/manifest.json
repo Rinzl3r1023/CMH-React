@@ -561,7 +561,8 @@
       "word_count": 6000,
       "markup_era": "Classic",
       "embed": "libsyn",
-      "category": "ai-marketing"
+      "category": "ai-marketing",
+      "rewrite_priority": true
     },
     {
       "title": "Changing the Game in Your Industry | Bucking Traditional Avenues via Technology and Content Creation",
@@ -711,7 +712,7 @@
       "word_count": 463,
       "markup_era": "Divi",
       "embed": "YouTube",
-      "category": "business-ops"
+      "category": "other"
     },
     {
       "title": "Strategic Planning Hacks With Sean Castrina",
@@ -971,7 +972,7 @@
       "word_count": 74,
       "markup_era": "Classic",
       "embed": "libsyn",
-      "category": "business-ops"
+      "category": "personal-development"
     },
     {
       "title": "My 3 Top Books to Read for Business in 2018 and Beyond | Reading is an Investment in Your Future",
@@ -1061,7 +1062,7 @@
       "word_count": 1633,
       "markup_era": "Classic",
       "embed": "libsyn",
-      "category": "business-ops"
+      "category": "personal-development"
     },
     {
       "title": "Is It Possible to Build a Retail Business Without Investment Dollars? | When Investors Don't Make Sense for Your Company",
@@ -1211,7 +1212,7 @@
       "word_count": 324,
       "markup_era": "Classic",
       "embed": "libsyn",
-      "category": "business-ops"
+      "category": "personal-development"
     },
     {
       "title": "Can Boomers Still Launch A Successful Business? | Entrepreneurship Extends Beyond Millennials",
