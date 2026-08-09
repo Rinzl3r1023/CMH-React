@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './fonts.css';
 import './globals.css';
 import ClientEnhancer from '@/components/ClientEnhancer';
+import Analytics from '@/components/Analytics';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 
 // Site-wide metadata defaults. Individual pages override title/description/og.
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <ClientEnhancer />
+        <Analytics />
       </body>
     </html>
   );
