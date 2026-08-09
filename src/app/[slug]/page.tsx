@@ -11,6 +11,38 @@ import HtmlFragment from '@/components/HtmlFragment';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import JsonLd from '@/components/JsonLd';
 import { postGraph } from '@/lib/schema/graphs';
+import DispatchInline from '@/components/DispatchInline';
+import CallCTA from '@/components/CallCTA';
+import KeyTakeaways from '@/components/KeyTakeaways';
+import FaqBlock from '@/components/FaqBlock';
+
+// Split the body so the mid-article Dispatch lands after the 3rd section (or
+// ~50% down for shorter posts). Splits only on top-level h2s outside code fences.
+function splitForMidCta(body: string): { before: string; after: string } {
+  const lines = body.split('\n');
+  let fence = false;
+  const h2: number[] = [];
+  lines.forEach((ln, i) => {
+    if (/^\s*```/.test(ln)) fence = !fence;
+    else if (!fence && /^##\s+\S/.test(ln)) h2.push(i);
+  });
+  if (h2.length >= 2) {
+    const nth = Math.min(3, Math.ceil(h2.length / 2)); // 3rd section, or ~50% if fewer
+    const cut = h2[nth] ?? h2[h2.length - 1];
+    return { before: lines.slice(0, cut).join('\n'), after: lines.slice(cut).join('\n') };
+  }
+  // No usable heading structure: split by paragraphs at ~50% of the word count.
+  const paras = body.split(/\n{2,}/);
+  const totalWords = body.split(/\s+/).filter(Boolean).length;
+  let acc = 0;
+  let k = 0;
+  for (; k < paras.length; k++) {
+    acc += paras[k].split(/\s+/).filter(Boolean).length;
+    if (acc >= totalWords / 2) { k++; break; }
+  }
+  if (k <= 0 || k >= paras.length) return { before: body, after: '' };
+  return { before: paras.slice(0, k).join('\n\n'), after: paras.slice(k).join('\n\n') };
+}
 
 // Root-level post slugs (§1). Static routes (/about, /show, /dispatch, /blog)
 // live in their own folders and take precedence; this dynamic segment is the
@@ -48,10 +80,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const post = getPost(slug);
   if (!post) notFound();
 
-  const { content } = await compileMDX({
-    source: post.body,
-    options: { parseFrontmatter: false },
-  });
+  // The mid-article Dispatch renders for both cta modes; it needs content on both
+  // sides of the split (skip it if the post is too short to split).
+  const { before, after } = splitForMidCta(post.body);
+  const showMidDispatch = after.trim().length > 0;
+  const [beforeNode, afterNode] = showMidDispatch
+    ? [
+        (await compileMDX({ source: before, options: { parseFrontmatter: false } })).content,
+        (await compileMDX({ source: after, options: { parseFrontmatter: false } })).content,
+      ]
+    : [(await compileMDX({ source: post.body, options: { parseFrontmatter: false } })).content, null];
 
   // VideoObject metadata (title/duration/uploadDate) comes from the shared
   // YouTube cache — reuses the videos.list path, no second API integration (§4.2).
@@ -122,7 +160,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         )}
 
-        <div className="postBody">{content}</div>
+        <KeyTakeaways items={post.takeaways} />
+
+        <div className="postBody">
+          {beforeNode}
+          {showMidDispatch && <DispatchInline />}
+          {afterNode}
+        </div>
+
+        <FaqBlock items={post.faq} />
+        {post.cta === 'full' && <CallCTA />}
       </article>
 
       <HtmlFragment html={fragment('library.capfoot.html')} />
