@@ -53,6 +53,17 @@ a:hover { color:#FFD79A; }
 .cut { clip-path:polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%); }
 .brk { position:absolute; width:11px; height:11px; border-color:rgba(240,169,60,.55); }
 
+/* Ridgeline motif (Home "Where I coach", Motif C). A generated terrain band —
+   the only organic shape in the system, everything else is grid + circle — sits
+   in each card's upper .art region, behind nothing (content lives in .pad below),
+   so legibility is never in question. hazeDrift is disabled under reduced-motion
+   by the global rule further down. .spec is the community card's bullet list. */
+.art { position:relative; overflow:hidden; background:#07070C; border-bottom:1px solid rgba(255,255,255,.08); flex:none; height:clamp(150px,18vw,192px); }
+.pad { padding:clamp(30px,3.6vw,42px) clamp(26px,3.2vw,36px); display:flex; flex-direction:column; flex:1; }
+.spec { display:flex; gap:11px; align-items:flex-start; font-size:clamp(15px,1.9vw,16px); color:#D9D3CA; line-height:1.55; }
+.spec > span { color:#F0A93C; flex:none; }
+@keyframes hazeDrift { 0%,100% { transform:translateX(0); } 50% { transform:translateX(3%); } }
+
 input::placeholder { color:#8A8378; }
 input:focus { outline:2px solid #F0A93C !important; outline-offset:-2px !important; }
 form:focus-within { border-color:#F0A93C !important; box-shadow:0 0 0 1px rgba(240,169,60,.4), 0 0 44px -6px rgba(240,169,60,.75) !important; }
