@@ -162,6 +162,52 @@ export default function ClientEnhancer() {
       formHandlers.push([form, handler]);
     });
 
+    // ── Copy buttons on code blocks ──────────────────────────────────────────
+    // Progressive enhancement: fenced code in a post renders server-side as plain
+    // <pre><code>; this wraps each block and drops a Copy button in the corner so a
+    // copy-paste prompt is one tap away. The wrapper (not <pre>) holds the button
+    // so it stays pinned while long lines scroll. Guarded so route re-runs don't
+    // double-wrap; clipboard-gated so it no-ops where the API is unavailable.
+    const codeCleanups: Array<() => void> = [];
+    if (navigator.clipboard) {
+      document.querySelectorAll<HTMLPreElement>('.postBody pre').forEach((pre) => {
+        if (pre.dataset.copyReady || !pre.parentNode) return;
+        pre.dataset.copyReady = '1';
+        const wrap = document.createElement('div');
+        wrap.className = 'codeWrap';
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'codeCopy';
+        btn.textContent = 'Copy';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        let resetT: ReturnType<typeof setTimeout> | undefined;
+        const onClick = async () => {
+          const text = (pre.querySelector('code') ?? pre).textContent ?? '';
+          try {
+            await navigator.clipboard.writeText(text);
+            btn.textContent = 'Copied ✓';
+            btn.classList.add('copied');
+          } catch {
+            btn.textContent = 'Press ⌘/Ctrl-C';
+          }
+          if (resetT) clearTimeout(resetT);
+          resetT = setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+        };
+        btn.addEventListener('click', onClick);
+        wrap.appendChild(btn);
+        codeCleanups.push(() => {
+          if (resetT) clearTimeout(resetT);
+          btn.removeEventListener('click', onClick);
+          // Restore the <pre> to its original slot and drop the wrapper.
+          if (wrap.parentNode) wrap.parentNode.insertBefore(pre, wrap);
+          wrap.remove();
+          delete pre.dataset.copyReady;
+        });
+      });
+    }
+
     return () => {
       io?.disconnect();
       if (safety) clearTimeout(safety);
@@ -170,6 +216,7 @@ export default function ClientEnhancer() {
       toggle?.removeEventListener('click', onToggle);
       closers.forEach((el) => el.removeEventListener('click', onClose));
       formHandlers.forEach(([form, handler]) => form.removeEventListener('submit', handler));
+      codeCleanups.forEach((fn) => fn());
     };
   }, [pathname]);
 
