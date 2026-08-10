@@ -35,6 +35,14 @@ export default function ClientEnhancer() {
       // In-view reveals keep their base opacity:1 and simply paint with the HTML;
       // only below-the-fold sections get the scroll-in animation. `getBounding
       // ClientRect` here reads post-layout positions since this runs after mount.
+      //
+      // This classification MUST stay synchronous. Deciding it from the observer's
+      // own first callback instead looked cleaner but shipped a full outage: a
+      // `.reveal` taller than the viewport (the post's <article class="postWrap
+      // reveal">, which wraps the whole article) never meets threshold 0.1, so the
+      // observer reports it NOT intersecting, arms it, and never un-arms it → every
+      // post rendered blank. getBoundingClientRect's top check has no such failure
+      // mode: the article's top is near 0, so it's never armed.
       const vh = window.innerHeight || document.documentElement.clientHeight || 0;
       const armedEls = reveals.filter((el) => el.getBoundingClientRect().top > vh * 0.9);
       armedEls.forEach((el) => el.classList.add('armed'));
@@ -51,11 +59,16 @@ export default function ClientEnhancer() {
         { threshold: 0.1, rootMargin: '0px 0px -6% 0px' },
       );
       armedEls.forEach((el) => io!.observe(el));
-      // Failsafe: never leave content hidden if the observer never fires.
-      safety = setTimeout(
-        () => armedEls.forEach((el) => { el.classList.remove('armed'); el.classList.add('in'); }),
-        2500,
-      );
+      // Fail-open: the reveal is decorative — content must never stay hidden. If
+      // the observer is delayed or never fires for an armed element, force EVERY
+      // element still armed after 2s to its revealed state. Query the DOM (not the
+      // armedEls list) so nothing armed can slip through, whatever armed it.
+      safety = setTimeout(() => {
+        document.querySelectorAll<HTMLElement>('.reveal.armed').forEach((el) => {
+          el.classList.remove('armed');
+          el.classList.add('in');
+        });
+      }, 2000);
     }
 
     // ── Parallax ─────────────────────────────────────────────────────────────
