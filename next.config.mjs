@@ -44,6 +44,21 @@ const nextConfig = {
     // handles root-level *post* slugs and folds any unknown path to '/'.
     return pageRedirects;
   },
+  async headers() {
+    // Post covers (originals + build-generated WebP variants) are static files
+    // that never change in place, but Next serves /public with max-age=0, so every
+    // browser revisit pays a revalidation round-trip. Cache them hard: Cloudflare
+    // already edge-caches the extension, this covers the CLIENT. `immutable` means
+    // no revalidation at all — safe because the content is fixed for a given path.
+    // (A cover redesign that reuses the same filename would need a query/version
+    // bump to bust client caches; today the art is deterministic per slug.)
+    return [
+      {
+        source: '/post-covers/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
