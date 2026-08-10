@@ -63,7 +63,7 @@ export default function FeaturedPost({ post }: { post: PostMeta }) {
           </span>
           <h2
             style={{
-              fontFamily: "'Fraunces','Fraunces Fallback',Georgia,serif",
+              fontFamily: "'Fraunces',serif",
               fontWeight: 400,
               fontSize: 'clamp(24px,3.2vw,31px)',
               lineHeight: 1.18,
