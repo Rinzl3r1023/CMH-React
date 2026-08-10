@@ -104,6 +104,10 @@ export default function ClientEnhancer() {
         a.target = '_blank';
         a.rel = 'noopener';
         a.style.setProperty('display', 'inline-flex', 'important');
+        // The desktop nav CTA reserves its box via visibility:hidden (globals.css,
+        // CLS fix) rather than display:none — flip it visible here. Harmless on the
+        // display:none CTAs, which visibility:visible leaves shown once display is set.
+        a.style.setProperty('visibility', 'visible', 'important');
       });
     }
     const coaching = process.env.NEXT_PUBLIC_COACHING_URL ?? 'https://thebusinesslounge.co/coaching/';

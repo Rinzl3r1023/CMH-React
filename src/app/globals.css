@@ -182,6 +182,15 @@ a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offse
    as the Kit 503 — a missing button beats a button that makes a false promise.
    ClientEnhancer reveals + wires them only when the env URL is present. */
 [data-book-call], [data-coaching-link] { display: none !important; }
+/* CLS fix (option 1): the DESKTOP nav CTA sits in the header on first paint, so
+   revealing it with `display` reflows the whole nav (~0.23 CLS). Instead reserve
+   its box from the start — keep it laid out (inline-flex) but invisible via
+   `visibility`, which ClientEnhancer flips to `visible` once the URL is wired.
+   Fail-closed still holds: while hidden it paints nothing and, being
+   visibility:hidden, is unfocusable and unclickable. Scoped to `.navlink` so the
+   mobile-menu / end-of-post / coaching CTAs keep the plain display:none reveal
+   (they're off the initial viewport and don't affect CLS). */
+.navlink[data-book-call] { display: inline-flex !important; visibility: hidden; }
 
 .pg-alt .brk { border-color:rgba(240,169,60,.6); }
 .pg-lib .navLinks { gap:clamp(14px,2vw,28px); }
