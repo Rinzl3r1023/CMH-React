@@ -1,5 +1,17 @@
 
 
+<style>
+/* Narrative aside (§01). The three backstory paragraphs — the founding, the
+   accounts, the podcast — are a past-tense step out of the section's otherwise
+   present-tense address. A single continuous amber rule in the left margin marks
+   the block as one aside (not three separate annotations). Weight (2px) and color
+   (amber .5) match the site's existing rule vocabulary (dividers, the quote rule).
+   The rule hangs in the left gutter — text stays aligned with the rest of §01. */
+.originAside { position:relative; }
+.originAside::before { content:""; position:absolute; left:-22px; top:4px; bottom:4px; width:2px; background:rgba(240,169,60,.5); border-radius:2px; }
+@media (max-width:600px) { .originAside::before { left:-14px; } }
+</style>
+
   <div id="scanveil" aria-hidden="true" style="position:fixed; inset:0; z-index:60; pointer-events:none; display:none; background:repeating-linear-gradient(180deg, rgba(255,255,255,.016) 0 1px, transparent 1px 3px); mix-blend-mode:screen;"></div>
   <div aria-hidden="true" style="position:fixed; inset:0; z-index:59; pointer-events:none; background:radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55));"></div>
 
@@ -69,9 +81,11 @@
       <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">The origin</span>
     </div>
     <p style="font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:300; font-size:30px; line-height:1.42; color:#FFD79A; margin:0 0 38px; text-shadow:0 0 50px rgba(240,169,60,.3);">I've been building and marketing businesses for 15 years. Long enough to know the difference between something that changes the game and something that just makes noise.</p>
+    <div class="originAside">
     <p style="font-size:18px; line-height:1.75; color:#A8A199; margin:0 0 26px;">Before any of this, we ran a moving and storage company. I started Lift It at <b>23</b> out of my college apartment with a mountain of debt — doing laundry in my bathtub, jogging to the office to save gas money. No outside investment, no line of credit, which mostly meant that when something went wrong, it went wrong on us. A little over two years later we were doing <b>$1.2 million</b> a year, running installations in more than thirty states.</p>
     <p style="font-size:18px; line-height:1.75; color:#A8A199; margin:0 0 26px;">The part I actually remember isn't the number. It's cold-calling national furniture manufacturers — <em>University Loft, Foliot, Dickson</em> — from a company none of them had heard of, and slowly talking our way into becoming one of Dickson's preferred installers in the country, furnishing some of the largest apartment communities in the U.S. Kim was in it. My brother was in it. I learned more about marketing in those two years than in anything I've bought since.</p>
     <p style="font-size:18px; line-height:1.75; color:#A8A199; margin:0 0 26px;">A few years later I started a podcast. That was 2015; it's 360 episodes now. The honest value of it was never the audience — it was a decade of asking people who had already done it how they actually did it. Daymond John, Barbara Corcoran, Guy Kawasaki, and a long line of others who were generous about the parts most people leave out. I'm also an Entrepreneur in Residence at Founder Institute, the Silicon Valley accelerator.</p>
+    </div>
     <p style="font-size:18px; line-height:1.75; color:#A8A199; margin:0 0 26px;">When AI showed up, the whole industry split into two camps. One panicked. The other hyped everything and sold courses about it before they'd tried any of it. Neither felt honest to me.</p>
     <p style="font-size:18px; line-height:1.75; color:#A8A199; margin:0 0 26px;">So I did the boring, unglamorous thing: I took it into a real business — ours — and tested it. Quietly. On real campaigns, real content, real clients, with real money on the line. I kept what worked and threw out the rest.</p>
     <p style="font-size:18px; line-height:1.75; color:#A8A199; margin:0;">That's the whole job. I go to the edge, I find the one or two things that actually move the needle, and I bring them back to you in plain language. Because no one should feel left behind just because they're not "a tech person." You were never the problem.</p>
