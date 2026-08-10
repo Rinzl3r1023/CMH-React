@@ -5,6 +5,8 @@
 
 import { personNode } from './person';
 import { organizationNode } from './organization';
+import { sparcNode } from './sparc';
+import { liftItNode } from './liftit';
 import { websiteNode } from './website';
 import { webPageNode } from './webpage';
 import { profilePageNode } from './profilePage';
@@ -18,8 +20,11 @@ import { HOME_URL, pageUrl, postUrl } from './config';
 
 type Node = Record<string, unknown>;
 
+// Site-wide entity graph, on every page: the identity triad (Person, Organization,
+// WebSite) plus the two company entities Chris is tied to — SPARC Marketing and
+// Lift It — so both resolve independently wherever the graph appears (§3B / §2.1b).
 function siteNodes(): Node[] {
-  return [personNode(), organizationNode(), websiteNode()];
+  return [personNode(), organizationNode(), sparcNode(), liftItNode(), websiteNode()];
 }
 
 function clean(nodes: Array<Node | null | undefined>): Node[] {
