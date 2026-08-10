@@ -173,7 +173,7 @@ export const LIFTIT = {
   name: 'Lift It Moving and Storage',
   foundingDate: '2011',
   description:
-    "Moving and storage company founded and bootstrapped by Chris Michael Harris at age 25, scaled from $50,000 to $1.2 million in revenue in a little over two years. Served national furniture manufacturers including University Loft Company, Foliot Furniture, and Blue Furniture, and was one of Dickson Furniture's preferred installers in the country.",
+    "Moving and storage company founded and bootstrapped by Chris Michael Harris at age 23, scaled from $50,000 to $1.2 million in revenue in a little over two years. Served national furniture manufacturers including University Loft Company, Foliot Furniture, and Blue Furniture, and was one of Dickson Furniture's preferred installers in the country.",
 };
 
 /** Build-time warning for an omitted/partial node (§1.2). */
