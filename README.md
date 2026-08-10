@@ -10,8 +10,10 @@ and performance are in scope — no copy or layout changes.
 - **Next.js 16 / React 19**, TypeScript, App Router
 - **Static generation** for pages and posts; server route handlers for the
   secret-holding integrations (Kit, YouTube)
-- **sharp** (via `next/image`) for responsive post images — AVIF → WebP → JPEG at
-  400 / 800 / 1200 / 1600
+- **sharp** for responsive post covers — pre-rendered to static WebP variants at
+  400 / 800 / 1200 at build (`scripts/sync-covers.mjs`) and served directly via a
+  `<picture>`, bypassing the runtime `/_next/image` optimizer (its cold AVIF encode
+  was landing on LCP)
 - **MDX in the repo** for blog content (`next-mdx-remote`), no CMS
 
 ## Local development

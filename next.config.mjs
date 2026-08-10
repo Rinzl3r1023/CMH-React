@@ -21,13 +21,18 @@ const nextConfig = {
   // URL lands on the page, not a redirect. Canonicals, sitemap, schema @ids/urls,
   // and internal links are all trailing-slash to match.
   trailingSlash: true,
-  // Post cover images are co-located in /content and served through the
-  // ResponsiveImage component, which uses next/image (backed by sharp) to
-  // generate AVIF -> WebP -> JPEG variants at 400/800/1200/1600 (§3.2).
+  // Post covers no longer use the runtime optimizer — they're pre-rendered to
+  // static WebP variants at build (scripts/sync-covers.mjs) and served directly by
+  // ResponsiveImage as a <picture> (§perf). This config only governs any remaining
+  // next/image use. Trimmed from the previous [400,800,1200,1600] on BOTH
+  // deviceSizes and imageSizes: those identical arrays collided into duplicate
+  // srcset entries, and 1600 upscaled the 1200-wide covers for nothing. WebP only
+  // (AVIF's cold encode was the LCP cost we removed); widths capped at the 1200
+  // source; imageSizes holds only the small in-content widths.
   images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [400, 800, 1200, 1600],
-    imageSizes: [400, 800, 1200, 1600],
+    formats: ['image/webp'],
+    deviceSizes: [400, 800, 1200],
+    imageSizes: [256, 384],
   },
   // The blog previously lived at WordPress-generated routes. Anything that is
   // intentionally not carried forward gets a 301 here (§1.1). Root-level post

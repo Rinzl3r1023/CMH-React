@@ -9,7 +9,12 @@ import matter from 'gray-matter';
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 const COVER_MANIFEST = path.join(process.cwd(), 'public', 'post-covers', 'manifest.json');
 
-export type Cover = { src: string; width: number; height: number };
+/** A pre-generated responsive variant of a cover: a WebP file at a fixed width.
+ *  Written by scripts/sync-covers.mjs at build so covers are served as static
+ *  assets — never through the runtime /_next/image optimizer (§perf). */
+export type CoverVariant = { w: number; webp: string };
+
+export type Cover = { src: string; width: number; height: number; variants?: CoverVariant[] };
 
 export type FaqItem = { q?: string; a?: string };
 

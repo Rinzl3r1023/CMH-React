@@ -98,13 +98,32 @@ function parseDurationSeconds(iso: string): number {
   return ((d * 24 + h) * 60 + mi) * 60 + s;
 }
 
+// A slow YouTube response must never stall page/ISR generation: this whole module
+// is read during render, so an unbounded fetch would hold the response open for as
+// long as googleapis takes. Cap every call — on timeout the AbortController rejects
+// the fetch, callers treat it like any other failure, and the feature fails closed
+// (no shelf, no VideoObject) rather than blocking. The 30-min Data Cache is
+// unaffected: a successful response is still cached, so the timeout only ever bites
+// a genuinely slow origin, not steady-state loads.
+const YT_TIMEOUT_MS = 2500;
+
+async function fetchYt(url: string): Promise<Response> {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), YT_TIMEOUT_MS);
+  try {
+    return await fetch(url, { next: { revalidate: 1800 }, signal: ctrl.signal });
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 // List the candidate video ids from a playlist (uploads or curated). One page.
 async function fetchPlaylistVideoIds(playlistId: string, apiKey: string): Promise<string[]> {
   const url =
     'https://www.googleapis.com/youtube/v3/playlistItems' +
     `?part=contentDetails&maxResults=${CANDIDATES_PER_SOURCE}` +
     `&playlistId=${encodeURIComponent(playlistId)}&key=${encodeURIComponent(apiKey)}`;
-  const res = await fetch(url, { next: { revalidate: 1800 } });
+  const res = await fetchYt(url);
   if (!res.ok) throw new Error(`YouTube playlistItems ${res.status}`);
   const data = (await res.json()) as { items?: Array<{ contentDetails?: { videoId?: string } }> };
   return (data.items ?? [])
@@ -123,7 +142,7 @@ async function fetchVideos(ids: string[], apiKey: string): Promise<FullVideo[]> 
       'https://www.googleapis.com/youtube/v3/videos' +
       `?part=snippet,contentDetails&id=${batch.map(encodeURIComponent).join(',')}` +
       `&key=${encodeURIComponent(apiKey)}`;
-    const res = await fetch(url, { next: { revalidate: 1800 } });
+    const res = await fetchYt(url);
     if (!res.ok) throw new Error(`YouTube videos ${res.status}`);
     const data = (await res.json()) as {
       items?: Array<{
@@ -219,7 +238,7 @@ export async function getVideosByIds(ids: string[]): Promise<Record<string, Vide
         'https://www.googleapis.com/youtube/v3/videos' +
         `?part=snippet,contentDetails&id=${batch.map(encodeURIComponent).join(',')}` +
         `&key=${encodeURIComponent(apiKey)}`;
-      const res = await fetch(url, { next: { revalidate: 1800 } });
+      const res = await fetchYt(url);
       if (!res.ok) continue;
       const data = (await res.json()) as {
         items?: Array<{
