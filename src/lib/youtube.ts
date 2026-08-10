@@ -107,11 +107,19 @@ function parseDurationSeconds(iso: string): number {
 // a genuinely slow origin, not steady-state loads.
 const YT_TIMEOUT_MS = 2500;
 
-async function fetchYt(url: string): Promise<Response> {
+// The /blog shelf wants fresh video listings (new uploads appear) -> 30 min.
+const SHELF_REVALIDATE = 1800;
+// Post VideoObject metadata (title/duration/upload date) is immutable after
+// publish, so it needn't drive the post route's revalidation. Caching it for a
+// year lets the post page carry a static-page-length s-maxage instead of being
+// dragged to the shelf's 30 min; deploys refresh it like everything else.
+const VIDEO_META_REVALIDATE = 31536000;
+
+async function fetchYt(url: string, revalidate: number = SHELF_REVALIDATE): Promise<Response> {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), YT_TIMEOUT_MS);
   try {
-    return await fetch(url, { next: { revalidate: 1800 }, signal: ctrl.signal });
+    return await fetch(url, { next: { revalidate }, signal: ctrl.signal });
   } finally {
     clearTimeout(t);
   }
@@ -238,7 +246,9 @@ export async function getVideosByIds(ids: string[]): Promise<Record<string, Vide
         'https://www.googleapis.com/youtube/v3/videos' +
         `?part=snippet,contentDetails&id=${batch.map(encodeURIComponent).join(',')}` +
         `&key=${encodeURIComponent(apiKey)}`;
-      const res = await fetchYt(url);
+      // Long revalidate: this call feeds the post VideoObject only; a year keeps
+      // the post route's s-maxage at static-page length instead of 30 min.
+      const res = await fetchYt(url, VIDEO_META_REVALIDATE);
       if (!res.ok) continue;
       const data = (await res.json()) as {
         items?: Array<{

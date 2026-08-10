@@ -55,7 +55,12 @@ function splitForMidCta(body: string): { before: string; after: string } {
 export const dynamicParams = true;
 // Match /blog: the VideoObject schema reads the shared YouTube Data Cache, which
 // revalidates on this cadence.
-export const revalidate = 1800;
+// Posts change only on deploy (static MDX), so match the fully-static pages' cache
+// window rather than the old 30-min ISR: this sets the HTML's s-maxage to a year,
+// so once Cloudflare's Cache Rule caches a post it holds it like /about/ (deploys
+// purge). The video-metadata fetch is cached a year too (youtube.ts), so it no
+// longer drags the route's revalidate down to the shelf's 30 min.
+export const revalidate = 31536000;
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
