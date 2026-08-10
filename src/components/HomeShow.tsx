@@ -58,7 +58,7 @@ function ShowCard({ video }: { video: ShowVideo }) {
       {/* Bucket label intentionally removed; the title takes the label's top margin. */}
       <h3
         style={{
-          fontFamily: "'Fraunces',serif",
+          fontFamily: "'Fraunces','Fraunces Fallback',Georgia,serif",
           fontWeight: 400,
           fontSize: 'clamp(19px,2.3vw,21px)',
           lineHeight: 1.25,
@@ -88,7 +88,7 @@ export default function HomeShow({ videos }: { videos: ShowVideo[] }) {
             </span>
             <span style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(240,169,60,.35), transparent)' }} />
           </div>
-          <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 300, fontSize: 'clamp(29px,4.6vw,48px)', lineHeight: 1.1, letterSpacing: '-.025em', margin: 0, maxWidth: 580 }}>
+          <h2 style={{ fontFamily: "'Fraunces','Fraunces Fallback',Georgia,serif", fontWeight: 300, fontSize: 'clamp(29px,4.6vw,48px)', lineHeight: 1.1, letterSpacing: '-.025em', margin: 0, maxWidth: 580 }}>
             Where I show you what I found.
           </h2>
         </div>
