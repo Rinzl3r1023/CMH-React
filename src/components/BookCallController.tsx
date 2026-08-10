@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Modal from './Modal';
-import CalendlyEmbed from './CalendlyEmbed';
+import dynamic from 'next/dynamic';
+
+// Lazy: the modal + Calendly (and their two CSS modules) are code-split out of the
+// always-mounted controller, so they load on first open instead of on every page.
+const BookCallModal = dynamic(() => import('./BookCallModal'), { ssr: false });
 
 // Final public URL (§9), baked as the default so the CTA works on every deploy;
 // Railway can override via env. Empty string forces the fail-closed (hidden)
@@ -38,9 +41,10 @@ export default function BookCallController() {
 
   if (!CALENDLY_URL) return null;
 
-  return (
-    <Modal open={open} onClose={() => setOpen(false)} title="Book a strategy call" restoreFocus={triggerRef.current}>
-      <CalendlyEmbed url={CALENDLY_URL} />
-    </Modal>
-  );
+  // Mount the modal subtree only while open — that's what defers its chunk (JS+CSS)
+  // to first open. Modal has no exit transition (it renders null when closed), so
+  // unmounting on close is equivalent to passing open={false}.
+  return open ? (
+    <BookCallModal url={CALENDLY_URL} onClose={() => setOpen(false)} restoreFocus={triggerRef.current} />
+  ) : null;
 }
