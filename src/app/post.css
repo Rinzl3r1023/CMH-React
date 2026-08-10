@@ -30,8 +30,18 @@
   font-size:clamp(19px,2.6vw,24px); line-height:1.4;
 }
 .postBody code { font-family:'JetBrains Mono',monospace; font-size:.88em; background:rgba(240,169,60,.1); padding:2px 6px; border-radius:3px; }
-.postBody pre { background:rgba(255,255,255,.03); border:1px solid rgba(240,169,60,.16); padding:18px 20px; overflow-x:auto; }
+/* Wrap long lines instead of scrolling — these blocks hold copy-paste prompts,
+   not code where a line break changes meaning, so a reader should see the whole
+   thing at once. Extra right padding clears the Copy button. */
+.postBody pre { background:rgba(255,255,255,.03); border:1px solid rgba(240,169,60,.16); padding:18px 20px; padding-right:84px; white-space:pre-wrap; overflow-wrap:anywhere; }
 .postBody pre code { background:none; padding:0; }
+/* Copy-to-clipboard affordance on code blocks. ClientEnhancer wraps each <pre>
+   in .codeWrap and injects .codeCopy; the wrapper is the positioning context so
+   the button stays pinned top-right while long lines scroll under it. */
+.codeWrap { position:relative; }
+.codeWrap .codeCopy { position:absolute; top:10px; right:10px; z-index:2; font-family:'Manrope',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#F0A93C; background:rgba(5,5,10,.72); border:1px solid rgba(240,169,60,.32); padding:5px 10px; border-radius:3px; cursor:pointer; transition:background .2s ease, border-color .2s ease, color .2s ease; }
+.codeWrap .codeCopy:hover { background:rgba(240,169,60,.16); border-color:rgba(240,169,60,.6); }
+.codeWrap .codeCopy.copied { color:#8FDC9A; border-color:rgba(143,220,154,.55); }
 .postBody img { max-width:100%; height:auto; display:block; border:1px solid rgba(240,169,60,.16); }
 .postBody hr { border:none; border-top:1px solid rgba(240,169,60,.18); }
 
