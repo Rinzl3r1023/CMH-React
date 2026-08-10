@@ -10,7 +10,7 @@ import { contentToCustomersGraph } from '@/lib/schema/graphs';
 export const metadata: Metadata = pageMetadata({
   title: 'The Content to Customers Method — Chris Michael Harris',
   description:
-    'The Content to Customers Method turns content into customers instead of just producing more of it — a two-dimensional framework (business phase × funnel temperature) developed by Kim Jimenez at The Business Lounge.',
+    'The Content to Customers Method turns content into customers instead of just producing more of it — a two-dimensional framework (business phase × funnel temperature) built by Chris Michael Harris and Kim Jimenez at The Business Lounge.',
   path: '/content-to-customers',
 });
 

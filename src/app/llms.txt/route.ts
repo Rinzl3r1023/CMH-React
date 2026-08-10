@@ -16,7 +16,7 @@ export async function GET() {
   const pageLines = [
     `- [About](${canonicalUrl('/about')}): Chris Michael Harris — Marketing + AI strategist. Who he is, how he works, and what he believes.`,
     `- [About Chris Michael Harris (AI & marketing)](${canonicalUrl('/ai')}): Who he helps, his services, the Content to Customers Method, results, and full credentials — the AI-answer profile.`,
-    `- [The Content to Customers Method](${canonicalUrl('/content-to-customers')}): The framework for turning content into customers — business phase × funnel temperature. Developed by Kim Jimenez at The Business Lounge.`,
+    `- [The Content to Customers Method](${canonicalUrl('/content-to-customers')}): The framework for turning content into customers — business phase × funnel temperature. Built by Chris Michael Harris and Kim Jimenez at The Business Lounge.`,
     `- [The Dispatch](${canonicalUrl('/dispatch')}): The weekly email — what's coming, what's working now, and what you can safely ignore.`,
     `- [Work with me — coaching](${SITE_URL}/#work-with-me): Two ways to go deeper inside The Business Lounge — the self-serve community, or hands-on coaching alongside Kim.`,
     `- [The Show](${canonicalUrl('/blog')}): Every post and video — Marketing + AI, tested live inside a real business.`,
