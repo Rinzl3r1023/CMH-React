@@ -9,6 +9,7 @@ import { getVideosByIds, liveYouTubeId } from '@/lib/youtube';
 import { pageMetadata } from '@/lib/metadata';
 import HtmlFragment from '@/components/HtmlFragment';
 import ResponsiveImage from '@/components/ResponsiveImage';
+import VideoFacade from '@/components/VideoFacade';
 import JsonLd from '@/components/JsonLd';
 import { postGraph } from '@/lib/schema/graphs';
 import DispatchInline from '@/components/DispatchInline';
@@ -145,28 +146,24 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           )}
         </div>
 
-        {post.cover && (
-          <div className="postCover">
-            <ResponsiveImage
-              cover={post.cover}
-              alt={post.title}
-              sizes="(max-width: 800px) 100vw, 760px"
-              priority
-            />
-          </div>
-        )}
-
-        {/* live youtube_id -> single embed (§2.2); dead/denylisted ids render nothing */}
-        {videoId && (
-          <div className="ytEmbed">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-              title={post.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-            />
-          </div>
+        {/* A live video post shows the click-to-load facade (cover as poster),
+            which never loads the ~1MB player until clicked. A post with no live
+            video (incl. dead/denylisted ids -> videoId undefined) shows the plain
+            cover hero and no embed at all. The facade's poster IS the cover, so
+            video posts don't render it twice. */}
+        {videoId ? (
+          <VideoFacade videoId={videoId} cover={post.cover} title={post.title} />
+        ) : (
+          post.cover && (
+            <div className="postCover">
+              <ResponsiveImage
+                cover={post.cover}
+                alt={post.title}
+                sizes="(max-width: 800px) 100vw, 760px"
+                priority
+              />
+            </div>
+          )
         )}
 
         <KeyTakeaways items={post.takeaways} />

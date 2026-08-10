@@ -15,6 +15,22 @@
 .postWrap .ytEmbed { position:relative; aspect-ratio:16/9; margin:0 0 clamp(28px,4vw,40px); border:1px solid rgba(240,169,60,.2); overflow:hidden; }
 .postWrap .ytEmbed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
 
+/* YouTube facade (click-to-load). Same 16/9 box + amber frame as .ytEmbed so the
+   swap to the real iframe is seamless. Poster is the post's own cover; the play
+   button uses the modal chrome — amber border, lit top edge, dark glass, glow. */
+.postWrap .ytFacade { position:relative; display:block; width:100%; aspect-ratio:16/9; margin:0 0 clamp(28px,4vw,40px); padding:0; border:1px solid rgba(240,169,60,.2); background:#05050A; overflow:hidden; cursor:pointer; }
+.postWrap .ytFacade-poster { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.postWrap .ytFacade-blank { background:linear-gradient(180deg,#0A0A12,#08080E); }
+.postWrap .ytFacade-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:inline-flex; align-items:center; justify-content:center; width:clamp(62px,9vw,82px); height:clamp(62px,9vw,82px); padding-left:5px; border-radius:50%; color:#F0A93C; background:rgba(5,5,10,.55); border:1px solid rgba(240,169,60,.5); border-top-color:rgba(255,215,154,.75); box-shadow:0 0 44px -6px rgba(240,169,60,.7); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); transition:background .3s ease, color .3s ease, box-shadow .3s ease, transform .3s ease; }
+.postWrap .ytFacade:hover .ytFacade-btn,
+.postWrap .ytFacade:focus-visible .ytFacade-btn { background:#F0A93C; color:#05050A; box-shadow:0 0 60px -4px rgba(240,169,60,.95); transform:translate(-50%,-50%) scale(1.06); }
+.postWrap .ytFacade:focus-visible { outline:2px solid #F0A93C; outline-offset:3px; }
+@media (prefers-reduced-motion:reduce) {
+  .postWrap .ytFacade-btn { transition:none; }
+  .postWrap .ytFacade:hover .ytFacade-btn,
+  .postWrap .ytFacade:focus-visible .ytFacade-btn { transform:translate(-50%,-50%); }
+}
+
 .postBody { font-size:clamp(16.5px,2vw,18px); line-height:1.75; color:#D9D3CA; }
 .postBody > * + * { margin-top:1.25em; }
 .postBody h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(23px,3.2vw,30px); line-height:1.2; letter-spacing:-.02em; color:#EDEAE4; margin-top:1.8em; }
