@@ -1,11 +1,12 @@
-import { ORGANIZATION } from './config';
+import { ORGANIZATION, PERSON_ID } from './config';
 
 // The Content to Customers Method as a DefinedTerm (Task 3) — so the methodology
-// resolves as a named entity, not just prose. creator is Kim Jimenez (the method
-// is hers); she has no #person node on this personal-brand site, so she's inline.
-// DefinedTerm is a stable schema.org type; if a validator ever rejects it, the
-// page's Article-with-`about` still carries the topic (the page matters more than
-// the node type).
+// resolves as a named entity, not just prose. creator is BOTH co-founders: Chris
+// (by @id → #person) and Kim Jimenez (inline — she has no node on this personal-
+// brand site). The method was built by the two of them together, so single
+// attribution to Kim is inaccurate. `creator` is multi-valued, so an array is
+// valid. DefinedTerm is a stable schema.org type; if a validator ever rejects it,
+// the page's copy still carries the topic (the page matters more than the node).
 export function contentMethodNode(url: string): Record<string, unknown> {
   return {
     '@type': 'DefinedTerm',
@@ -18,6 +19,9 @@ export function contentMethodNode(url: string): Record<string, unknown> {
       name: 'The Business Lounge Methodology',
       url: ORGANIZATION.url,
     },
-    creator: { '@type': 'Person', name: ORGANIZATION.coFounderName },
+    creator: [
+      { '@id': PERSON_ID },
+      { '@type': 'Person', name: ORGANIZATION.coFounderName, jobTitle: 'Co-founder, The Business Lounge' },
+    ],
   };
 }
