@@ -28,7 +28,16 @@ export default function ClientEnhancer() {
     let safety: ReturnType<typeof setTimeout> | undefined;
     const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
     if ('IntersectionObserver' in window && reveals.length) {
-      reveals.forEach((el) => el.classList.add('armed'));
+      // Only arm (opacity:0) elements that are OFF-SCREEN at mount. Arming an
+      // element already in the initial viewport hides content that first-paint
+      // already showed, then re-reveals it via JS — which defers the LCP element
+      // behind hydration (a ~6s LCP on slow mobile, while the HTML painted in ms).
+      // In-view reveals keep their base opacity:1 and simply paint with the HTML;
+      // only below-the-fold sections get the scroll-in animation. `getBounding
+      // ClientRect` here reads post-layout positions since this runs after mount.
+      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      const armedEls = reveals.filter((el) => el.getBoundingClientRect().top > vh * 0.9);
+      armedEls.forEach((el) => el.classList.add('armed'));
       io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -41,10 +50,10 @@ export default function ClientEnhancer() {
         },
         { threshold: 0.1, rootMargin: '0px 0px -6% 0px' },
       );
-      reveals.forEach((el) => io!.observe(el));
+      armedEls.forEach((el) => io!.observe(el));
       // Failsafe: never leave content hidden if the observer never fires.
       safety = setTimeout(
-        () => reveals.forEach((el) => { el.classList.remove('armed'); el.classList.add('in'); }),
+        () => armedEls.forEach((el) => { el.classList.remove('armed'); el.classList.add('in'); }),
         2500,
       );
     }
