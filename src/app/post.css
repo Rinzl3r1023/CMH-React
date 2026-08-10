@@ -5,7 +5,7 @@
 .postWrap { max-width: 760px; margin: 0 auto; padding: clamp(48px,7vw,86px) clamp(18px,4vw,44px) clamp(60px,8vw,96px); }
 .postWrap .backlink { display:inline-block; margin-bottom:28px; }
 .postWrap h1 {
-  font-family:'Fraunces',serif; font-weight:300; font-size:clamp(30px,5vw,50px);
+  font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:300; font-size:clamp(30px,5vw,50px);
   line-height:1.06; letter-spacing:-.03em; margin:14px 0 18px; text-wrap:pretty;
 }
 .postWrap .postMeta { display:flex; align-items:center; gap:14px; margin-bottom:clamp(28px,4vw,40px); }
@@ -33,8 +33,8 @@
 
 .postBody { font-size:clamp(16.5px,2vw,18px); line-height:1.75; color:#D9D3CA; }
 .postBody > * + * { margin-top:1.25em; }
-.postBody h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(23px,3.2vw,30px); line-height:1.2; letter-spacing:-.02em; color:#EDEAE4; margin-top:1.8em; }
-.postBody h3 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(20px,2.6vw,24px); line-height:1.25; color:#EDEAE4; margin-top:1.6em; }
+.postBody h2 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(23px,3.2vw,30px); line-height:1.2; letter-spacing:-.02em; color:#EDEAE4; margin-top:1.8em; }
+.postBody h3 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(20px,2.6vw,24px); line-height:1.25; color:#EDEAE4; margin-top:1.6em; }
 .postBody a { color:#F0A93C; text-decoration:underline; text-underline-offset:3px; }
 .postBody a:hover { color:#FFD79A; }
 .postBody strong { color:#EDEAE4; font-weight:600; }
@@ -42,7 +42,7 @@
 .postBody li + li { margin-top:.5em; }
 .postBody blockquote {
   border-left:2px solid rgba(240,169,60,.55); padding:2px 0 2px 22px; margin-left:0;
-  font-family:'Fraunces',serif; font-style:italic; font-weight:300; color:#FFD79A;
+  font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-style:italic; font-weight:300; color:#FFD79A;
   font-size:clamp(19px,2.6vw,24px); line-height:1.4;
 }
 .postBody code { font-family:'JetBrains Mono',monospace; font-size:.88em; background:rgba(240,169,60,.1); padding:2px 6px; border-radius:3px; }
@@ -55,7 +55,7 @@
    in .codeWrap and injects .codeCopy; the wrapper is the positioning context so
    the button stays pinned top-right while long lines scroll under it. */
 .codeWrap { position:relative; }
-.codeWrap .codeCopy { position:absolute; top:10px; right:10px; z-index:2; font-family:'Manrope',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#F0A93C; background:rgba(5,5,10,.72); border:1px solid rgba(240,169,60,.32); padding:5px 10px; border-radius:3px; cursor:pointer; transition:background .2s ease, border-color .2s ease, color .2s ease; }
+.codeWrap .codeCopy { position:absolute; top:10px; right:10px; z-index:2; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#F0A93C; background:rgba(5,5,10,.72); border:1px solid rgba(240,169,60,.32); padding:5px 10px; border-radius:3px; cursor:pointer; transition:background .2s ease, border-color .2s ease, color .2s ease; }
 .codeWrap .codeCopy:hover { background:rgba(240,169,60,.16); border-color:rgba(240,169,60,.6); }
 .codeWrap .codeCopy.copied { color:#8FDC9A; border-color:rgba(143,220,154,.55); }
 .postBody img { max-width:100%; height:auto; display:block; border:1px solid rgba(240,169,60,.16); }
@@ -65,34 +65,34 @@
 
 /* Key Takeaways — summary block near the top. Dormant until frontmatter. */
 .keyTakeaways { margin:0 0 clamp(28px,4vw,40px); padding:clamp(20px,2.6vw,26px) clamp(22px,3vw,28px); border:1px solid rgba(240,169,60,.22); border-left:3px solid #F0A93C; background:rgba(240,169,60,.04); }
-.keyTakeaways-label { font-family:'Manrope',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:#F0A93C; }
+.keyTakeaways-label { font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:#F0A93C; }
 .keyTakeaways ul { margin:12px 0 0; padding-left:1.2em; }
 .keyTakeaways li { font-size:clamp(15px,1.9vw,16.5px); line-height:1.55; color:#D9D3CA; }
 .keyTakeaways li + li { margin-top:.5em; }
 
 /* Mid-article Dispatch — understated inline capture, not a card. */
 .dispatchInline { margin:clamp(36px,5vw,52px) 0; padding:22px 0; border-top:1px solid rgba(240,169,60,.18); border-bottom:1px solid rgba(240,169,60,.18); }
-.dispatchInline-label { font-family:'Manrope',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:#F0A93C; }
+.dispatchInline-label { font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:#F0A93C; }
 .dispatchInline-line { font-size:clamp(15px,1.9vw,16.5px); line-height:1.5; color:#C9C3B9; margin:8px 0 14px; }
 .dispatchInline-form { display:flex; gap:10px; max-width:470px; flex-wrap:wrap; }
-.dispatchInline-form input[type=email] { flex:1; min-width:200px; padding:12px 14px; background:rgba(255,255,255,.03); border:1px solid rgba(240,169,60,.3); color:#EDEAE4; font-size:15px; font-family:'Manrope',sans-serif; outline:none; }
+.dispatchInline-form input[type=email] { flex:1; min-width:200px; padding:12px 14px; background:rgba(255,255,255,.03); border:1px solid rgba(240,169,60,.3); color:#EDEAE4; font-size:15px; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; outline:none; }
 .dispatchInline-form input[type=email]:focus { border-color:#F0A93C; }
-.dispatchInline-form button { padding:12px 22px; border:none; background:#F0A93C; color:#06060A; font-family:'Manrope',sans-serif; font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; }
+.dispatchInline-form button { padding:12px 22px; border:none; background:#F0A93C; color:#06060A; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; }
 .dispatchInline-note { font-size:12.5px; color:#8A8378; margin:10px 0 0; }
 
 /* End-of-article call CTA — full block, standard treatment. The button carries
    [data-book-call]: hidden by globals.css until ClientEnhancer wires Calendly. */
 .callCta { margin:clamp(48px,7vw,72px) 0 0; padding:clamp(30px,4vw,44px); border:1px solid rgba(240,169,60,.3); background:linear-gradient(165deg, rgba(240,169,60,.09), rgba(255,255,255,.012) 55%); text-align:center; }
-.callCta-eyebrow { font-family:'Manrope',sans-serif; font-weight:600; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#F0A93C; }
-.callCta-title { font-family:'Fraunces',serif; font-weight:300; font-size:clamp(24px,3.6vw,34px); line-height:1.12; letter-spacing:-.02em; color:#EDEAE4; margin:14px 0 12px; }
+.callCta-eyebrow { font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#F0A93C; }
+.callCta-title { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:300; font-size:clamp(24px,3.6vw,34px); line-height:1.12; letter-spacing:-.02em; color:#EDEAE4; margin:14px 0 12px; }
 .callCta-body { font-size:clamp(15.5px,2vw,17px); line-height:1.6; color:#A8A199; max-width:540px; margin:0 auto 26px; }
-.callCta-btn { align-items:center; justify-content:center; padding:15px 30px; background:#F0A93C; color:#05050A; font-family:'Manrope',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; box-shadow:0 0 40px -8px rgba(240,169,60,.7); }
+.callCta-btn { align-items:center; justify-content:center; padding:15px 30px; background:#F0A93C; color:#05050A; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; box-shadow:0 0 40px -8px rgba(240,169,60,.7); }
 
 /* FAQ — visible Q&A the FAQPage schema describes. Dormant until frontmatter. */
 .postFaq { margin:clamp(40px,6vw,60px) 0 0; }
-.postFaq > h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(23px,3.2vw,30px); line-height:1.2; letter-spacing:-.02em; color:#EDEAE4; margin:0 0 clamp(16px,2.2vw,22px); }
+.postFaq > h2 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(23px,3.2vw,30px); line-height:1.2; letter-spacing:-.02em; color:#EDEAE4; margin:0 0 clamp(16px,2.2vw,22px); }
 .postFaq-item { padding:18px 0; border-top:1px solid rgba(240,169,60,.16); }
-.postFaq dt { font-family:'Manrope',sans-serif; font-weight:600; font-size:clamp(16px,2vw,17.5px); color:#EDEAE4; margin-bottom:8px; }
+.postFaq dt { font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:clamp(16px,2vw,17.5px); color:#EDEAE4; margin-bottom:8px; }
 .postFaq dd { margin:0; font-size:clamp(15.5px,2vw,17px); line-height:1.65; color:#A8A199; }
 
 /* In-body YouTube embed — kept from the source (youtube_id also drives the
@@ -106,5 +106,5 @@
 .relatedCard { display: flex; flex-direction: column; min-width: 0; color: #EDEAE4; border: 1px solid rgba(237,234,228,.13); padding-bottom: 18px; }
 .relatedCover { aspect-ratio: 16/9; min-width: 0; overflow: hidden; border-bottom: 1px solid rgba(237,234,228,.13); background: repeating-linear-gradient(90deg, rgba(240,169,60,.08) 0 1px, transparent 1px 34px); }
 .relatedCard .stamp { display: block; margin: 16px 16px 0; font-size: 10px; }
-.relatedCard h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 16px; line-height: 1.28; margin: 8px 16px 0; }
+.relatedCard h3 { font-family: 'Fraunces', 'Fraunces Fallback', Georgia, serif; font-weight: 400; font-size: 16px; line-height: 1.28; margin: 8px 16px 0; }
 @media (max-width: 660px) { .relatedGrid { grid-template-columns: 1fr; gap: 14px; } }

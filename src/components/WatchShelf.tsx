@@ -84,7 +84,7 @@ function FeaturedVideo({ video }: { video: ShowVideo }) {
           <span className="label" style={{ color: '#F0A93C', marginBottom: 16 }}>
             Latest episode
           </span>
-          <h3 style={{ fontFamily: "'Fraunces',serif", fontWeight: 400, fontSize: 'clamp(24px,3.2vw,31px)', lineHeight: 1.18, margin: '0 0 14px' }}>
+          <h3 style={{ fontFamily: "'Fraunces','Fraunces Fallback',Georgia,serif", fontWeight: 400, fontSize: 'clamp(24px,3.2vw,31px)', lineHeight: 1.18, margin: '0 0 14px' }}>
             {video.title}
           </h3>
           {video.excerpt && (
@@ -155,7 +155,7 @@ function VideoCard({ video }: { video: ShowVideo }) {
           {video.dateStamp}
         </span>
       )}
-      <h3 style={{ fontFamily: "'Fraunces',serif", fontWeight: 400, fontSize: 'clamp(19px,2.3vw,21px)', lineHeight: 1.25, margin: `${video.dateStamp ? '10px' : '22px'} clamp(20px,2.4vw,26px) 0` }}>
+      <h3 style={{ fontFamily: "'Fraunces','Fraunces Fallback',Georgia,serif", fontWeight: 400, fontSize: 'clamp(19px,2.3vw,21px)', lineHeight: 1.25, margin: `${video.dateStamp ? '10px' : '22px'} clamp(20px,2.4vw,26px) 0` }}>
         {video.title}
       </h3>
     </a>
