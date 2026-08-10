@@ -87,6 +87,12 @@
 .callCta-title { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:300; font-size:clamp(24px,3.6vw,34px); line-height:1.12; letter-spacing:-.02em; color:#EDEAE4; margin:14px 0 12px; }
 .callCta-body { font-size:clamp(15.5px,2vw,17px); line-height:1.6; color:#A8A199; max-width:540px; margin:0 auto 26px; }
 .callCta-btn { align-items:center; justify-content:center; padding:15px 30px; background:#F0A93C; color:#05050A; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; box-shadow:0 0 40px -8px rgba(240,169,60,.7); }
+.authorBlock { display:flex; align-items:center; gap:16px; margin:clamp(40px,6vw,60px) 0 0; padding:22px clamp(18px,3vw,26px); border-top:1px solid rgba(240,169,60,.16); }
+.authorBlock-avatar { flex:none; width:60px; height:60px; border-radius:50%; object-fit:cover; border:1px solid rgba(240,169,60,.4); }
+.authorBlock-bio { font-size:14.5px; line-height:1.6; color:#A8A199; margin:0; }
+.authorBlock-name { color:#EDEAE4; font-weight:600; }
+.authorBlock-bio a { color:#F0A93C; }
+.authorBlock-bio a:hover { color:#FFD79A; }
 
 /* FAQ — visible Q&A the FAQPage schema describes. Dormant until frontmatter. */
 .postFaq { margin:clamp(40px,6vw,60px) 0 0; }

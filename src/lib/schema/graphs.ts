@@ -13,6 +13,7 @@ import { profilePageNode } from './profilePage';
 import { collectionPageNode } from './collectionPage';
 import { blogPostingNode } from './article';
 import { videoObjectNode } from './video';
+import { contentMethodNode } from './definedTerm';
 import { faqPageNode, type FaqItem } from './faq';
 import { howToNode } from './howto';
 import { breadcrumbNode } from './breadcrumb';
@@ -45,6 +46,29 @@ export function dispatchGraph(opts: { name: string; description?: string }): Nod
 
 export function legalGraph(opts: { path: '/privacy' | '/terms'; name: string; description?: string }): Node[] {
   return clean([...siteNodes(), webPageNode({ url: pageUrl(opts.path), name: opts.name, description: opts.description })]);
+}
+
+// /ai — the AI-answer-optimized About page. about → the Person (the page is about
+// Chris); its FAQPage carries the 5 visible Q&As.
+export function aiGraph(opts: { name: string; description?: string; faq?: FaqItem[] }): Node[] {
+  const url = pageUrl('/ai');
+  return clean([
+    ...siteNodes(),
+    webPageNode({ url, name: opts.name, description: opts.description, about: true }),
+    faqPageNode(url, opts.faq),
+  ]);
+}
+
+// /content-to-customers — the methodology page. WebPage + the DefinedTerm entity
+// for the method + its FAQPage (2 visible Q&As).
+export function contentToCustomersGraph(opts: { name: string; description?: string; faq?: FaqItem[] }): Node[] {
+  const url = pageUrl('/content-to-customers');
+  return clean([
+    ...siteNodes(),
+    webPageNode({ url, name: opts.name, description: opts.description }),
+    contentMethodNode(url),
+    faqPageNode(url, opts.faq),
+  ]);
 }
 
 export function blogGraph(opts: {

@@ -42,11 +42,11 @@ export const PERSON = {
   description:
     "I keep up with AI and marketing inside a real business, then report back on what matters, what doesn't, and what to do next.",
   image: absoluteUrl('/images/chris-portrait.jpg'),
-  // §7 #4 — confirmed. Machine-readable topical-authority terms (not visible copy,
-  // so the beacon rule doesn't apply here). The second group was added for the
-  // AI-visibility Answer Pack topics. "AI adoption for small businesses" replaces
-  // the spec's "AI for coaches and service providers" to keep the audience label
-  // as "business owners" (master guardrail §7).
+  // §7 #4 — confirmed. Machine-readable topical-authority terms for entity
+  // matching (not human-facing copy). The audience-label guardrail governs
+  // hooks/ad callouts, NOT schema topic tags — so these stay specific on purpose:
+  // "AI for coaches and service providers" matches its target queries better than
+  // a vaguer phrasing would. Second group added for the AI-visibility Answer Pack.
   knowsAbout: [
     'AI for business owners',
     'AI workflow design',
@@ -55,7 +55,7 @@ export const PERSON = {
     'Content marketing',
     'Marketing operations',
     'Content marketing strategy',
-    'AI adoption for small businesses',
+    'AI for coaches and service providers',
     'Meta advertising',
     'Sales funnels and offer construction',
     'Email marketing automation',

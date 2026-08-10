@@ -14,6 +14,7 @@ import JsonLd from '@/components/JsonLd';
 import { postGraph } from '@/lib/schema/graphs';
 import DispatchInline from '@/components/DispatchInline';
 import CallCTA from '@/components/CallCTA';
+import AuthorBlock from '@/components/AuthorBlock';
 import KeyTakeaways from '@/components/KeyTakeaways';
 import FaqBlock from '@/components/FaqBlock';
 import RelatedPosts from '@/components/RelatedPosts';
@@ -182,6 +183,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <FaqBlock items={post.faq} />
         <RelatedPosts slug={post.slug} />
         {post.cta === 'full' && <CallCTA />}
+        <AuthorBlock />
       </article>
 
       <HtmlFragment html={fragment('library.capfoot.html')} />
