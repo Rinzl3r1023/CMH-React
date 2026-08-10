@@ -12,6 +12,9 @@ export function personNode(): Record<string, unknown> {
     jobTitle: PERSON.jobTitle,
     description: PERSON.description,
     knowsAbout: PERSON.knowsAbout,
+    hasCredential: PERSON.hasCredential,
+    alumniOf: PERSON.alumniOf,
+    subjectOf: PERSON.subjectOf,
     sameAs: PERSON.sameAs,
     worksFor: { '@id': ORG_ID },
   };

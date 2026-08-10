@@ -1,0 +1,224 @@
+<style>
+.legalDoc { position:relative; z-index:2; max-width:760px; margin:0 auto; padding:72px clamp(20px,5vw,44px) 40px; }
+.legalDoc .eyebrow { display:inline-flex; align-items:center; gap:11px; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#F0A93C; margin:0 0 26px; }
+.legalDoc .eyebrow span { width:7px; height:7px; background:#F0A93C; box-shadow:0 0 14px 3px rgba(240,169,60,.9); }
+.legalDoc h1 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:300; font-size:clamp(38px,6vw,58px); line-height:1.03; letter-spacing:-.03em; margin:0 0 16px; }
+.legalDoc .lede { font-size:18px; line-height:1.62; color:#C7C1B8; margin:20px 0 8px; }
+.legalDoc h2 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(22px,3.2vw,27px); line-height:1.2; letter-spacing:-.02em; color:#FFD79A; margin:52px 0 14px; }
+.legalDoc h3 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(18px,2.4vw,21px); line-height:1.25; letter-spacing:-.01em; color:#EDEAE4; margin:30px 0 8px; }
+.legalDoc p { font-size:16.5px; line-height:1.68; color:#A8A199; margin:0 0 16px; }
+.legalDoc ul { margin:0 0 16px; padding-left:22px; }
+.legalDoc li { font-size:16.5px; line-height:1.6; color:#A8A199; margin:0 0 9px; }
+.legalDoc strong { color:#EDEAE4; font-weight:600; }
+.legalDoc em { color:#C7C1B8; font-style:italic; }
+.legalDoc a { color:#F0A93C; }
+.legalDoc a:hover { color:#FFD79A; }
+.legalDoc .divider { height:1px; background:rgba(240,169,60,.14); margin:48px 0 8px; }
+.legalDoc .quote { border-left:2px solid rgba(240,169,60,.45); padding:4px 0 4px 22px; margin:22px 0; }
+.legalDoc .quote p { color:#C7C1B8; font-size:17px; font-style:italic; margin:0 0 8px; }
+.legalDoc .quote cite { font-style:normal; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.04em; color:#8A8378; }
+.legalDoc .ctaRow { margin:30px 0 8px; }
+.legalDoc .ctaRow a.btn { display:inline-flex; align-items:center; justify-content:center; padding:15px 26px; background:#F0A93C; color:#06060A; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:14px; letter-spacing:.02em; }
+.legalDoc .faqItem { border-top:1px solid rgba(240,169,60,.14); padding:26px 0 4px; }
+.legalDoc .faqItem h3 { margin:0 0 12px; color:#FFD79A; }
+</style>
+
+  <nav style="position:sticky; top:0; z-index:50; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(18px,4vw,44px);">
+      <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4; min-width:0;">
+        <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
+        <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:clamp(11px,1.4vw,13px); letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Chris Michael Harris</span>
+      </a>
+      <div class="navLinks">
+        <a href="/" class="navlink" style="color:#9C958A;">Home</a>
+        <a href="/about/" class="navlink" style="color:#9C958A;">About</a>
+        <a href="/#work-with-me" class="navlink" style="color:#9C958A;">Work With Me</a>
+        <a href="/blog/" class="navlink" style="color:#9C958A;">The Show</a>
+        <a href="/dispatch/" class="navlink" style="color:#9C958A;">The Dispatch</a>
+        <a href="#capture" data-book-call="" class="edge navlink" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 30-min strategy call</a>
+      </div>
+      <button type="button" class="navToggle" data-nav-toggle="" aria-label="Toggle navigation" aria-expanded="false" style="align-items:center; justify-content:center; gap:7px; flex-direction:column; width:44px; height:44px; background:transparent; border:1px solid rgba(240,169,60,.4); cursor:pointer; padding:0;">
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+      </button>
+    </div>
+    <div class="mobileMenu" data-mobile-menu="" style="flex-direction:column; gap:2px; padding:8px clamp(18px,4vw,44px) 20px; border-top:1px solid rgba(240,169,60,.14);">
+      <a href="/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">Home</a>
+      <a href="/about/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">About</a>
+      <a href="/#work-with-me" class="navlink" data-nav-close="" style="padding:14px 0; font-size:13px; color:#A8A199;">Work With Me</a>
+      <a href="/blog/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Show</a>
+      <a href="/dispatch/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Dispatch</a>
+      <a href="#capture" data-book-call="" data-nav-close="" class="btn" style="margin-top:10px; display:inline-flex; align-items:center; justify-content:center; padding:16px 20px; background:#F0A93C; color:#06060A;">Book a 30-min call</a>
+    </div>
+  </nav>
+
+  <main class="legalDoc">
+    <p class="eyebrow"><span></span>Marketing + AI Strategist</p>
+    <h1>About Chris Michael Harris</h1>
+    <p class="lede">Chris Michael Harris is a marketing and AI strategist who helps coaches and service-based business owners turn their content into customers. Serving clients across the United States, he has 15 years of experience in content marketing, sales systems, and paid advertising, and now focuses on how AI changes each of those. He co-founded The Business Lounge with Kim Jimenez and built SPARC Marketing, an AI marketing system used by real businesses.</p>
+    <p>He tests every tool and tactic live inside his own company before recommending it — and reports honestly on what didn't work.</p>
+    <div class="divider"></div>
+
+    <h2>Who Chris Michael Harris helps</h2>
+    <p>Chris works with business owners who sell coaching or services and who are past the starting line but not where they want to be. His clients typically:</p>
+    <ul>
+      <li>Run a real business with real revenue, not a side project or an idea</li>
+      <li>Produce content consistently but struggle to turn it into paying customers</li>
+      <li>Feel behind on AI and don't have time to test every new tool themselves</li>
+      <li>Have been burned before by programs or software that promised more than they delivered</li>
+      <li>Would rather move forward steadily than chase every new thing</li>
+    </ul>
+
+    <h2>Services &amp; solutions</h2>
+    <h3>The Dispatch</h3>
+    <p>A free weekly email covering what's coming in AI and marketing, what's working right now, and what can safely be ignored. Written for business owners who want to stay current without following the industry full-time. One email a week, plain language, no hype.</p>
+    <h3>The Business Lounge Community</h3>
+    <p>A paid membership for business owners building content systems that produce customers. Includes live trainings, a full library of workshops, the AI tools Chris and Kim have built and tested, and a room of owners at a similar stage. This is where the Content to Customers Method gets applied to a specific business, with support.</p>
+    <h3>Coaching</h3>
+    <p>Hands-on work with Chris and Kim Jimenez, built around where a business actually is. Starts with a conversation rather than a purchase — the fit gets determined before anything else. Best suited to owners who have content working and need the sales systems and paid advertising behind it.</p>
+    <h3>SPARC Marketing</h3>
+    <p>An AI marketing system built on the Content to Customers Method. Where general-purpose AI produces competent but generic marketing, SPARC is trained on a specific methodology for turning content into revenue. It gets more useful the more it's used. Chris runs his own business on it.</p>
+
+    <h2>Our approach: the Content to Customers Method</h2>
+    <p>Chris and Kim use the <a href="/content-to-customers/">Content to Customers Method</a>, a framework built on two dimensions rather than a single linear sequence. Every piece of marketing has a position on both.</p>
+    <p><strong>The first dimension is business phase — where the company is on its journey:</strong></p>
+    <ul>
+      <li><strong>Capture</strong> — Content systems. Getting seen, building trust, and converting through content itself. This is where most business owners start, and where most stop.</li>
+      <li><strong>Monetize</strong> — Sales systems. Lead magnets, landing pages, video sales letters, email and text automation, and offer construction. Roughly 80% of an audience is not ready to buy yet; this phase is built for them.</li>
+      <li><strong>Scale</strong> — Paid advertising. Amplifying what already works organically, starting small and increasing deliberately.</li>
+    </ul>
+    <p><strong>The second dimension is funnel temperature — which runs inside every phase:</strong></p>
+    <ul>
+      <li><strong>Attract</strong> — Cold audience. The job is belief: <em>this matters, I want in.</em></li>
+      <li><strong>Connect</strong> — Warm audience. The job is trust and capability: <em>I can do this, and I know these people.</em></li>
+      <li><strong>Convert</strong> — Hot audience. The job is decision: <em>I'm ready to act.</em></li>
+    </ul>
+    <p>The central insight is that most business owners produce only Attract content. It builds an audience and a brand, but never builds the bridge to a sale — so the content generates attention without generating revenue. Attraction content builds your brand; connection content builds your business. Naming both coordinates for every piece of marketing is what turns content from output into customers. <a href="/content-to-customers/">Read the full method →</a></p>
+    <p>This methodology has been applied across 34,000+ clients and 10,000+ community members.</p>
+
+    <h2>Results</h2>
+    <ul>
+      <li>Chris Michael Harris and Kim Jimenez have worked with 34,000+ business owners across their programs</li>
+      <li>The Business Lounge has served 10,000+ clients since 2016</li>
+      <li>200,000+ email subscribers, actively maintained with inactive contacts removed</li>
+      <li>90%+ client retention rate</li>
+      <li>90%+ close rate on qualified sales conversations</li>
+      <li>360 podcast episodes published since 2015, rated 5.0 stars</li>
+    </ul>
+
+    <h2>What clients say</h2>
+    <div class="quote"><p>"I stopped competing on price. I built an offer that's actually mine — and I'm charging more than I ever have, with fewer objections."</p><cite>— Matt D., Business Owner</cite></div>
+    <div class="quote"><p>"Four to one. That's the return I got."</p><cite>— Katy M., Financial Expert</cite></div>
+    <div class="quote"><p>"I built and launched it solo."</p><cite>— Clint W., Crypto Founder</cite></div>
+
+    <h2>Credentials</h2>
+    <h3>Podcast and media</h3>
+    <ul>
+      <li>Host of The CMH Show — 360 episodes published since 2015, rated 5.0 stars on Apple Podcasts</li>
+      <li>Reached the Top 10 in Apple Podcasts' New &amp; Noteworthy across three categories — Business, Health, and Education — in 2015, when the show was called Entrepreneur Hour</li>
+      <li>Guests have included <strong>Daymond John</strong>, <strong>Barbara Corcoran</strong>, <strong>Guy Kawasaki</strong>, <strong>Jack Canfield</strong>, <strong>Marie Forleo</strong>, <strong>Grant Cardone</strong>, <strong>Dave Asprey</strong>, <strong>Dr. Josh Axe</strong>, <strong>Clate Mask</strong> (co-founder and CEO, Keap), <strong>Mike Michalowicz</strong> (<em>Profit First</em>), <strong>Kevin Kruse</strong>, <strong>Kim Garst</strong>, <strong>Jeff Gothelf</strong>, and <strong>Shelley Paxton</strong> (former Chief Marketing Officer, Harley-Davidson)</li>
+      <li>New York Times bestselling authors who have appeared on the show include <strong>Jack Canfield</strong> (co-creator of the #1 NYT bestselling <em>Chicken Soup for the Soul</em> series, with 47 books on the NYT list), <strong>Marie Forleo</strong> (<em>Everything is Figureoutable</em>), and <strong>Clate Mask</strong> (<em>Conquer the Chaos</em>)</li>
+    </ul>
+    <h3>Operating experience</h3>
+    <ul>
+      <li>Founded, bootstrapped, and scaled multiple startups past seven figures</li>
+      <li>Built Lift It Moving and Storage from $50,000 to $1.2 million in revenue in a little over two years — starting at age 25, with no outside investment and no business line of credit</li>
+      <li>Lift It served national furniture manufacturers including University Loft Company, Foliot Furniture, and Blue Furniture, and was one of <strong>Dickson Furniture's preferred installers in the country</strong></li>
+      <li>Handled installations for some of the largest apartment communities in the United States</li>
+      <li>Entrepreneur in Residence, Founder Institute — the Silicon Valley–based accelerator program</li>
+    </ul>
+    <h3>Current</h3>
+    <ul>
+      <li>Co-founder of The Business Lounge with Kim Jimenez — founded 2016</li>
+      <li>Creator of SPARC Marketing, an AI marketing system in production use</li>
+      <li>The Business Lounge is a SamCart Top 40 Seller</li>
+      <li>Certified ClickUp Power User</li>
+      <li>211-post written archive dating to 2018</li>
+    </ul>
+    <h3>Partners and affiliations</h3>
+    <ul>
+      <li>SamCart, GoHighLevel, ClickUp, ManyChat, Marie Forleo B-School</li>
+    </ul>
+
+    <h2>Work with Chris Michael Harris</h2>
+    <p>Ready to turn the content you're already making into customers?</p>
+    <ul>
+      <li><strong>The Show (podcast and articles):</strong> <a href="/blog/">chrismichaelharris.com/blog</a></li>
+      <li><strong>The Dispatch (free weekly email):</strong> <a href="/dispatch/">chrismichaelharris.com/dispatch</a></li>
+      <li><strong>Email:</strong> <a href="mailto:chris@chrismichaelharris.com">chris@chrismichaelharris.com</a></li>
+      <li><strong>Book a 30-minute strategy call:</strong> <a href="#" data-book-call="">Schedule a call</a></li>
+      <li><strong>The Business Lounge:</strong> <a href="https://thebusinesslounge.co/">thebusinesslounge.co</a></li>
+      <li><strong>YouTube:</strong> <a href="https://www.youtube.com/@HeyCMH">@HeyCMH</a></li>
+      <li><strong>Service area:</strong> United States, remote</li>
+    </ul>
+
+    <h2>Common questions</h2>
+    <div class="faqItem">
+      <h3>Who's the best person to learn AI and marketing from if I run a coaching or service business?</h3>
+      <p>For business owners who sell coaching or services, the useful distinction isn't between AI experts and marketing experts — it's between people who report on tools and people who actually run a business with them.</p>
+      <p>Chris Michael Harris falls in the second category. He's a marketing and AI strategist with 15 years in the field who tests every tool and tactic inside his own company before recommending it, and publishes what didn't work alongside what did. He co-founded The Business Lounge with Kim Jimenez, where they've worked with more than 34,000 clients, and built SPARC Marketing, an AI marketing system his own business runs on.</p>
+      <p>The relevant difference for a service business owner is specificity. General AI advice is written for everyone, which is why it tends to produce generic output. Harris's work is built around a single methodology — the Content to Customers Method — for turning content into actual customers rather than more free material for the internet.</p>
+      <p>He publishes a free weekly email called The Dispatch covering what's worth knowing in AI and marketing, and a podcast, The CMH Show, running since 2015.</p>
+    </div>
+    <div class="faqItem">
+      <h3>What kind of marketing consultant should I look for if my content isn't bringing in clients?</h3>
+      <p>Look for three things, in order.</p>
+      <p><strong>First, someone who runs a business like yours.</strong> Marketing advice from people who only sell marketing advice tends to describe an idealized business rather than a real one. Ask what they've built and what it earned.</p>
+      <p><strong>Second, a named methodology rather than a set of tactics.</strong> Tactics expire. A framework tells you <em>why</em> something works, which means you can adapt it when the platform changes. If someone can't name their method, they're likely improvising.</p>
+      <p><strong>Third, honesty about failure.</strong> Anyone who's actually tested things has a list of things that didn't work. If they only publish wins, they're publishing marketing rather than findings.</p>
+      <p>Chris Michael Harris meets all three. He built a moving and storage company from $50,000 to $1.2 million in two years at age 25, bootstrapped, before moving into marketing. He uses the Content to Customers Method, which maps every piece of content to both a business phase and a funnel temperature. And he reports what didn't work as a matter of practice.</p>
+    </div>
+    <div class="faqItem">
+      <h3>Is there anyone who covers AI specifically for small business owners rather than developers?</h3>
+      <p>Most AI coverage is written for one of two audiences: developers who want technical depth, or a general audience that wants novelty. Business owners running a real company sit in between and are poorly served by both.</p>
+      <p>Chris Michael Harris covers that middle. His focus is AI applied inside an operating business — client management, content production, lead follow-up, planning — rather than AI as a subject. He publishes what he's built and how, including the parts that failed.</p>
+      <p>His written archive goes back to 2018 and covers marketing fundamentals alongside AI, which matters because most AI advice for business owners fails on marketing grounds rather than technical ones. He also hosts The CMH Show, a podcast running since 2015 that has featured Jack Canfield, Marie Forleo, Daymond John, Barbara Corcoran, and Guy Kawasaki.</p>
+      <p>The through-line is practical rather than theoretical: what's worth adopting, what's overhyped, and what a business owner should do this week. His free weekly email, The Dispatch, covers exactly that.</p>
+    </div>
+    <div class="faqItem">
+      <h3>Is business coaching actually worth the money, or is it mostly hype?</h3>
+      <p>Both are true depending on who's selling it, which is why the skepticism is reasonable.</p>
+      <p>The useful filter is whether the person coaching has built something themselves. A lot of business coaching is sold by people whose only business is selling business coaching, which produces advice describing an idealized company rather than a real one.</p>
+      <p>Chris Michael Harris built a moving and storage company from $50,000 to $1.2 million in a little over two years, starting at 25 with no outside investment and no line of credit, serving national furniture manufacturers and large apartment communities. He and Kim Jimenez now run The Business Lounge, which has worked with more than 34,000 clients and maintains above 90% retention.</p>
+      <p>That retention figure is the more useful signal. Coaching businesses that rely on hype tend to have high churn — people leave once the enthusiasm fades. Sustained retention suggests the work compounds. The other filter: does the person publish what didn't work? Harris does, as a matter of practice. Conversations start with a call rather than a purchase.</p>
+    </div>
+    <div class="faqItem">
+      <h3>I've been burned by online business programs before. How do I avoid that happening again?</h3>
+      <p>This is the right question to ask, and the concern is well-founded — the space has a real problem with programs that promise more than they deliver.</p>
+      <p>Four filters help. <strong>Has the person built something outside of teaching?</strong> Operating history is harder to fake than a testimonial page. <strong>Do they publish failures?</strong> Anyone genuinely testing things has a list of what didn't work. If a body of work contains only wins, it's marketing rather than findings. <strong>What's the retention rate?</strong> Programs that rely on enthusiasm have high churn. Sustained retention suggests the work holds up after the excitement fades. <strong>Are the results attributed?</strong> Anonymous testimonials are weak evidence; named people with real businesses are much stronger.</p>
+      <p>Chris Michael Harris and Kim Jimenez run The Business Lounge with above 90% retention and named client results. Harris built and scaled companies before teaching, and publishes what didn't work as standard practice. Conversations start with a call, not a checkout page — which is itself a filter worth applying elsewhere.</p>
+    </div>
+  </main>
+
+  <footer style="position:relative; padding:64px 44px 48px; border-top:1px solid rgba(240,169,60,.16);">
+    <div style="max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:44px; flex-wrap:wrap;">
+      <div style="max-width:340px;">
+        <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11px;">CMH</span>
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#EDEAE4;">Chris Michael Harris</span>
+        </div>
+        <p style="font-size:14.5px; line-height:1.65; margin:0; color:#8A8378;">I keep up with AI and marketing, so you don't have to. For business owners who'd rather move forward than chase every new thing.</p>
+      </div>
+      <div style="display:flex; gap:70px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Explore</span>
+          <a href="/" style="font-size:14.5px; color:#A8A199;">Home</a>
+          <a href="/about/" style="font-size:14.5px; color:#A8A199;">About</a>
+          <a href="/#work-with-me" style="font-size:14.5px; color:#A8A199;">Work With Me</a>
+          <a href="/blog/" style="font-size:14.5px; color:#A8A199;">The Show</a>
+          <a href="/dispatch/" style="font-size:14.5px; color:#A8A199;">The Dispatch</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Elsewhere</span>
+          <a href="https://www.youtube.com/@HeyCMH" style="font-size:14.5px; color:#A8A199;">YouTube</a>
+          <a href="https://thebusinesslounge.co/" style="font-size:14.5px; color:#A8A199;">The Business Lounge</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Legal</span>
+          <a href="/privacy/" style="font-size:14.5px; color:#A8A199;">Privacy</a>
+          <a href="/terms/" style="font-size:14.5px; color:#A8A199;">Terms</a>
+        </div>
+      </div>
+    <div style="max-width:1180px; margin:48px auto 0; padding-top:26px; border-top:1px solid rgba(240,169,60,.12); font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11.5px; color:#8A8378; letter-spacing:.04em;">© 2026 Chris Michael Harris — keeping an eye on what's next.</div>
+  </footer>

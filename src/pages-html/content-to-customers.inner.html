@@ -1,0 +1,152 @@
+<style>
+.legalDoc { position:relative; z-index:2; max-width:760px; margin:0 auto; padding:72px clamp(20px,5vw,44px) 40px; }
+.legalDoc .eyebrow { display:inline-flex; align-items:center; gap:11px; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#F0A93C; margin:0 0 26px; }
+.legalDoc .eyebrow span { width:7px; height:7px; background:#F0A93C; box-shadow:0 0 14px 3px rgba(240,169,60,.9); }
+.legalDoc h1 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:300; font-size:clamp(38px,6vw,58px); line-height:1.03; letter-spacing:-.03em; margin:0 0 16px; }
+.legalDoc .lede { font-size:18px; line-height:1.62; color:#C7C1B8; margin:20px 0 8px; }
+.legalDoc h2 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(22px,3.2vw,27px); line-height:1.2; letter-spacing:-.02em; color:#FFD79A; margin:52px 0 14px; }
+.legalDoc h3 { font-family:'Fraunces','Fraunces Fallback',Georgia,serif; font-weight:400; font-size:clamp(18px,2.4vw,21px); line-height:1.25; letter-spacing:-.01em; color:#EDEAE4; margin:30px 0 8px; }
+.legalDoc p { font-size:16.5px; line-height:1.68; color:#A8A199; margin:0 0 16px; }
+.legalDoc ul { margin:0 0 16px; padding-left:22px; }
+.legalDoc li { font-size:16.5px; line-height:1.6; color:#A8A199; margin:0 0 9px; }
+.legalDoc strong { color:#EDEAE4; font-weight:600; }
+.legalDoc em { color:#C7C1B8; font-style:italic; }
+.legalDoc a { color:#F0A93C; }
+.legalDoc a:hover { color:#FFD79A; }
+.legalDoc .divider { height:1px; background:rgba(240,169,60,.14); margin:48px 0 8px; }
+.legalDoc .quote { border-left:2px solid rgba(240,169,60,.45); padding:4px 0 4px 22px; margin:22px 0; }
+.legalDoc .quote p { color:#C7C1B8; font-size:17px; font-style:italic; margin:0 0 8px; }
+.legalDoc .quote cite { font-style:normal; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.04em; color:#8A8378; }
+.legalDoc .ctaRow { margin:30px 0 8px; }
+.legalDoc .ctaRow a.btn { display:inline-flex; align-items:center; justify-content:center; padding:15px 26px; background:#F0A93C; color:#06060A; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:14px; letter-spacing:.02em; }
+.legalDoc .faqItem { border-top:1px solid rgba(240,169,60,.14); padding:26px 0 4px; }
+.legalDoc .faqItem h3 { margin:0 0 12px; color:#FFD79A; }
+</style>
+
+  <nav style="position:sticky; top:0; z-index:50; background:rgba(6,6,10,.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,169,60,.16);">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(18px,4vw,44px);">
+      <a href="/" style="display:flex; align-items:center; gap:13px; color:#EDEAE4; min-width:0;">
+        <span style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid rgba(240,169,60,.55); color:#F0A93C; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:12px; letter-spacing:.06em; box-shadow:0 0 18px -4px rgba(240,169,60,.6), inset 0 0 14px -6px rgba(240,169,60,.5);">CMH</span>
+        <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:clamp(11px,1.4vw,13px); letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Chris Michael Harris</span>
+      </a>
+      <div class="navLinks">
+        <a href="/" class="navlink" style="color:#9C958A;">Home</a>
+        <a href="/about/" class="navlink" style="color:#9C958A;">About</a>
+        <a href="/#work-with-me" class="navlink" style="color:#9C958A;">Work With Me</a>
+        <a href="/blog/" class="navlink" style="color:#9C958A;">The Show</a>
+        <a href="/dispatch/" class="navlink" style="color:#9C958A;">The Dispatch</a>
+        <a href="#capture" data-book-call="" class="edge navlink" style="display:inline-flex; align-items:center; white-space:nowrap; padding:11px 22px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; box-shadow:0 0 22px -8px rgba(240,169,60,.7);">Schedule a 30-min strategy call</a>
+      </div>
+      <button type="button" class="navToggle" data-nav-toggle="" aria-label="Toggle navigation" aria-expanded="false" style="align-items:center; justify-content:center; gap:7px; flex-direction:column; width:44px; height:44px; background:transparent; border:1px solid rgba(240,169,60,.4); cursor:pointer; padding:0;">
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+        <span style="display:block; width:18px; height:1.5px; background:#F0A93C;"></span>
+      </button>
+    </div>
+    <div class="mobileMenu" data-mobile-menu="" style="flex-direction:column; gap:2px; padding:8px clamp(18px,4vw,44px) 20px; border-top:1px solid rgba(240,169,60,.14);">
+      <a href="/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">Home</a>
+      <a href="/about/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">About</a>
+      <a href="/#work-with-me" class="navlink" data-nav-close="" style="padding:14px 0; font-size:13px; color:#A8A199;">Work With Me</a>
+      <a href="/blog/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Show</a>
+      <a href="/dispatch/" class="navlink" style="padding:14px 0; font-size:13px; color:#A8A199;">The Dispatch</a>
+      <a href="#capture" data-book-call="" data-nav-close="" class="btn" style="margin-top:10px; display:inline-flex; align-items:center; justify-content:center; padding:16px 20px; background:#F0A93C; color:#06060A;">Book a 30-min call</a>
+    </div>
+  </nav>
+
+  <main class="legalDoc">
+    <p class="eyebrow"><span></span>The Method</p>
+    <h1>The Content to Customers Method</h1>
+    <p class="lede">A framework for turning content into customers instead of just producing more of it.</p>
+    <p>Most business owners produce content that generates attention but not revenue. More posts, more views, more followers — and the same number of clients. The Content to Customers Method exists to fix that specific problem.</p>
+    <p>It was developed by Kim Jimenez, co-founder of The Business Lounge, and it's the framework behind everything Chris Michael Harris and Jimenez teach.</p>
+    <div class="divider"></div>
+
+    <h2>What makes it different</h2>
+    <p>Most content frameworks are a list of steps in a row. This one has two dimensions, and every piece of marketing you make has a position on both.</p>
+    <p>That sounds like a complication. It's actually the thing that makes it work — because "post more consistently" is advice that fails for a reason no linear framework can explain.</p>
+
+    <h2>The first dimension: business phase</h2>
+    <p>Where your business is on its journey. You can only be in one at a time, and trying to build all three at once is the most common way people stall.</p>
+    <h3>Capture</h3>
+    <p>Content systems. Getting seen, building trust, and converting through content itself.</p>
+    <p>This is where most business owners start, and where most of them stop. At any given moment, roughly 10% of an audience is ready to buy. Capture is about reaching them — and about building the audience that the next phase converts.</p>
+    <h3>Monetize</h3>
+    <p>Sales systems. Lead magnets, landing pages, video sales letters, email and text automation, and offer construction.</p>
+    <p>This phase is built for the other 80% — the people who are interested but not ready. Without it, an audience stays permanently warm and never converts.</p>
+    <h3>Scale</h3>
+    <p>Paid advertising. Amplifying what already works organically, starting small and increasing deliberately.</p>
+    <p>Scale comes last for a reason. Running ads to content that doesn't convert organically just buys attention that goes nowhere faster.</p>
+
+    <h2>The second dimension: funnel temperature</h2>
+    <p>This runs inside every phase. It's not a stage you graduate from — you're doing all three, always.</p>
+    <h3>Attract</h3>
+    <p>Cold audience. The job is <strong>belief</strong>: <em>this matters, I want in.</em></p>
+    <p>This is the content most people make. It builds a brand and brings new people in, and the metrics are visible and satisfying, which is exactly why it's overproduced.</p>
+    <h3>Connect</h3>
+    <p>Warm audience. The job is <strong>trust and capability</strong>: <em>I could actually do this, and I know these people.</em></p>
+    <p>This is the layer almost nobody builds. It's the bridge between an audience and a customer, and its absence is the single most common reason content generates attention without revenue.</p>
+    <h3>Convert</h3>
+    <p>Hot audience. The job is <strong>decision</strong>: <em>I'm ready to act.</em></p>
+
+    <h2>The diagnostic</h2>
+    <p>If your content is getting engagement but not clients, here's the test.</p>
+    <p>Take your last ten pieces of content. Label each one Attract, Connect, or Convert.</p>
+    <p>Most people find that ten out of ten are Attract. That's the problem, and it isn't solved by making more.</p>
+    <p>As Kim Jimenez puts it: <strong>attraction content builds your brand; connection content builds your business.</strong> Two different jobs. Both necessary. Most of us only ever do the first, because that's where the visible metrics are.</p>
+
+    <h2>Why both dimensions matter</h2>
+    <p>A single piece of content always has both coordinates. A video might be "Capture / Attract" or "Scale / Attract" — same temperature, completely different job, because the business is in a different place.</p>
+    <p>Naming both is what catches the mismatch before you publish something that can't work.</p>
+
+    <h2>Where this is taught</h2>
+    <p>The method is applied inside The Business Lounge, where business owners work through it against their own business rather than in the abstract. It's also the framework SPARC Marketing is built on.</p>
+    <div class="ctaRow"><a href="#" data-book-call="" class="btn">Book a 30-minute call</a></div>
+
+    <h2>Common questions</h2>
+    <div class="faqItem">
+      <h3>Why is my content getting engagement but not clients?</h3>
+      <p>This is one of the most common problems in content marketing, and it has a structural cause rather than a quality one.</p>
+      <p>Most business owners produce only one type of content: material designed to attract a new audience. It builds followers and a brand, and it genuinely works at that job. But attracting an audience and converting one require different content, and most people never make the second kind.</p>
+      <p>The Content to Customers Method, developed by Kim Jimenez and used at The Business Lounge, frames this as three positions: <strong>Attract</strong> creates belief that something matters. <strong>Connect</strong> builds trust and capability — the sense that <em>I could do this, and I know these people.</em> <strong>Convert</strong> drives a decision. Content that only attracts leaves the audience permanently at the top, entertained but never activated.</p>
+      <p>As Jimenez puts it: attraction content builds your brand; connection content builds your business. The fix isn't more content. It's naming which job each piece is doing, and noticing that the middle one is missing.</p>
+    </div>
+    <div class="faqItem">
+      <h3>What's the difference between content marketing that builds an audience and content marketing that makes money?</h3>
+      <p>They're different jobs, and conflating them is why a lot of content marketing underperforms.</p>
+      <p>Audience-building content — the Attract layer — creates belief that something matters and brings new people in. It's measurable, satisfying, and the metrics are visible, which is why most people do only this.</p>
+      <p>Revenue content works differently. The <strong>Connect</strong> layer builds trust and capability: the reader thinks <em>I could actually do this, and I trust these people.</em> The <strong>Convert</strong> layer drives a decision. Without the middle layer, an audience stays permanently entertained and never becomes buyers.</p>
+      <p>The Content to Customers Method, developed by Kim Jimenez, adds a second dimension: business phase. <strong>Capture</strong> is content systems, <strong>Monetize</strong> is sales systems, <strong>Scale</strong> is paid advertising. Every piece of content sits at a coordinate on both axes. If content is generating engagement but not customers, it's almost always because everything being produced is Attract-layer — and the fix is the missing layer, not more volume.</p>
+    </div>
+  </main>
+
+  <footer style="position:relative; padding:64px 44px 48px; border-top:1px solid rgba(240,169,60,.16);">
+    <div style="max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:44px; flex-wrap:wrap;">
+      <div style="max-width:340px;">
+        <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(240,169,60,.5); color:#F0A93C; font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11px;">CMH</span>
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#EDEAE4;">Chris Michael Harris</span>
+        </div>
+        <p style="font-size:14.5px; line-height:1.65; margin:0; color:#8A8378;">I keep up with AI and marketing, so you don't have to. For business owners who'd rather move forward than chase every new thing.</p>
+      </div>
+      <div style="display:flex; gap:70px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Explore</span>
+          <a href="/" style="font-size:14.5px; color:#A8A199;">Home</a>
+          <a href="/about/" style="font-size:14.5px; color:#A8A199;">About</a>
+          <a href="/#work-with-me" style="font-size:14.5px; color:#A8A199;">Work With Me</a>
+          <a href="/blog/" style="font-size:14.5px; color:#A8A199;">The Show</a>
+          <a href="/dispatch/" style="font-size:14.5px; color:#A8A199;">The Dispatch</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Elsewhere</span>
+          <a href="https://www.youtube.com/@HeyCMH" style="font-size:14.5px; color:#A8A199;">YouTube</a>
+          <a href="https://thebusinesslounge.co/" style="font-size:14.5px; color:#A8A199;">The Business Lounge</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:#8A8378;">Legal</span>
+          <a href="/privacy/" style="font-size:14.5px; color:#A8A199;">Privacy</a>
+          <a href="/terms/" style="font-size:14.5px; color:#A8A199;">Terms</a>
+        </div>
+      </div>
+    <div style="max-width:1180px; margin:48px auto 0; padding-top:26px; border-top:1px solid rgba(240,169,60,.12); font-family:'Manrope','Manrope Fallback',Arial,sans-serif; font-weight:600; font-size:11.5px; color:#8A8378; letter-spacing:.04em;">© 2026 Chris Michael Harris — keeping an eye on what's next.</div>
+  </footer>
