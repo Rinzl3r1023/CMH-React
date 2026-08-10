@@ -24,38 +24,42 @@ export default function ClientEnhancer() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ── Scroll reveal ────────────────────────────────────────────────────────
+    // `.reveal` elements start visible (opacity:1) and paint with the HTML. An
+    // IntersectionObserver arms (hides -> opacity:0) only the ones BELOW THE FOLD
+    // at mount, then animates them in as they scroll into view. Elements already
+    // in the initial viewport are never armed — they keep painting with the HTML,
+    // so the LCP element is never deferred behind hydration (the #48 fix).
+    //
+    // Visibility is classified from the observer's OWN first callback (which
+    // reports every observed element's initial intersection state) rather than a
+    // synchronous getBoundingClientRect — the latter forced a layout reflow on
+    // load (the "Forced reflow" PSI flagged). Under reduced-motion we skip the
+    // observer entirely: nothing is armed, so all `.reveal` content just shows.
     let io: IntersectionObserver | undefined;
-    let safety: ReturnType<typeof setTimeout> | undefined;
     const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
-    if ('IntersectionObserver' in window && reveals.length) {
-      // Only arm (opacity:0) elements that are OFF-SCREEN at mount. Arming an
-      // element already in the initial viewport hides content that first-paint
-      // already showed, then re-reveals it via JS — which defers the LCP element
-      // behind hydration (a ~6s LCP on slow mobile, while the HTML painted in ms).
-      // In-view reveals keep their base opacity:1 and simply paint with the HTML;
-      // only below-the-fold sections get the scroll-in animation. `getBounding
-      // ClientRect` here reads post-layout positions since this runs after mount.
-      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-      const armedEls = reveals.filter((el) => el.getBoundingClientRect().top > vh * 0.9);
-      armedEls.forEach((el) => el.classList.add('armed'));
+    if (!reduced && 'IntersectionObserver' in window && reveals.length) {
       io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting) {
-              e.target.classList.remove('armed');
-              e.target.classList.add('in');
+              // Visible now: if it was armed (below-fold at mount), play the
+              // scroll-in animation; if it was never armed (in-view at mount),
+              // leave it exactly as first-paint rendered it — no animation, so
+              // the LCP element is untouched.
+              if (e.target.classList.contains('armed')) {
+                e.target.classList.remove('armed');
+                e.target.classList.add('in');
+              }
               io!.unobserve(e.target);
+            } else {
+              // Below the fold at observation time — arm it so it can animate in.
+              e.target.classList.add('armed');
             }
           });
         },
         { threshold: 0.1, rootMargin: '0px 0px -6% 0px' },
       );
-      armedEls.forEach((el) => io!.observe(el));
-      // Failsafe: never leave content hidden if the observer never fires.
-      safety = setTimeout(
-        () => armedEls.forEach((el) => { el.classList.remove('armed'); el.classList.add('in'); }),
-        2500,
-      );
+      reveals.forEach((el) => io!.observe(el));
     }
 
     // ── Parallax ─────────────────────────────────────────────────────────────
@@ -223,7 +227,6 @@ export default function ClientEnhancer() {
 
     return () => {
       io?.disconnect();
-      if (safety) clearTimeout(safety);
       if (onScroll) window.removeEventListener('scroll', onScroll);
       if (raf) cancelAnimationFrame(raf);
       toggle?.removeEventListener('click', onToggle);

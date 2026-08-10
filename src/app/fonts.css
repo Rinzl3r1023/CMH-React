@@ -379,3 +379,41 @@
   src: url("/fonts/0f74e651-3f4f-40bb-9877-31cfdbb13a26.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+/* ── Metric-matched fallbacks (CLS) ───────────────────────────────────────────
+   Fraunces/Manrope swap in late over slow connections, and their metrics differ
+   from the generic serif/sans — so the swap reflowed text (~0.25 CLS on the
+   homepage). These size-adjusted fallbacks (local Georgia / Arial) render at the
+   SAME box as the web fonts, so when the real font swaps in there's no reflow.
+   The override values were generated with @capsizecss/core from the real font
+   metrics (not hand-tuned); the font stacks reference "Fraunces Fallback" /
+   "Manrope Fallback" ahead of the generic families. */
+@font-face {
+  font-family: "Fraunces Fallback";
+  /* Georgia/Times give the exact metric match capsize computed these overrides
+     for (desktop Windows/Mac). Android ships neither, and `local()` won't alias
+     a missing face, so also list the serifs that DO ship on the mobile target
+     (Noto Serif) and on Linux/CI (Liberation/DejaVu Serif). Whichever resolves,
+     the ascent/descent/size-adjust overrides pin its line box to Fraunces', so
+     the swap from fallback to the real face doesn't reflow the page (the CLS).
+     Without the extra names the whole face is DROPPED on Android and the fix is
+     a no-op there — verified: the box is dropped on this Linux box too. */
+  src: local('Georgia'), local('Times New Roman'), local('Times'),
+       local('Noto Serif'), local('Liberation Serif'), local('DejaVu Serif');
+  ascent-override: 92.9623%;
+  descent-override: 24.2386%;
+  size-adjust: 105.2039%;
+}
+@font-face {
+  font-family: "Manrope Fallback";
+  /* Same cross-platform strategy as the serif fallback above: Arial/Helvetica
+     for the exact desktop match the overrides were tuned to, then Roboto/Noto
+     (Android) and Liberation/DejaVu (Linux/CI) so the metric-pinned box applies
+     everywhere instead of the face being dropped on the mobile target. */
+  src: local('Arial'), local('ArialMT'), local('Helvetica Neue'),
+       local('Roboto'), local('Noto Sans'), local('Liberation Sans'), local('DejaVu Sans');
+  ascent-override: 103.3095%;
+  descent-override: 29.074%;
+  line-gap-override: 0%;
+  size-adjust: 103.1851%;
+}
