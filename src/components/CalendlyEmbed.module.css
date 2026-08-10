@@ -54,7 +54,7 @@
   text-align: center;
   background: #0d0b10;
   color: #a8a199;
-  font-family: 'Manrope', 'Manrope Fallback', Arial, sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 14.5px;
 }
 
@@ -81,7 +81,7 @@
   padding: 12px 22px;
   border: 1px solid rgba(240, 169, 60, 0.5);
   color: #f0a93c;
-  font-family: 'Manrope', 'Manrope Fallback', Arial, sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.02em;
