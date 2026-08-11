@@ -1,6 +1,26 @@
+/* Engagement sentinels. topSentinel is document-anchored ~2.5 viewport-heights
+   down (absolute at the initial containing block → scrolls with the page); it
+   enters the viewport ~1.5 screens in, arming the bar. At 250vh (~2000px on an
+   800px viewport) it sits within every included page (shortest ≈ 3170px), so it
+   never adds scroll. bottomSentinel is a zero-size flow element at the document
+   end — the floor, so a page shorter than the top sentinel still arms. */
+.sentinelTop {
+  position: absolute;
+  top: 250vh;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.sentinelBottom {
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
 /* Bottom-fixed, dismissible promo bar routing content traffic to /visibility.
    Overlays without reflow (fixed) and sits near the thumb. Hidden until armed
-   (35% scroll) and faded out when the page's own CTA is in view. */
+   (engagement sentinel) and faded out when the page's own CTA is in view. */
 .bar {
   position: fixed;
   left: 0;

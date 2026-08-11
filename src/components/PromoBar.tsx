@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import styles from './PromoBar.module.css';
 
@@ -25,7 +25,6 @@ export const PROMO_BAR_DENY: readonly string[] = [
 
 const STORAGE_KEY = 'cmh_promobar_dismissed_at';
 const DISMISS_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-const SCROLL_TRIGGER = 0.35; // arm after 35% scroll depth
 // Fade the bar out when the page's own FOOTER CTA (the end-of-post book-a-call
 // block) enters view — its reader is at higher intent than the bar serves, so the
 // page's own CTA wins. Scoped to the footer block, NOT the mid-article Dispatch
@@ -48,9 +47,19 @@ export default function PromoBar() {
   const path = normalize(pathname || '/');
   const excluded = PROMO_BAR_DENY.includes(path);
 
-  const [armed, setArmed] = useState(false); // scroll threshold crossed
+  const [armed, setArmed] = useState(false); // engagement sentinel reached
   const [dismissed, setDismissed] = useState(true); // default hidden until storage is read (no flash)
   const [nearCta, setNearCta] = useState(false); // a page CTA is in view
+
+  // Sentinels for arming. Watching for an element to appear has NO scroll-origin
+  // assumption to violate — unlike a scrollY/scrollHeight ratio, it is immune to a
+  // corrupted scroll position at mount and to lazy-load height growth (the prod
+  // failure). `top` fires ~1.5 screens down (engaged, not instant); `bottom` sits
+  // at the document end as the floor so a page shorter than the top sentinel still
+  // arms rather than never (every current included page is ≥ ~3170px, well past
+  // the top sentinel, so it never extends the page).
+  const topRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   // 30-day dismissal (client-only). Default dismissed=true means SSR/first paint
   // renders hidden; this reveals it only when not recently dismissed.
@@ -66,23 +75,26 @@ export default function PromoBar() {
     setDismissed(hidden);
   }, [excluded]);
 
-  // Arm once 35% of the page has been scrolled (engaged, not interrupting the
-  // read). Self-removes after firing.
+  // Arm when either sentinel enters the viewport. IntersectionObserver, not a
+  // scroll-position calc — structural immunity to the scroll-restoration / CLS
+  // quirk that broke the ratio approach in production.
   useEffect(() => {
     if (excluded) return;
-    const onScroll = () => {
-      // Robust across scroll containers: window.scrollY is the viewport scroll for
-      // document-level scrolling regardless of whether html or body is the scroller.
-      const scrolled = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max > 0 && scrolled / max >= SCROLL_TRIGGER) {
+    const targets = [topRef.current, bottomRef.current].filter((t): t is HTMLDivElement => t !== null);
+    if (targets.length === 0) return;
+    const io = new IntersectionObserver((entries) => {
+      // Arm when a sentinel is in view OR already scrolled PAST (bottom above the
+      // viewport top → boundingClientRect.bottom < 0). The "past" case matters if
+      // the page mounts already deep (a restored/corrected scroll position): the
+      // reader is engaged, so the bar should arm rather than wait for a re-entry
+      // that never comes.
+      if (entries.some((e) => e.isIntersecting || e.boundingClientRect.bottom < 0)) {
         setArmed(true);
-        window.removeEventListener('scroll', onScroll);
+        io.disconnect();
       }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // short/already-scrolled pages
-    return () => window.removeEventListener('scroll', onScroll);
+    });
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
   }, [excluded]);
 
   // Fade near the page's own CTA. Re-runs per path so a client nav re-observes.
@@ -123,25 +135,30 @@ export default function PromoBar() {
   const show = armed && !dismissed && !nearCta;
 
   return (
-    <div
-      role="region"
-      aria-label="AI visibility check offer"
-      className={styles.bar}
-      data-show={show ? 'true' : 'false'}
-      aria-hidden={show ? undefined : 'true'}
-    >
-      <div className={styles.inner}>
-        <p className={styles.headline}>
-          <span className={styles.full}>{HEADLINE}</span>
-          <span className={styles.short}>{HEADLINE_SHORT}</span>
-        </p>
-        <a className={styles.cta} href={href} onClick={onCtaClick}>
-          {BUTTON}
-        </a>
-        <button type="button" className={styles.close} aria-label="Dismiss" onClick={dismiss}>
-          <span aria-hidden="true">×</span>
-        </button>
+    <>
+      {/* Engagement sentinels (see ref comment). Zero-size, non-interactive. */}
+      <div ref={topRef} aria-hidden="true" className={styles.sentinelTop} />
+      <div ref={bottomRef} aria-hidden="true" className={styles.sentinelBottom} />
+      <div
+        role="region"
+        aria-label="AI visibility check offer"
+        className={styles.bar}
+        data-show={show ? 'true' : 'false'}
+        aria-hidden={show ? undefined : 'true'}
+      >
+        <div className={styles.inner}>
+          <p className={styles.headline}>
+            <span className={styles.full}>{HEADLINE}</span>
+            <span className={styles.short}>{HEADLINE_SHORT}</span>
+          </p>
+          <a className={styles.cta} href={href} onClick={onCtaClick}>
+            {BUTTON}
+          </a>
+          <button type="button" className={styles.close} aria-label="Dismiss" onClick={dismiss}>
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
