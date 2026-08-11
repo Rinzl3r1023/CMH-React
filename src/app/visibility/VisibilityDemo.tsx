@@ -56,9 +56,11 @@ interface Payoff {
   crawlability: string;
 }
 
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
-const COMMUNITY_URL = process.env.NEXT_PUBLIC_COMMUNITY_URL || '#';
-const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || '#';
+// .trim() guards against a stray newline/space from a dashboard copy-paste — a
+// trailing newline on the site key once made Turnstile reject it as invalid.
+const TURNSTILE_SITE_KEY = (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '').trim();
+const COMMUNITY_URL = (process.env.NEXT_PUBLIC_COMMUNITY_URL || '').trim() || '#';
+const CALENDLY_URL = (process.env.NEXT_PUBLIC_CALENDLY_URL || '').trim() || '#';
 
 declare global {
   interface Window {

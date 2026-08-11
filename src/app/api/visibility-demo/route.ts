@@ -12,6 +12,7 @@ import {
   // is search-path-specific and belongs with the search call.
   CapacityError,
   classifyFailure,
+  envTrim,
   ANTHROPIC_MESSAGES_URL,
   ANTHROPIC_VERSION,
   ANTHROPIC_MODEL,
@@ -170,7 +171,7 @@ function retryAfterMs(header: string | null): number {
 async function searchWeb(
   query: string,
 ): Promise<{ results: unknown[]; summary: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
-  const key = process.env[ANTHROPIC_KEY_ENV];
+  const key = envTrim(ANTHROPIC_KEY_ENV);
 
   // STUB: no key → deterministic mock shaped like real web_search_result blocks,
   // so query construction, persistence, and SSE all run end-to-end keyless.
@@ -284,8 +285,8 @@ interface PersistInput {
 }
 
 async function persistCall1(p: PersistInput): Promise<boolean> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return false;
 
   const res = await fetch(`${base}/rest/v1/demo_sessions?on_conflict=session_token`, {
@@ -426,7 +427,7 @@ async function synthesizeCall1(
   // Bias against a false absence: any code signal of appearance flips the default.
   const codeSuggestsAppeared = signal.domainMatch || signal.nameMatch;
 
-  const key = process.env[ANTHROPIC_KEY_ENV];
+  const key = envTrim(ANTHROPIC_KEY_ENV);
 
   // STUB: no key → deterministic copy derived from the code signal, so both
   // branches are exercisable without a live key. (The stub search injects no
