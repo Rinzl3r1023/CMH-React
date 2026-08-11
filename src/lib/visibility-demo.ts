@@ -16,6 +16,17 @@ export const SITE_ID = 'demo-visibility';
 export const MONTHLY_CEILING = 2000; // §7.5 / REV 1.1 — 2,000 sessions/mo
 export const IP_WINDOW_HOURS = 24; // §7.3 — one free run per IP per 24h
 
+/**
+ * Read an env var, TRIMMED. A stray trailing newline or space from a dashboard
+ * copy-paste (exactly how the Turnstile site key once broke) is invisible but
+ * fatal — an invalid sitekey, a malformed URL, a header with an embedded newline.
+ * Every env read in the demo goes through this so paste whitespace can't recur.
+ */
+export function envTrim(name: string): string {
+  const v = process.env[name];
+  return typeof v === 'string' ? v.trim() : '';
+}
+
 // ── client IP + salted hash (never store a raw IP) ───────────────────────────
 export function clientIp(request: Request): string {
   const xff = request.headers.get('x-forwarded-for');
@@ -25,7 +36,7 @@ export function clientIp(request: Request): string {
 
 const DEV_SALT_FALLBACK = 'cmh-visibility-demo-dev';
 export function hashIp(ip: string): string {
-  const salt = process.env.DEMO_IP_SALT;
+  const salt = envTrim('DEMO_IP_SALT') || undefined;
   if (!salt) {
     if (process.env.NODE_ENV === 'production') {
       // Fail loud: a hardcoded salt makes hashed IPs reversible by anyone with the
@@ -44,7 +55,7 @@ export function hashIp(ip: string): string {
 // Fail-OPEN only when no secret is set (dev/keyless). With a secret present it
 // fails CLOSED on any non-success, so production (secret set) is always enforced.
 export async function verifyTurnstile(token: string, ip: string): Promise<{ ok: boolean; bypassed: boolean }> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = envTrim('TURNSTILE_SECRET_KEY');
   if (!secret) return { ok: true, bypassed: true }; // ⚑ dev only — MUST be set before launch
   if (!token) return { ok: false, bypassed: false };
   try {
@@ -69,7 +80,7 @@ export async function verifyTurnstile(token: string, ip: string): Promise<{ ok: 
 // ⚑ ENV NEEDED (not in the confirmed new-env list § REV 1.1): SUPABASE_URL,
 // SUPABASE_SERVICE_ROLE_KEY.
 export function supabaseConfigured(): boolean {
-  return !!(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return !!(envTrim('SUPABASE_URL') && envTrim('SUPABASE_SERVICE_ROLE_KEY'));
 }
 
 function sbAuth(svc: string): Record<string, string> {
@@ -79,8 +90,8 @@ function sbAuth(svc: string): Record<string, string> {
 // Exact row count for a filter, via PostgREST count=exact + Content-Range.
 // Returns null when Supabase is unconfigured so the caller can skip the check.
 async function sbCount(query: string): Promise<number | null> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return null;
   try {
     const res = await fetch(`${base}/rest/v1/demo_sessions?${query}`, {
@@ -126,8 +137,8 @@ export async function emailUsed(email: string): Promise<boolean | null> {
  * Best-effort: the final persistCall1() upsert merges the rest onto session_token.
  */
 export async function reserveSession(sessionToken: string, ipHash: string): Promise<void> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return;
   try {
     await fetch(`${base}/rest/v1/demo_sessions?on_conflict=session_token`, {
@@ -145,8 +156,8 @@ export async function reserveSession(sessionToken: string, ipHash: string): Prom
  * false when Supabase is unconfigured OR no row matched the token (invalid token).
  */
 export async function markGated(sessionToken: string, email: string): Promise<boolean> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return false;
   try {
     const res = await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
@@ -166,8 +177,8 @@ export async function markGated(sessionToken: string, email: string): Promise<bo
 // Mirrors the /api/subscribe pattern (v3 form-subscribe; idempotent). Demo leads
 // must NOT pool with the main audience (§1) — hence the separate form.
 export async function subscribeDemoLead(email: string): Promise<'ok' | 'unconfigured' | 'failed'> {
-  const apiKey = process.env.KIT_API_KEY;
-  const formId = process.env.KIT_DEMO_FORM_ID;
+  const apiKey = envTrim('KIT_API_KEY');
+  const formId = envTrim('KIT_DEMO_FORM_ID');
   if (!apiKey || !formId) return 'unconfigured';
   try {
     const res = await fetch(`https://api.convertkit.com/v3/forms/${encodeURIComponent(formId)}/subscribe`, {
@@ -188,8 +199,8 @@ export async function subscribeDemoLead(email: string): Promise<'ok' | 'unconfig
  * is a recoverable backfill queue, not silent lead loss. Best-effort.
  */
 export async function markKitSynced(sessionToken: string): Promise<void> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return;
   try {
     await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
@@ -219,8 +230,8 @@ export interface DemoSessionRow {
 
 /** Fetch a session row by token for Call 2. null = not found / unconfigured. */
 export async function getSession(sessionToken: string): Promise<DemoSessionRow | null> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return null;
   const cols = 'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff';
   try {
@@ -247,8 +258,8 @@ export async function persistScore(
   presence: number,
   payoff: unknown,
 ): Promise<boolean> {
-  const base = process.env.SUPABASE_URL;
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return false;
   try {
     const res = await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
@@ -301,7 +312,7 @@ export async function callClaudeText(
   prompt: string,
   maxTokens: number,
 ): Promise<{ text: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
-  const key = process.env[ANTHROPIC_KEY_ENV];
+  const key = envTrim(ANTHROPIC_KEY_ENV);
   if (!key) return { text: '', usage: { input_tokens: 0, output_tokens: 0 }, stubbed: true };
 
   const res = await fetch(ANTHROPIC_MESSAGES_URL, {
