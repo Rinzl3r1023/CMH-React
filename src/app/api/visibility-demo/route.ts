@@ -577,14 +577,14 @@ async function synthesizeCall1(
     `   • verdict: one line, at most 15 words, plain language.`,
     `   • bullets: up to 3 short factual points about what AI associates them with (drawn only from the results).`,
     `   • detail: 2-3 sentences of nuance. Where AI's answer is stale or wrong, say so directly.`,
-    `   • collision: set true ONLY if a DISTINCT, DIFFERENT organization that shares the name appears in the identity results and could be mistaken for ${subject.name}. If true, you MUST name that other organization in collision_entity (e.g. "Harris & Co Accounting, Leeds"). A vague "there may be similar businesses" is NOT a collision — set collision false and leave collision_entity empty. Never invent an entity to fill this field.`,
+    `   • collision: set true ONLY if a DISTINCT, DIFFERENT organization that shares the name appears in the identity results and could be mistaken for ${subject.name}. If true, you MUST (a) name that other organization in collision_entity (e.g. "Harris & Co Accounting, Leeds"), AND (b) name that SAME organization in the verdict or one of the bullets — NOT only in the detail — so a reader who never expands the detail can see why this section is flagged. A vague "there may be similar businesses" is NOT a collision — set collision false and leave collision_entity empty. Never invent an entity to fill this field.`,
     ``,
-    `2) ABSENCE — for the buyer-intent query "${buyerQuery}", what actually came back.`,
-    `   • verdict: one line, at most 15 words.`,
-    `   • bullets: up to 3 short points on who or what the results surface.`,
-    `   • detail: 2-3 sentences.`,
+    `2) ABSENCE — for the buyer-intent query "${buyerQuery}", where does ${subject.name} STAND? Write the verdict and bullets in the SECOND PERSON, about ${subject.name} ("you"). Competitors are CONTEXT, never the headline — the reader is ${subject.name}, not a market analyst.`,
+    `   • verdict: one line, at most 15 words, ABOUT ${subject.name}'s own position — whether you appear and, if so, where you rank and how you're framed. It MUST refer to ${subject.name} (as "you" or by name); it must NOT be a summary of the result set or a roster of competitors. Good: "You appear, but third — behind a directory list and one detailed competitor profile." Bad: "The results return several competing providers."`,
+    `   • bullets: up to 3, subject-first — where YOU rank, how YOU'RE described, what's said about YOU. Name a competitor only as the thing you sit behind or ahead of, never as the bullet's subject.`,
+    `   • detail: 2-3 sentences; here you MAY summarize the wider competitive field.`,
     `   • recommended: the names actually returned by that query (who a buyer would find). Empty array if none.`,
-    `   Do NOT state whether ${subject.name} appeared — that is decided separately in code. Just report what the results contain.`,
+    `   Do NOT state whether ${subject.name} appeared as a yes/no — that is decided separately in code. Describe the POSITION, not the boolean.`,
     ``,
     `3) OPPORTUNITY — one short paragraph. ${opportunityGuidance}`,
     `   • opportunity_anchor: name the ONE concrete finding from THIS run that the paragraph is built on — the colliding entity, a specific competitor from the buyer-intent results, the rank position, or the query "${buyerQuery}" itself. It must be something that actually appeared in the results above. A generic "improvements are available" is NOT anchored — if you cannot tie it to a concrete finding, leave opportunity_anchor empty.`,
@@ -617,23 +617,57 @@ async function synthesizeCall1(
   );
 
   // COLLISION GUARD (code): a collision is only real if the model NAMED the
-  // distinct entity. collision=true with an empty/blank collision_entity is
-  // treated as false — the model doesn't get to manufacture a problem it can't
-  // name. This exception is scoped to collision ONLY; it is NOT a precedent for
-  // `appeared`, which stays purely code-anchored above.
+  // distinct entity AND that entity is VISIBLE above the fold (verdict or a
+  // bullet). Two failure modes are closed here:
+  //   • collision=true with a blank collision_entity → manufactured, drop it.
+  //   • collision=true but the entity appears only in the collapsed detail (or
+  //     nowhere) → an INVISIBLE amber trigger. A visitor sees ⚠️ with no reason
+  //     on the page, which is the same failure as a vague one. Drop it.
+  // Scoped to collision ONLY; NOT a precedent for `appeared` (code-anchored).
   const collisionEntity =
     typeof parsed.mirror?.collision_entity === 'string' ? parsed.mirror.collision_entity.trim() : '';
-  const collision = parsed.mirror?.collision === true && collisionEntity.length > 0;
+  const collisionVisible =
+    collisionEntity.length > 0 &&
+    [mirrorSection.verdict, ...mirrorSection.bullets].some((t) =>
+      t.toLowerCase().includes(collisionEntity.toLowerCase()),
+    );
+  const collision = parsed.mirror?.collision === true && collisionEntity.length > 0 && collisionVisible;
 
   const absenceSection = toRevealSection(
     parsed.absence,
     appeared
-      ? `For "${buyerQuery}", ${subject.name} appears in the results.`
-      : `For "${buyerQuery}", here's who the results surface.`,
+      ? `You appear for "${buyerQuery}" — see the full detail for where you rank.`
+      : `You don't appear for "${buyerQuery}" — here's who does.`,
     appeared
       ? `For "${buyerQuery}", ${subject.name} does appear — the full report covers where they rank and how they're described.`
       : `For "${buyerQuery}", here's who the results surface instead.`,
   );
+
+  // SUBJECT-FIRST GUARD (code): the absence verdict must be about ${subject.name}'s
+  // OWN position, not a summary of the result set. A verdict like "the results
+  // return a roster of competing providers" shows a ✅/❌ over a headline about
+  // everyone ELSE. Accept the model's verdict only if it refers to the subject —
+  // by name or in the second person ("you"/"your"). Otherwise replace it with a
+  // subject-first fallback. (The fallbacks above already pass this check.)
+  const nameNorm = subject.name.trim().toLowerCase();
+  // Distinctive brand token = the first word of the name when it's long enough to
+  // be a brand rather than a generic lead ("the", "dr"). Matching on it lets a
+  // name-based verdict ("Lifespring ranks third") pass without demanding the full
+  // entered name verbatim — while a competitor-summary verdict, which never
+  // contains the brand token, still fails. Second person ("you") is the primary,
+  // prompt-steered path and is matched directly.
+  const firstToken = nameNorm.split(/\s+/)[0] ?? '';
+  const verdictLc = absenceSection.verdict.toLowerCase();
+  const verdictAboutSubject =
+    (nameNorm.length >= 3 && verdictLc.includes(nameNorm)) ||
+    (firstToken.length >= 5 && verdictLc.includes(firstToken)) ||
+    /\b(you|your|you['’]re|youre)\b/.test(verdictLc);
+  if (!verdictAboutSubject) {
+    absenceSection.verdict = appeared
+      ? `You appear for "${buyerQuery}" — see the full detail for where you rank.`
+      : `You don't appear for "${buyerQuery}" — here's who does.`;
+  }
+
   const recommended = Array.isArray(parsed.absence?.recommended)
     ? (parsed.absence!.recommended as unknown[]).filter((x): x is string => typeof x === 'string' && x.trim().length > 0)
     : [];
@@ -653,6 +687,19 @@ async function synthesizeCall1(
       : appeared
         ? `The full report scores how strongly and accurately ${subject.name} shows up for "${buyerQuery}", and where that presence can be sharpened.`
         : `For "${buyerQuery}", the full report shows what's missing between ${subject.name} and the buyers searching — the gap to close to become findable.`;
+
+  // DIAGNOSTIC (Bug 1): log which signal drives the mirror ✅/⚠️ this run, so an
+  // unexplained amber can be traced to accurate=false vs a collision — and, when
+  // accurate=false, the identity results that produced it (to see why domain/name
+  // match failed). Read in the Railway logs, keyed by subject name.
+  const amberDriver = accurate && !collision ? 'none-green' : !accurate ? 'accurate=false' : 'collision';
+  console.log(
+    `[visibility-mirror] name=${JSON.stringify(subject.name)} host=${JSON.stringify(subjectHost)} ` +
+      `accurate=${accurate} idSignal=${JSON.stringify(idSignal)} ` +
+      `modelCollision=${parsed.mirror?.collision === true} collisionEntity=${JSON.stringify(collisionEntity)} ` +
+      `collisionVisible=${collisionVisible} collision=${collision} amberDriver=${amberDriver} ` +
+      `identityResults=${JSON.stringify(resultsOfKind(call1Results, 'identity').slice(0, 6))}`,
+  );
 
   return {
     mirror: { ...mirrorSection, accurate, collision },
