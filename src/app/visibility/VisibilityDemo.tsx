@@ -207,7 +207,7 @@ export default function VisibilityDemo() {
     setAbsence(null);
 
     try {
-      const res = await fetch('/api/visibility-demo', {
+      const res = await fetch('/api/visibility-demo/', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ name, url, category, what, who, location, turnstileToken }),
@@ -308,7 +308,7 @@ export default function VisibilityDemo() {
     gatingRef.current = true;
     setGateBusy(true);
     try {
-      const g = await fetch('/api/visibility-demo/gate', {
+      const g = await fetch('/api/visibility-demo/gate/', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email, company, session_token: sessionToken }),
@@ -321,7 +321,7 @@ export default function VisibilityDemo() {
         return;
       }
       setPhase('scoring');
-      const s = await fetch('/api/visibility-demo/score', {
+      const s = await fetch('/api/visibility-demo/score/', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ session_token: sessionToken }),

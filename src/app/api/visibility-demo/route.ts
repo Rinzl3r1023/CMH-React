@@ -72,7 +72,12 @@ const WEB_SEARCH_TOOL_TYPE = 'web_search_20260209';
 // Only visitor-supplied free text ([what]/[who]/[location]) ever enters the query,
 // so a pill label like "service provider" can still never be inserted.
 function buyerIntentQuery(what: string, who: string, location: string): string {
-  return location ? `best ${what} in ${location}` : `best ${what} for ${who}`;
+  // Both [who] and [location] are optional, so "both blank" is a real (and for a
+  // global/online business, common) path. Never emit a dangling connector — drop
+  // "in [location]" / "for [who]" when the trailing slot is empty.
+  if (location) return `best ${what} in ${location}`;
+  if (who) return `best ${what} for ${who}`;
+  return `best ${what}`;
 }
 
 // ── input sanitization (§7.6 — these strings go into live search queries) ────
