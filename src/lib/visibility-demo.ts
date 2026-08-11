@@ -23,8 +23,20 @@ export function clientIp(request: Request): string {
   return request.headers.get('x-real-ip') || 'unknown';
 }
 
+const DEV_SALT_FALLBACK = 'cmh-visibility-demo-dev';
 export function hashIp(ip: string): string {
-  const salt = process.env.DEMO_IP_SALT || 'cmh-visibility-demo';
+  const salt = process.env.DEMO_IP_SALT;
+  if (!salt) {
+    if (process.env.NODE_ENV === 'production') {
+      // Fail loud: a hardcoded salt makes hashed IPs reversible by anyone with the
+      // repo. Enforced at first use (not module top-level) on purpose — `next build`
+      // runs with NODE_ENV=production and no runtime secrets, so a top-level throw
+      // would break the build; and the failure is scoped to the demo, not the whole
+      // site. In prod, DEMO_IP_SALT MUST be set or the run endpoint 500s loudly.
+      throw new Error('DEMO_IP_SALT is required in production (a hardcoded salt makes hashed IPs reversible).');
+    }
+    return createHash('sha256').update(`${DEV_SALT_FALLBACK}:${ip}`).digest('hex');
+  }
   return createHash('sha256').update(`${salt}:${ip}`).digest('hex');
 }
 
@@ -167,4 +179,151 @@ export async function subscribeDemoLead(email: string): Promise<'ok' | 'unconfig
   } catch {
     return 'failed';
   }
+}
+
+/**
+ * Observability for the Kit sync (§ this piece): stamp kit_synced_at on a
+ * successful subscribe. Left NULL on failure so
+ *   WHERE email IS NOT NULL AND kit_synced_at IS NULL
+ * is a recoverable backfill queue, not silent lead loss. Best-effort.
+ */
+export async function markKitSynced(sessionToken: string): Promise<void> {
+  const base = process.env.SUPABASE_URL;
+  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!base || !svc) return;
+  try {
+    await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
+      method: 'PATCH',
+      headers: { ...sbAuth(svc), 'content-type': 'application/json', prefer: 'return=minimal' },
+      body: JSON.stringify({ kit_synced_at: new Date().toISOString() }),
+    });
+  } catch {
+    /* best-effort — the null timestamp is the backfill signal */
+  }
+}
+
+// ── Call 2 (gated score) support ─────────────────────────────────────────────
+
+export interface DemoSessionRow {
+  session_token: string;
+  subject_name: string | null;
+  subject_url: string | null;
+  category: string | null;
+  gated_at: string | null;
+  email: string | null;
+  call1_results: unknown;
+  score_clarity: number | null;
+  score_presence: number | null;
+}
+
+/** Fetch a session row by token for Call 2. null = not found / unconfigured. */
+export async function getSession(sessionToken: string): Promise<DemoSessionRow | null> {
+  const base = process.env.SUPABASE_URL;
+  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!base || !svc) return null;
+  const cols = 'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence';
+  try {
+    const res = await fetch(
+      `${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}&select=${cols}&limit=1`,
+      { method: 'GET', headers: { ...sbAuth(svc) } },
+    );
+    if (!res.ok) return null;
+    const rows = (await res.json()) as DemoSessionRow[];
+    return Array.isArray(rows) && rows.length > 0 ? rows[0] : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Persist Call-2 scores (each /25) + payoff_generated_at. */
+export async function persistScore(sessionToken: string, clarity: number, presence: number): Promise<boolean> {
+  const base = process.env.SUPABASE_URL;
+  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!base || !svc) return false;
+  try {
+    const res = await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
+      method: 'PATCH',
+      headers: { ...sbAuth(svc), 'content-type': 'application/json', prefer: 'return=minimal' },
+      body: JSON.stringify({
+        score_clarity: clarity,
+        score_presence: presence,
+        payoff_generated_at: new Date().toISOString(),
+      }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// ── Anthropic text call (no tools) — used by Call 2 scoring ──────────────────
+// NOTE: the RUN route (/api/visibility-demo/route.ts) keeps its own local
+// CapacityError + classifyFailure for the SEARCH path (with the 429 retry). This
+// pair mirrors them for the no-search scoring path; capacity detection is kept
+// identical on purpose. callClaudeText declares NO web_search tool, so Call 2 can
+// never issue a search and never touches the 3-search cap.
+export const ANTHROPIC_MESSAGES_URL = 'https://api.anthropic.com/v1/messages';
+export const ANTHROPIC_VERSION = '2023-06-01';
+export const ANTHROPIC_MODEL = 'claude-sonnet-5';
+export const ANTHROPIC_KEY_ENV = 'ANTHROPIC_API_KEY_DEMO';
+
+export class CapacityError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    this.name = 'CapacityError';
+  }
+}
+
+export function classifyFailure(status: number, errType: string, errMsg: string): 'capacity' | 'ratelimit' | 'error' {
+  const text = `${errType} ${errMsg}`;
+  if (status === 402 || /credit|billing|spend|budget|quota|payment|balance/i.test(text)) return 'capacity';
+  if (status === 429) return 'ratelimit';
+  return 'error';
+}
+
+interface ClaudeTextResponse {
+  content?: Array<{ type: string; text?: string }>;
+  usage?: { input_tokens?: number; output_tokens?: number };
+}
+
+export async function callClaudeText(
+  prompt: string,
+  maxTokens: number,
+): Promise<{ text: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
+  const key = process.env[ANTHROPIC_KEY_ENV];
+  if (!key) return { text: '', usage: { input_tokens: 0, output_tokens: 0 }, stubbed: true };
+
+  const res = await fetch(ANTHROPIC_MESSAGES_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': ANTHROPIC_VERSION },
+    // NO tools → this call physically cannot issue a web search.
+    body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] }),
+  });
+
+  if (!res.ok) {
+    let errType = '';
+    let errMsg = '';
+    try {
+      const j = (await res.json()) as { error?: { type?: string; message?: string } };
+      errType = j.error?.type ?? '';
+      errMsg = j.error?.message ?? '';
+    } catch {
+      /* non-JSON */
+    }
+    if (classifyFailure(res.status, errType, errMsg) === 'capacity') {
+      throw new CapacityError(`anthropic capacity ${res.status}`);
+    }
+    throw new Error(`anthropic ${res.status}`);
+  }
+
+  const data = (await res.json()) as ClaudeTextResponse;
+  let text = '';
+  for (const block of data.content ?? []) {
+    if (block.type === 'text' && typeof block.text === 'string') text += block.text;
+  }
+  return {
+    text,
+    usage: { input_tokens: data.usage?.input_tokens ?? 0, output_tokens: data.usage?.output_tokens ?? 0 },
+    stubbed: false,
+  };
 }

@@ -656,9 +656,15 @@ export async function POST(request: NextRequest) {
           controller.close();
           return;
         }
-        // 2. One free run per IP per 24h (§7.3).
+        // 2. One free run per IP per 24h (§7.3). Not a dead-end error — someone
+        //    who came back is interested; point them at the full framework.
         if ((await ipRunInLast24h(ipHash)) === true) {
-          send({ type: 'rate_limited', scope: 'ip' });
+          send({
+            type: 'rate_limited',
+            scope: 'ip',
+            message: "You've already run this today. Want the full framework instead?",
+            cta: 'community',
+          });
           controller.close();
           return;
         }

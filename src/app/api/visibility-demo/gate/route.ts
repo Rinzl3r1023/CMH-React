@@ -1,6 +1,7 @@
 import {
   emailUsed,
   markGated,
+  markKitSynced,
   subscribeDemoLead,
   supabaseConfigured,
 } from '@/lib/visibility-demo';
@@ -68,8 +69,15 @@ export async function POST(request: Request) {
   }
 
   // Lead capture to the separate demo form. Best-effort: a Kit hiccup must not
-  // cost the visitor the score they just unlocked.
+  // cost the visitor the score they just unlocked — but the outcome IS recorded.
+  // On success we stamp kit_synced_at; on failure we log and leave it NULL, which
+  // makes "email set, kit_synced_at null" a recoverable backfill queue.
   const kit = await subscribeDemoLead(email);
+  if (kit === 'ok') {
+    await markKitSynced(sessionToken);
+  } else if (kit === 'failed') {
+    console.error(`[visibility-demo] Kit sync failed for gated session ${sessionToken} (email captured, kit_synced_at left null for backfill)`);
+  }
 
   return Response.json({ ok: true, unlocked: true, kit });
 }
