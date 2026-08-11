@@ -590,7 +590,7 @@ async function synthesizeCall1(
     `   • opportunity_anchor: name the ONE concrete finding from THIS run that the paragraph is built on — the colliding entity, a specific competitor from the buyer-intent results, the rank position, or the query "${buyerQuery}" itself. It must be something that actually appeared in the results above. A generic "improvements are available" is NOT anchored — if you cannot tie it to a concrete finding, leave opportunity_anchor empty.`,
   ].join('\n');
 
-  const { text, usage } = await callClaudeText(prompt, SYNTHESIS_MAX_TOKENS, {
+  const { text, usage, stopReason, contentTypes } = await callClaudeText(prompt, SYNTHESIS_MAX_TOKENS, {
     format: { type: 'json_schema', schema: SYNTHESIS_SCHEMA },
   });
 
@@ -602,13 +602,33 @@ async function synthesizeCall1(
     opportunity?: unknown;
     opportunity_anchor?: unknown;
   } = {};
+  let parseOk = false;
+  let parseError = '';
   try {
     const start = text.indexOf('{');
     const end = text.lastIndexOf('}');
-    if (start >= 0 && end > start) parsed = JSON.parse(text.slice(start, end + 1));
-  } catch {
+    if (start >= 0 && end > start) {
+      parsed = JSON.parse(text.slice(start, end + 1));
+      parseOk = true;
+    } else {
+      parseError = 'no-braces';
+    }
+  } catch (e) {
+    parseError = e instanceof Error ? e.message : 'parse-throw';
     /* fall through to safe fallbacks below */
   }
+
+  // DIAGNOSTIC (raw synthesis output) — we've twice reasoned about discarded
+  // content blind. Dump the RAW model text, stop_reason (max_tokens ⇒ truncated
+  // JSON ⇒ blanket fallback), content block types (a non-'text' structured block
+  // would leave `text` empty), synthesis-only token usage, and the parse outcome
+  // with which top-level keys survived. Read in the Railway deploy logs by name.
+  console.error(
+    `[visibility-synth-raw] name=${JSON.stringify(subject.name)} stopReason=${JSON.stringify(stopReason)} ` +
+      `contentTypes=${JSON.stringify(contentTypes)} synthInTok=${usage.input_tokens} synthOutTok=${usage.output_tokens} ` +
+      `maxTok=${SYNTHESIS_MAX_TOKENS} textLen=${text.length} parseOk=${parseOk} parseError=${JSON.stringify(parseError)} ` +
+      `topKeys=${JSON.stringify(Object.keys(parsed))} rawText=${JSON.stringify(text)}`,
+  );
 
   const mirrorSection = toRevealSection(
     parsed.mirror,
