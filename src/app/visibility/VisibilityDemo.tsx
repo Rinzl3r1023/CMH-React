@@ -118,6 +118,8 @@ export default function VisibilityDemo() {
   // one costs real money (search fees + a Call), not just a conversion.
   const runningRef = useRef(false);
   const gatingRef = useRef(false);
+  // UTM params captured off the landing URL on mount (see effect below).
+  const utmRef = useRef<Record<string, string>>({});
 
   // Turnstile.
   const [turnstileToken, setTurnstileToken] = useState('');
@@ -210,6 +212,19 @@ export default function VisibilityDemo() {
     if (phase === 'score') window.scrollTo({ top: 0, behavior: 'auto' });
   }, [phase]);
 
+  // Capture UTM params off the landing URL once, so the promo bar's utm_content
+  // (originating page slug) — and any ad-campaign UTMs — persist onto the session
+  // row. Read on mount; the run POST forwards them and the route persists them.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    utmRef.current = {
+      utm_source: q.get('utm_source') ?? '',
+      utm_medium: q.get('utm_medium') ?? '',
+      utm_campaign: q.get('utm_campaign') ?? '',
+      utm_content: q.get('utm_content') ?? '',
+    };
+  }, []);
+
   function toTerminal(kind: 'at_capacity' | 'rate_limited' | 'error', msg: string, cta: 'community' | 'calendly' | null) {
     setTerminalMsg(msg);
     setTerminalCta(cta);
@@ -247,7 +262,7 @@ export default function VisibilityDemo() {
       const res = await fetch('/api/visibility-demo/', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, url, category, what, who, serviceArea, location, turnstileToken }),
+        body: JSON.stringify({ name, url, category, what, who, serviceArea, location, turnstileToken, ...utmRef.current }),
       });
       if (!res.ok || !res.body) {
         toTerminal('error', 'Something went wrong starting your check. Please try again.', null);
