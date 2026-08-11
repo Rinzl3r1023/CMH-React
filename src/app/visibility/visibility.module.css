@@ -1,0 +1,340 @@
+/* Standalone styles for the AI Visibility Demo (/visibility). Scoped via CSS
+   module so nothing leaks to/from the rest of the site. Dark, amber-accent,
+   matching the CMH brand; no nav, no footer. */
+
+.page {
+  --vd-bg: #0e0e10;
+  --vd-panel: #17171b;
+  --vd-line: #2a2a30;
+  --vd-ink: #f4f2ec;
+  --vd-muted: #a2a09a;
+  --vd-amber: #f0a93c;
+  --vd-amber-soft: rgba(240, 169, 60, 0.14);
+  --vd-red: #e5735b;
+  --vd-green: #7bbd8f;
+  min-height: 100vh;
+  background: var(--vd-bg);
+  color: var(--vd-ink);
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: clamp(1.5rem, 5vw, 4rem) 1.25rem 5rem;
+  line-height: 1.55;
+}
+
+.shell {
+  width: 100%;
+  max-width: 640px;
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-amber);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.9rem, 6vw, 2.9rem);
+  line-height: 1.1;
+  margin: 0 0 0.9rem;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 1.06rem;
+  color: var(--vd-muted);
+  margin: 0 0 2rem;
+}
+
+.field {
+  margin-bottom: 1.15rem;
+}
+.label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.hint {
+  font-weight: 400;
+  color: var(--vd-muted);
+}
+.input {
+  width: 100%;
+  background: var(--vd-panel);
+  border: 1px solid var(--vd-line);
+  border-radius: 10px;
+  color: var(--vd-ink);
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  font-size: 1rem;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--vd-amber);
+  box-shadow: 0 0 0 3px var(--vd-amber-soft);
+}
+.count {
+  float: right;
+  font-size: 0.75rem;
+  color: var(--vd-muted);
+  font-weight: 400;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pill {
+  background: var(--vd-panel);
+  border: 1px solid var(--vd-line);
+  border-radius: 999px;
+  color: var(--vd-ink);
+  padding: 0.45rem 0.85rem;
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.pill:hover {
+  border-color: var(--vd-amber);
+}
+.pillActive {
+  background: var(--vd-amber-soft);
+  border-color: var(--vd-amber);
+  color: var(--vd-amber);
+  font-weight: 600;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.button {
+  width: 100%;
+  background: var(--vd-amber);
+  color: #1a1205;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font: inherit;
+  font-size: 1.02rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: filter 0.15s, transform 0.05s;
+}
+.button:hover {
+  filter: brightness(1.06);
+}
+.button:active {
+  transform: translateY(1px);
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.buttonGhost {
+  composes: button;
+  background: transparent;
+  color: var(--vd-amber);
+  border: 1px solid var(--vd-amber);
+}
+
+.error {
+  color: var(--vd-red);
+  font-size: 0.9rem;
+  margin-top: 0.6rem;
+  min-height: 1.1rem;
+}
+
+.turnstile {
+  margin: 0.5rem 0 0.25rem;
+  min-height: 65px;
+}
+
+/* Running / narration */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+}
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  color: var(--vd-muted);
+  border-bottom: 1px solid var(--vd-line);
+  transition: color 0.2s;
+}
+.stepActive {
+  color: var(--vd-ink);
+}
+.stepDone {
+  color: var(--vd-ink);
+}
+.dot {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--vd-line);
+  margin-top: 2px;
+}
+.stepActive .dot {
+  border-color: var(--vd-amber);
+  border-top-color: transparent;
+  animation: vdspin 0.8s linear infinite;
+}
+.stepDone .dot {
+  border-color: var(--vd-green);
+  background: var(--vd-green);
+}
+@keyframes vdspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reveal cards */
+.card {
+  background: var(--vd-panel);
+  border: 1px solid var(--vd-line);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+  margin-top: 1.25rem;
+}
+.cardLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-amber);
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+}
+.cardBody {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.queryLine {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  color: var(--vd-ink);
+  margin: 0 0 0.7rem;
+}
+.recList {
+  margin: 0.7rem 0 0;
+  padding-left: 1.2rem;
+  color: var(--vd-muted);
+}
+
+/* Gate */
+.gate {
+  composes: card;
+  border-color: var(--vd-amber);
+}
+
+/* Score */
+.scoreHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.25rem;
+}
+.scoreBig {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 3.2rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--vd-amber);
+}
+.scoreOf {
+  font-size: 1.2rem;
+  color: var(--vd-muted);
+}
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+  margin: 1.2rem 0;
+}
+@media (max-width: 480px) {
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+}
+.pillarBox {
+  background: var(--vd-panel);
+  border: 1px solid var(--vd-line);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+.pillarName {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vd-muted);
+  margin: 0 0 0.35rem;
+}
+.pillarScore {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.6rem;
+}
+.criteria {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+}
+.criterion {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  padding: 0.28rem 0;
+  border-top: 1px solid var(--vd-line);
+  color: var(--vd-muted);
+}
+.critScore {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: var(--vd-ink);
+}
+.fixes {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+.fixes li {
+  margin-bottom: 0.5rem;
+}
+.wall {
+  border-top: 1px solid var(--vd-line);
+  margin-top: 1.5rem;
+  padding-top: 1.3rem;
+}
+.crawlNote {
+  color: var(--vd-muted);
+  font-size: 0.95rem;
+  margin: 0 0 1.1rem;
+}
+
+.terminal {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.terminalMsg {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 0 0 1.5rem;
+}
