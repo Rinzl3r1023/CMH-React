@@ -31,15 +31,12 @@
   max-width: 600px;
 }
 
-/* The demo's own focus glow. The global `form:focus-within` no longer matches
-   these forms — they carry data-no-global-glow, and globals.css excludes it via
-   :not([data-no-global-glow]) — so NO !important is needed here and this can't
-   lose on stylesheet order. Wider blur + low opacity = a gradual falloff, not the
-   global's tight 44px/-6px hug. */
-.page form:focus-within {
-  border-color: rgba(240, 169, 60, 0.45);
-  box-shadow: 0 0 0 1px rgba(240, 169, 60, 0.22), 0 0 120px 10px rgba(240, 169, 60, 0.2);
-}
+/* No form-level focus glow on the demo — it cost five cycles for a decorative
+   effect that added nothing. The forms keep data-no-global-glow so the global
+   `form:not([data-no-global-glow]):focus-within` in globals.css can't match them
+   either; global behavior is unchanged everywhere else on the site. The focus
+   affordance now lives entirely on the focused FIELD (.input:focus below): a 1px
+   amber border — visible for keyboard and accessibility, without the decoration. */
 
 .eyebrow {
   font-size: 0.78rem;

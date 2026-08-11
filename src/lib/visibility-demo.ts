@@ -391,7 +391,10 @@ export async function callClaudeText(
     if (classifyFailure(res.status, errType, errMsg) === 'capacity') {
       throw new CapacityError(`anthropic capacity ${res.status}`);
     }
-    throw new Error(`anthropic ${res.status}`);
+    // Include the API error type + message so a rejected output_config schema
+    // (400) is visible in logs instead of a bare status. This was lost before —
+    // the score call's first live failure had no recoverable reason in the log.
+    throw new Error(`anthropic ${res.status} ${errType} ${errMsg}`.trim());
   }
 
   const data = (await res.json()) as ClaudeTextResponse;

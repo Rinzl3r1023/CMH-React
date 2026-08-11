@@ -428,8 +428,22 @@ function resultsDigest(call1Results: RawSearch[]): string {
 }
 
 // Three sections × (verdict + up to 3 bullets + detail) + an opportunity
-// paragraph fit comfortably here; bumped from 1200 for the extra structure.
-const SYNTHESIS_MAX_TOKENS = 1600;
+// paragraph. 1600 was a BORDERLINE cap: passing runs fit, but a verbose run
+// crossed it and truncated the JSON mid-object — parse failed and every field
+// silently defaulted to its fallback (the intermittent-hollow-report bug). Raised
+// to 4000 for real headroom; the loud-fail below catches any run that still
+// exceeds it, so truncation can never again masquerade as empty findings.
+const SYNTHESIS_MAX_TOKENS = 4000;
+
+// A total synthesis parse failure / truncation is a FAILURE, not empty findings.
+// Blanket-defaulting every section produces a hollow report that reads as real —
+// the same class as the fabricated uniform-20 score. This surfaces instead.
+class SynthesisError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    this.name = 'SynthesisError';
+  }
+}
 
 // Structured-outputs schema — forces schema-valid JSON so a public page can
 // never render malformed model output. NOTE what is deliberately ABSENT:
@@ -577,7 +591,7 @@ async function synthesizeCall1(
     `   • verdict: one line, at most 15 words, plain language.`,
     `   • bullets: up to 3 short factual points about what AI associates them with (drawn only from the results).`,
     `   • detail: 2-3 sentences of nuance. Where AI's answer is stale or wrong, say so directly.`,
-    `   • collision: set true ONLY if a DISTINCT, DIFFERENT organization that shares the name appears in the identity results and could be mistaken for ${subject.name}. If true, you MUST (a) name that other organization in collision_entity (e.g. "Harris & Co Accounting, Leeds"), AND (b) name that SAME organization in the verdict or one of the bullets — NOT only in the detail — so a reader who never expands the detail can see why this section is flagged. A vague "there may be similar businesses" is NOT a collision — set collision false and leave collision_entity empty. Never invent an entity to fill this field.`,
+    `   • collision: set true whenever a DISTINCT, DIFFERENT organization sharing the name appears in the identity results and could be mistaken for ${subject.name} — judge this on its OWN MERITS, independently of where you write about it. When true, name that organization in collision_entity (e.g. "LifeSpring Chiropractic, Orange County"). You may also mention it in a bullet, but DETECTION IS NOT CONDITIONAL ON PLACEMENT — never leave collision false just because you didn't name it above the fold. A vague "there may be similar businesses" is NOT a collision — set collision false and leave collision_entity empty. Never invent an entity to fill this field.`,
     ``,
     `2) ABSENCE — for the buyer-intent query "${buyerQuery}", where does ${subject.name} STAND? Write the verdict and bullets in the SECOND PERSON, about ${subject.name} ("you"). Competitors are CONTEXT, never the headline — the reader is ${subject.name}, not a market analyst.`,
     `   • verdict: one line, at most 15 words, ABOUT ${subject.name}'s own position — whether you appear and, if so, where you rank and how you're framed. It MUST refer to ${subject.name} (as "you" or by name); it must NOT be a summary of the result set or a roster of competitors. Good: "You appear, but third — behind a directory list and one detailed competitor profile." Bad: "The results return several competing providers."`,
@@ -630,28 +644,56 @@ async function synthesizeCall1(
       `topKeys=${JSON.stringify(Object.keys(parsed))} rawText=${JSON.stringify(text)}`,
   );
 
+  // LOUD-FAIL on an unusable synthesis. A total parse failure or a truncated
+  // response must NOT blanket-default every section into a hollow-but-real-looking
+  // report. Distinguish the two causes (they need different fixes and look
+  // identical otherwise): stop_reason=max_tokens ⇒ TRUNCATED (raise the cap);
+  // anything else with a broken parse ⇒ MALFORMED (a real bad-output problem).
+  // NOTE: this fires only on a TOTAL failure — an individual missing field inside
+  // a VALID parse still degrades gracefully through its per-field fallback below.
+  if (!parseOk || stopReason === 'max_tokens') {
+    const failure = stopReason === 'max_tokens' ? 'truncated' : 'malformed';
+    console.error(
+      `[visibility-synth] FAILED (${failure}) name=${JSON.stringify(subject.name)} ` +
+        `stopReason=${JSON.stringify(stopReason)} outTok=${usage.output_tokens} maxTok=${SYNTHESIS_MAX_TOKENS} ` +
+        `parseOk=${parseOk} parseError=${JSON.stringify(parseError)}`,
+    );
+    throw new SynthesisError(`${failure} synthesis`);
+  }
+
   const mirrorSection = toRevealSection(
     parsed.mirror,
     `Here's what AI currently surfaces about ${subject.name}.`,
     `Here's the current reading of how AI describes ${subject.name}.`,
   );
 
-  // COLLISION GUARD (code): a collision is only real if the model NAMED the
-  // distinct entity AND that entity is VISIBLE above the fold (verdict or a
-  // bullet). Two failure modes are closed here:
-  //   • collision=true with a blank collision_entity → manufactured, drop it.
-  //   • collision=true but the entity appears only in the collapsed detail (or
-  //     nowhere) → an INVISIBLE amber trigger. A visitor sees ⚠️ with no reason
-  //     on the page, which is the same failure as a vague one. Drop it.
-  // Scoped to collision ONLY; NOT a precedent for `appeared` (code-anchored).
+  // COLLISION — DETECTION separate from PLACEMENT (the #71 regression fix).
+  // DETECTION: a collision is real if the model flagged one AND named the distinct
+  // entity (the named-entity guard against manufacturing stays). Detection is NOT
+  // conditional on where the model wrote about it — requiring above-the-fold
+  // placement as a detection gate made the model SUPPRESS true collisions (it left
+  // collision=false rather than risk violating the placement rule). Scoped to
+  // collision ONLY; NOT a precedent for `appeared` (code-anchored).
   const collisionEntity =
     typeof parsed.mirror?.collision_entity === 'string' ? parsed.mirror.collision_entity.trim() : '';
-  const collisionVisible =
-    collisionEntity.length > 0 &&
-    [mirrorSection.verdict, ...mirrorSection.bullets].some((t) =>
+  const collision = parsed.mirror?.collision === true && collisionEntity.length > 0;
+  // PLACEMENT (rendering step): a true collision must be VISIBLE above the fold so
+  // the ⚠️ has an on-page reason. If the model buried the entity (only in the
+  // collapsed detail, or nowhere in verdict/bullets), PROMOTE it into a bullet —
+  // never DROP the flag. A rendering requirement must not suppress a true finding.
+  let collisionPromoted = false;
+  if (collision) {
+    const alreadyVisible = [mirrorSection.verdict, ...mirrorSection.bullets].some((t) =>
       t.toLowerCase().includes(collisionEntity.toLowerCase()),
     );
-  const collision = parsed.mirror?.collision === true && collisionEntity.length > 0 && collisionVisible;
+    if (!alreadyVisible) {
+      mirrorSection.bullets = [
+        `Shares the name with ${collisionEntity} — a different business AI could confuse you with.`,
+        ...mirrorSection.bullets,
+      ].slice(0, 3);
+      collisionPromoted = true;
+    }
+  }
 
   const absenceSection = toRevealSection(
     parsed.absence,
@@ -717,7 +759,7 @@ async function synthesizeCall1(
     `[visibility-mirror] name=${JSON.stringify(subject.name)} host=${JSON.stringify(subjectHost)} ` +
       `accurate=${accurate} idSignal=${JSON.stringify(idSignal)} ` +
       `modelCollision=${parsed.mirror?.collision === true} collisionEntity=${JSON.stringify(collisionEntity)} ` +
-      `collisionVisible=${collisionVisible} collision=${collision} amberDriver=${amberDriver} ` +
+      `collision=${collision} collisionPromoted=${collisionPromoted} amberDriver=${amberDriver} ` +
       `identityResults=${JSON.stringify(resultsOfKind(call1Results, 'identity').slice(0, 6))}`,
   );
 
