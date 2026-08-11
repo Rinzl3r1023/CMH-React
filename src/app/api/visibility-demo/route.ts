@@ -634,7 +634,7 @@ export async function POST(request: NextRequest) {
           send({
             type: 'rate_limited',
             scope: 'ip',
-            message: "You've already run this today. Want the full framework instead?",
+            message: "You've already run your check today — so here's what you earned: 50% off your first month of the full framework.",
             cta: 'community',
           });
           controller.close();

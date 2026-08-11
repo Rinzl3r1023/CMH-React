@@ -327,6 +327,11 @@
   font-size: 0.95rem;
   margin: 0 0 1.1rem;
 }
+.earnedLine {
+  color: var(--vd-amber);
+  font-weight: 600;
+  margin: 0 0 0.9rem;
+}
 
 .terminal {
   text-align: center;

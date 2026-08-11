@@ -308,9 +308,10 @@ export default function VisibilityDemo() {
                 Grab a slot
               </a>
             ) : terminalCta === 'community' ? (
-              // rate_limited: they already got the value — community is the next step.
+              // rate_limited: they already ran the check → the discount is earned.
+              // Name it, don't drop them on a generic button to a promo page.
               <a className={styles.button} href={COMMUNITY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
-                See the full framework
+                Claim 50% off your first month
               </a>
             ) : (
               <button className={styles.buttonGhost} style={{ width: 'auto', padding: '0.9rem 1.6rem' }} onClick={() => setPhase('form')}>
@@ -489,12 +490,16 @@ export default function VisibilityDemo() {
 
             <div className={styles.wall}>
               {payoff.crawlability && <p className={styles.crawlNote}>{payoff.crawlability}</p>}
-              <p className={styles.cardBody} style={{ marginBottom: '1.1rem' }}>
+              <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
                 The full framework builds the fix — the canonical entity page, structured credentials, the AEO rewrites. Indexing takes 60–90 days
                 and no asset shortens it, so the sooner it&rsquo;s built, the sooner it lands. It&rsquo;s inside the community.
               </p>
+              {/* The community page is a 50%-off offer. Naming the discount as EARNED
+                  (you ran the check) is what keeps a standing promo an honest scale
+                  rather than a generic button onto a discount page. */}
+              <p className={styles.earnedLine}>You ran the check — here&rsquo;s 50% off your first month.</p>
               <a className={styles.button} href={COMMUNITY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
-                See the full framework
+                Claim 50% off your first month
               </a>
             </div>
           </div>
