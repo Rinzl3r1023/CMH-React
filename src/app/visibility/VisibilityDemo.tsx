@@ -768,19 +768,34 @@ export default function VisibilityDemo() {
               </div>
             )}
 
+            {/* The wall. Deliberately NOT asserting backend opportunities exist
+                (we never looked at their backend), no growth statistics (unsourced
+                = the line a skeptic screenshots), no pressure phrasing — the finding
+                above is the motivation. The secondary CTA reuses the app-wide
+                [data-book-call] modal (BookCallController in the root layout). */}
             <div className={styles.wall}>
-              {payoff.crawlability && <p className={styles.crawlNote}>{payoff.crawlability}</p>}
+              <h3 className={styles.wallHead}>What this check can&rsquo;t see</h3>
               <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
-                The full framework builds the fix — the canonical entity page, structured credentials, the AEO rewrites. Indexing takes 60–90 days
-                and no asset shortens it, so the sooner it&rsquo;s built, the sooner it lands. It&rsquo;s inside the community.
+                This runs on what&rsquo;s publicly visible — what AI finds when it searches. It can&rsquo;t look at your site itself: how
+                it&rsquo;s structured, whether AI can read it cleanly, what&rsquo;s buried in the backend. That&rsquo;s often where the real gap
+                is, and it&rsquo;s the part this free check will never reach.
               </p>
-              {/* The community page is a 50%-off offer. Naming the discount as EARNED
-                  (you ran the check) is what keeps a standing promo an honest scale
-                  rather than a generic button onto a discount page. */}
-              <p className={styles.earnedLine}>You ran the check — here&rsquo;s 50% off your first month.</p>
-              <a className={styles.button} href={COMMUNITY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
-                Claim 50% off your first month
-              </a>
+              <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
+                I built the framework that closes it. Not advice — the actual sequence, so you know exactly what to fix and in what order to
+                get recommended instead of overlooked.
+              </p>
+              <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
+                Two ways in: grab it inside The Business Lounge, or book 30 minutes with me and we&rsquo;ll look at your situation directly.
+              </p>
+              <p className={styles.earnedLine}>Most business owners haven&rsquo;t thought about this yet. That&rsquo;s the opening.</p>
+              <div className={styles.ctaRow}>
+                <a className={styles.button} href={COMMUNITY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
+                  Claim 50% off your first month
+                </a>
+                <a className={styles.callLink} href={CALENDLY_URL} data-book-call="">
+                  Or book a 30-minute strategy call
+                </a>
+              </div>
             </div>
           </div>
         )}

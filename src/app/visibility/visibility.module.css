@@ -333,15 +333,49 @@
   margin-top: 1.5rem;
   padding-top: 1.3rem;
 }
-.crawlNote {
-  color: var(--vd-muted);
-  font-size: 0.95rem;
-  margin: 0 0 1.1rem;
+.wallHead {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0 0 0.9rem;
 }
 .earnedLine {
   color: var(--vd-amber);
   font-weight: 600;
-  margin: 0 0 0.9rem;
+  margin: 1.2rem 0 0.9rem;
+}
+/* CTA hierarchy: community is the full-weight button; the call is a lighter text
+   link. They stack — button first, link beneath — since the 600px shell rarely
+   fits both inline; column keeps the link off to its own baseline, not orphaned
+   beside the button. */
+.ctaRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-top: 0.3rem;
+}
+.callLink {
+  color: var(--vd-amber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 0.98rem;
+  cursor: pointer;
+}
+.callLink:hover {
+  color: var(--vd-ink);
+}
+/* The call link carries data-book-call so the app-wide BookCallController opens
+   the on-brand Calendly modal (delegated listener → works for this late-rendered
+   element). But globals.css hides [data-book-call] by default and ClientEnhancer
+   only reveals the ones present at page load — this link renders later, in the
+   score state, so that one-time pass never un-hides it. Override the global hide
+   here with a higher-specificity !important, which wins regardless of stylesheet
+   order (the glow-ordering lesson). The click is still intercepted → modal. */
+.callLink[data-book-call] {
+  display: inline !important;
+  visibility: visible !important;
 }
 
 .terminal {
