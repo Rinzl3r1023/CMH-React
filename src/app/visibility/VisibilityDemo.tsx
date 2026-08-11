@@ -24,9 +24,23 @@ const PILLS: { key: string; label: string }[] = [
   { key: 'other', label: 'Service provider — something else' },
 ];
 
-// Pills where location is expected (fix B4a) — the placeholder invites a city.
-// Every other pill reads "Optional" and can be skipped without a decision.
-const LOCAL_PILLS = new Set(['local', 'real_estate', 'health']);
+// Service-area pills. Service area is NOT inferable from business type (a coach
+// can be local; a chiropractor telehealth), so the visitor picks it directly. The
+// choice drives the query shape AND what the follow-up field asks for, so "Online"
+// vs a location can never overlap. Persisted to `service_area` for segmentation.
+const SERVICE_AREAS: { key: string; label: string }[] = [
+  { key: 'online', label: 'Online / anywhere' },
+  { key: 'city', label: 'One city or metro' },
+  { key: 'region', label: 'A state or region' },
+  { key: 'country', label: 'One country' },
+];
+// The conditional field is defined by what each choice needs — self-evident, and
+// 'online' shows no field at all.
+const LOCATION_FIELD: Record<string, { label: string; placeholder: string }> = {
+  city: { label: 'City', placeholder: 'Austin, TX' },
+  region: { label: 'State or region', placeholder: 'Central Texas' },
+  country: { label: 'Country', placeholder: 'United Kingdom' },
+};
 
 // §1 running narration, keyed by the search kind the server streams.
 const NARRATION: Record<string, string> = {
@@ -86,6 +100,7 @@ export default function VisibilityDemo() {
   const [category, setCategory] = useState('');
   const [what, setWhat] = useState('');
   const [who, setWho] = useState('');
+  const [serviceArea, setServiceArea] = useState('');
   const [location, setLocation] = useState('');
   const [formError, setFormError] = useState('');
   // Re-entry guards (C2): a double-click must never fire a duplicate run — that
@@ -210,7 +225,7 @@ export default function VisibilityDemo() {
       const res = await fetch('/api/visibility-demo/', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, url, category, what, who, location, turnstileToken }),
+        body: JSON.stringify({ name, url, category, what, who, serviceArea, location, turnstileToken }),
       });
       if (!res.ok || !res.body) {
         toTerminal('error', 'Something went wrong starting your check. Please try again.', null);
@@ -428,25 +443,44 @@ export default function VisibilityDemo() {
               </div>
             </div>
 
-            {/* Location follows the pill while that context is fresh (fix B4b). The
-                pill the visitor just tapped answers "are you location-based?" — so
-                the placeholder, not a static hint, sets the expectation: local
-                pills invite a city, everything else reads "Optional" and is skipped
-                without a decision. Always optional (a mobile/virtual practice must
-                never hit a wall on a lead magnet). */}
+            {/* Service area — asked directly, not inferred from business type. The
+                choice defines what (if anything) the follow-up field asks for, so
+                "Online" and a location can never overlap. Optional throughout: pick
+                a geography and leave the field blank → falls back to "for [who]". */}
             <div className={styles.field}>
-              <label className={styles.label} htmlFor="vd-location">
-                Where are you based?
-              </label>
-              <input
-                id="vd-location"
-                className={styles.input}
-                value={location}
-                maxLength={60}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder={LOCAL_PILLS.has(category) ? 'City or region' : 'Optional — city or region'}
-              />
+              <span className={styles.label}>Where do you serve?</span>
+              <div className={styles.pills}>
+                {SERVICE_AREAS.map((s) => (
+                  <button
+                    type="button"
+                    key={s.key}
+                    className={serviceArea === s.key ? `${styles.pill} ${styles.pillActive}` : styles.pill}
+                    onClick={() => setServiceArea(s.key)}
+                    aria-pressed={serviceArea === s.key}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Conditional location field — shown ONLY for city/region/country,
+                labeled to match the choice. 'online' shows no field at all. */}
+            {LOCATION_FIELD[serviceArea] && (
+              <div className={styles.field}>
+                <label className={styles.label} htmlFor="vd-location">
+                  {LOCATION_FIELD[serviceArea].label}
+                </label>
+                <input
+                  id="vd-location"
+                  className={styles.input}
+                  value={location}
+                  maxLength={60}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder={LOCATION_FIELD[serviceArea].placeholder}
+                />
+              </div>
+            )}
 
             <div className={styles.field}>
               <label className={styles.label} htmlFor="vd-what">

@@ -58,24 +58,21 @@ const MAX_SEARCHES = 3;
 // web_search_20250305 if a fallback is ever needed. Search-path-specific → local.
 const WEB_SEARCH_TOOL_TYPE = 'web_search_20260209';
 
-// ── buyer-intent query (fix A) ───────────────────────────────────────────────
-// NO injected category nouns. The old templates hardcoded a noun the visitor
-// never said ("coach", "agency", "course", "realtor") — e.g. a chiropractic
-// clinic became "best Chiropractor coach online for Patients", searching for
-// coaching sold TO chiropractors. The visitor already told us [what]; the pill
-// only self-identifies them and drives analytics, never the query. Two shapes,
-// selected by whether they gave a location:
-//   located  → "best [what] in [location]"   (local businesses are unscoreable
-//                                              without this — "best chiropractor"
-//                                              nationally is meaningless)
-//   national → "best [what] for [who]"
+// ── buyer-intent query ───────────────────────────────────────────────────────
+// NO injected category nouns (fix A). Two shapes, now selected by the visitor's
+// SERVICE AREA (not inferred from business type — service area isn't derivable
+// from what someone does; a coach can be local, a chiropractor telehealth):
+//   online / anywhere      → "best [what] for [who]"
+//   city / region / country → "best [what] in [location]"
 // Only visitor-supplied free text ([what]/[who]/[location]) ever enters the query,
-// so a pill label like "service provider" can still never be inserted.
-function buyerIntentQuery(what: string, who: string, location: string): string {
-  // Both [who] and [location] are optional, so "both blank" is a real (and for a
-  // global/online business, common) path. Never emit a dangling connector — drop
-  // "in [location]" / "for [who]" when the trailing slot is empty.
-  if (location) return `best ${what} in ${location}`;
+// so a pill label can never be inserted. All fields optional — dangling connectors
+// are trimmed ("both blank" → "best [what]").
+type ServiceArea = 'online' | 'city' | 'region' | 'country';
+function usesLocation(area: string): area is 'city' | 'region' | 'country' {
+  return area === 'city' || area === 'region' || area === 'country';
+}
+function buyerIntentQuery(what: string, who: string, serviceArea: string, location: string): string {
+  if (usesLocation(serviceArea) && location) return `best ${what} in ${location}`;
   if (who) return `best ${what} for ${who}`;
   return `best ${what}`;
 }
@@ -98,12 +95,12 @@ interface DemoQuery {
   provisional?: boolean;
 }
 
-function buildQueries(name: string, what: string, who: string, location: string): DemoQuery[] {
+function buildQueries(name: string, what: string, who: string, serviceArea: string, location: string): DemoQuery[] {
   const queries: DemoQuery[] = [
     // §4 identity template — confirmed.
     { step: 1, kind: 'identity', text: `What is ${name}?` },
-    // Buyer-intent (fix A) — noun-free, location- or audience-shaped. "The moment" (§1).
-    { step: 2, kind: 'buyer_intent', text: buyerIntentQuery(what, who, location) },
+    // Buyer-intent — noun-free, service-area-shaped. "The moment" (§1).
+    { step: 2, kind: 'buyer_intent', text: buyerIntentQuery(what, who, serviceArea, location) },
     // Fix B1: the comparative query is CUT. It was ~30k tokens (a third of the run)
     // and only added fidelity to one Clarity criterion; the spike found the punch
     // lands in these two. The identity search's own results already span independent
@@ -262,6 +259,7 @@ interface PersistInput {
   name: string;
   url: string;
   category: string;
+  serviceArea: string;
   queries: DemoQuery[];
   call1Results: RawSearch[];
   inputTokens: number;
@@ -292,6 +290,7 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
       subject_name: p.name,
       subject_url: p.url || null,
       category: p.category,
+      service_area: p.serviceArea || null,
       queries_run: p.queries,
       call1_results: p.call1Results,
       input_tokens: p.inputTokens,
@@ -593,7 +592,8 @@ export async function POST(request: NextRequest) {
   const category = typeof body.category === 'string' ? body.category : 'other';
   const what = clean(body.what, CAP_WHAT);
   const who = clean(body.who, CAP_WHO);
-  // fix A: optional location. Blank = serves nationally → "best [what] for [who]".
+  // Service area drives the query shape (online → "for [who]", else "in [location]").
+  const serviceArea = typeof body.serviceArea === 'string' ? body.serviceArea : '';
   const location = clean(body.location, CAP_LOCATION);
 
   if (!name) {
@@ -615,7 +615,7 @@ export async function POST(request: NextRequest) {
   const ip = clientIp(request);
   const ipHash = hashIp(ip);
 
-  const queries = buildQueries(name, what, who, location);
+  const queries = buildQueries(name, what, who, serviceArea, location);
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
@@ -689,7 +689,7 @@ export async function POST(request: NextRequest) {
         // web_search tool, so it cannot search and NEVER touches the 3-search cap.
         const synthesis = await synthesizeCall1(
           { name, url },
-          buyerIntentQuery(what, who, location),
+          buyerIntentQuery(what, who, serviceArea, location),
           call1Results,
         );
         inputTokens += synthesis.usage.input_tokens;
@@ -711,6 +711,7 @@ export async function POST(request: NextRequest) {
           name,
           url,
           category,
+          serviceArea,
           queries,
           call1Results,
           inputTokens,
