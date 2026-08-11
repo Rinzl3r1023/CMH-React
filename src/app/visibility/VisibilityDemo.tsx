@@ -345,6 +345,10 @@ export default function VisibilityDemo() {
     if (gatingRef.current) return;
     gatingRef.current = true;
     setGateBusy(true);
+    // STAGE 1 — the gate (email capture + Kit). A failure HERE is the only place a
+    // "try again" is honest: nothing is charged and the email wasn't accepted, so
+    // retrying is safe. Kept in its own try so a gate error never leaks into the
+    // post-gate path and vice-versa.
     try {
       const g = await fetch('/api/visibility-demo/gate/', {
         method: 'POST',
@@ -358,7 +362,26 @@ export default function VisibilityDemo() {
         gatingRef.current = false; // allow a genuine retry
         return;
       }
-      setPhase('scoring');
+    } catch {
+      setGateError('Could not unlock. Please try again.');
+      setGateBusy(false);
+      gatingRef.current = false; // allow a genuine retry
+      return;
+    }
+
+    // STAGE 2 — the gate OPENED: the email is captured. From here ANY failure —
+    // a 502 scoring failure, an at-capacity 503, OR a thrown exception (timeout /
+    // non-JSON crash) — routes to BOOK A CALL, never the gate's "try again". A
+    // retry would fail identically and loop them after we've already taken their
+    // email; the earlier "Could not unlock. Please try again." was that exact bug.
+    const bookACall = () =>
+      toTerminal(
+        'error',
+        "We couldn't generate your score right now — grab a slot and I'll walk you through your visibility personally.",
+        'calendly',
+      );
+    setPhase('scoring');
+    try {
       const s = await fetch('/api/visibility-demo/score/', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -374,21 +397,16 @@ export default function VisibilityDemo() {
         return;
       }
       if (!s.ok || !(sj as { score?: unknown }).score) {
-        // Scoring failed — NEVER fabricate a number. Route to a real conversation
-        // rather than a looping "try again" that would spend again.
-        toTerminal(
-          'error',
-          "We couldn't generate your score right now — grab a slot and I'll walk you through your visibility personally.",
-          'calendly',
-        );
+        // Scoring failed loudly server-side (never a fabricated number) → book a call.
+        bookACall();
         return;
       }
       setPayoff(sj as Payoff);
       setPhase('score');
     } catch {
-      setGateError('Could not unlock. Please try again.');
-      setGateBusy(false);
-      gatingRef.current = false; // allow a genuine retry
+      // Non-JSON response (a timeout at maxDuration, or a crash) or a network drop —
+      // still post-gate, so book-a-call, NOT the "Could not unlock" retry loop.
+      bookACall();
     }
   }
 

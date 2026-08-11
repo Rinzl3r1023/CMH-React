@@ -27,10 +27,17 @@ import {
 // NOT here: any UI. Response is plain JSON (a single payoff, no SSE narration).
 
 export const runtime = 'nodejs';
-export const maxDuration = 60;
+// Raised 60→120 (matches the run route). A verbose structured-output rubric can
+// take ~30–60s to generate; a 60s ceiling risked a timeout that returns non-JSON
+// and reads to the client as a generic failure. Headroom removes that class.
+export const maxDuration = 120;
 
-// Raised from 1500 — a verbose rubric could truncate mid-JSON and fail to parse.
-const SCORE_MAX_TOKENS = 3000;
+// Worst-case audit (10 criteria × {score+note} + 3 fixes + crawlability + JSON
+// scaffolding): a verbose run reaches ~2.5k output tokens, so 3000 was thin
+// headroom, not real headroom — the same truncation class the synthesis call hit
+// one call over. Raised to 4000 with margin; the loud-fail below still catches
+// any run that somehow exceeds it (never a silent low score).
+const SCORE_MAX_TOKENS = 4000;
 
 // A parse/validation failure is NOT a low score — it's a scoring FAILURE. Never
 // fabricate a number: this routes to a loud, honest "book a call" instead.
@@ -44,10 +51,18 @@ class ScoringError extends Error {
 // Structured-outputs schema (durability layer) — forces schema-valid JSON so the
 // model physically cannot return the malformed/preamble/truncated output that hit
 // the fabricating fallback. output_config format: { type: 'json_schema', schema }.
+// SCHEMA SUBSET (durability): use ONLY the keywords the synthesis schema uses —
+// type / properties / required / additionalProperties / items. The numeric and
+// array-length constraints that were here before (minimum/maximum, minItems/
+// maxItems) are a prime suspect for the score call's first-run failure: the
+// synthesis schema, which omits them, works; this one, which had them, failed.
+// Every bound they enforced is ALREADY enforced in code — clampCriterion clamps
+// score to 1–5, normalizeCriteria pins exactly 5 criteria, fixes.slice(0,3) caps
+// fixes — so dropping the keywords loses no correctness and removes the 400 risk.
 const CRITERION_SCHEMA = {
   type: 'object',
   properties: {
-    score: { type: 'integer', minimum: 1, maximum: 5 },
+    score: { type: 'integer' },
     note: { type: 'string' },
   },
   required: ['score', 'note'],
@@ -55,7 +70,7 @@ const CRITERION_SCHEMA = {
 };
 const PILLAR_SCHEMA = {
   type: 'object',
-  properties: { criteria: { type: 'array', items: CRITERION_SCHEMA, minItems: 5, maxItems: 5 } },
+  properties: { criteria: { type: 'array', items: CRITERION_SCHEMA } },
   required: ['criteria'],
   additionalProperties: false,
 };
@@ -64,7 +79,7 @@ const SCORE_SCHEMA = {
   properties: {
     clarity: PILLAR_SCHEMA,
     presence: PILLAR_SCHEMA,
-    fixes: { type: 'array', items: { type: 'string' }, minItems: 1, maxItems: 3 },
+    fixes: { type: 'array', items: { type: 'string' } },
     crawlability_note: { type: 'string' },
   },
   required: ['clarity', 'presence', 'fixes', 'crawlability_note'],
@@ -237,9 +252,11 @@ function stubPayload(): ScorePayload {
 type Usage = { input_tokens: number; output_tokens: number };
 
 async function scoreSession(row: DemoSessionRow): Promise<{ payload: ScorePayload; usage: Usage }> {
-  const { text, usage, stubbed } = await callClaudeText(buildScorePrompt(row), SCORE_MAX_TOKENS, {
-    format: { type: 'json_schema', schema: SCORE_SCHEMA },
-  });
+  const { text, usage, stubbed, stopReason, contentTypes } = await callClaudeText(
+    buildScorePrompt(row),
+    SCORE_MAX_TOKENS,
+    { format: { type: 'json_schema', schema: SCORE_SCHEMA } },
+  );
   // Dev-only stub (no key). In PRODUCTION (key present) a failure must NEVER stub
   // or fall back — that fabricates a number. It fails loudly below instead.
   if (stubbed) return { payload: stubPayload(), usage };
@@ -266,11 +283,17 @@ async function scoreSession(row: DemoSessionRow): Promise<{ payload: ScorePayloa
   // criterion WITHIN a valid rubric still scores conservatively via clampCriterion.
   const validPillar = (a: unknown): boolean => Array.isArray(a) && a.length >= 5;
   if (!parsed || !validPillar(parsed.clarity?.criteria) || !validPillar(parsed.presence?.criteria)) {
-    // Log the RAW model output so the cause is captured (it wasn't, before).
+    // Distinguish the two failure classes — they need different fixes and look
+    // identical otherwise: stop_reason=max_tokens ⇒ TRUNCATED (raise the cap);
+    // anything else ⇒ MALFORMED (a real bad-output/schema problem). Log stop_reason,
+    // content block types, token usage, and the full raw text.
+    const failure = stopReason === 'max_tokens' ? 'truncated' : 'malformed';
     console.error(
-      `[visibility-demo] Call-2 scoring FAILED (unparseable/incomplete rubric) session=${row.session_token} len=${text.length} raw=${text.slice(0, 2000)}`,
+      `[visibility-demo] Call-2 scoring FAILED (${failure}) session=${row.session_token} ` +
+        `stopReason=${JSON.stringify(stopReason)} contentTypes=${JSON.stringify(contentTypes)} ` +
+        `outTok=${usage.output_tokens} maxTok=${SCORE_MAX_TOKENS} len=${text.length} raw=${JSON.stringify(text)}`,
     );
-    throw new ScoringError('unparseable or incomplete rubric');
+    throw new ScoringError(`${failure} rubric`);
   }
 
   const clarity = normalizeCriteria(parsed.clarity?.criteria, CLARITY_CRITERIA);
