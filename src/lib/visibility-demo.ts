@@ -229,11 +229,20 @@ export async function markKitSynced(sessionToken: string): Promise<void> {
 // ── Call 2 (gated score) support ─────────────────────────────────────────────
 
 // ── per-session spend estimate (fix B3) ──────────────────────────────────────
-// Rates: claude-sonnet-5 standard ($3/1M input, $15/1M output); web_search at
-// $0.01/search. Summed across EVERY call in the session, including Call 2.
-const RATE_INPUT_PER_1M = 3;
-const RATE_OUTPUT_PER_1M = 15;
-const SEARCH_COST_USD = 0.01;
+// Summed across EVERY call in the session (incl. Call 2). web_search at $0.01/search.
+//
+// COST NOTE — STANDARD rates, overstates until 2026-08-31. These are Sonnet 5's
+// STANDARD prices ($3/1M input, $15/1M output). Through 2026-08-31 Sonnet 5 bills
+// at INTRO rates ($2/1M in, $10/1M out), so est_cost_usd currently OVERSTATES real
+// spend by ~50% — deliberately. For a spend estimate, over- is the safe direction
+// to err; calculating at intro rates would under-report and then surprise us when
+// intro ends. On 2026-09-01 intro pricing lapses and STANDARD becomes the actual
+// rate, at which point this estimate becomes accurate with NO code change. If
+// Sonnet 5 pricing changes again, edit the two RATE_* constants below — one line
+// each, no inline numbers to hunt. (Intro reference, if ever needed: 2 / 10.)
+const RATE_INPUT_PER_1M = 3; // claude-sonnet-5 STANDARD, $/1M input tokens
+const RATE_OUTPUT_PER_1M = 15; // claude-sonnet-5 STANDARD, $/1M output tokens
+const SEARCH_COST_USD = 0.01; // web_search server tool, per search
 export function estCostUsd(inputTokens: number, outputTokens: number, searches: number): number {
   const c =
     (inputTokens / 1_000_000) * RATE_INPUT_PER_1M +
