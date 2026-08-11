@@ -48,6 +48,7 @@ export const maxDuration = 120;
 const CAP_NAME = 80;
 const CAP_WHAT = 40;
 const CAP_WHO = 60;
+const CAP_LOCATION = 60;
 
 // ── §7.4 hard cap: never more than 3 searches per run, enforced in code ──────
 const MAX_SEARCHES = 3;
@@ -56,42 +57,21 @@ const MAX_SEARCHES = 3;
 // web_search_20250305 if a fallback is ever needed. Search-path-specific → local.
 const WEB_SEARCH_TOOL_TYPE = 'web_search_20260209';
 
-// ── §4 category pills → buyer-intent query template ──────────────────────────
-// The free-text fields ([what]/[who]) carry the query; the pill only selects a
-// template. The "service provider" pill label is NEVER inserted into a query
-// (§4 rationale) — its template uses the same [what]/[who] fields as any other,
-// so "best service provider for X" can never be constructed from the pill.
-type CategoryKey =
-  | 'coaching'
-  | 'marketing'
-  | 'health'
-  | 'course'
-  | 'professional'
-  | 'local'
-  | 'real_estate'
-  | 'other';
-
-function buyerIntentQuery(category: string, what: string, who: string): string {
-  switch (category) {
-    case 'coaching':
-      return `best ${what} coach for ${who}`;
-    case 'marketing':
-      return `best ${what} agency for ${who}`;
-    case 'health':
-      return `best ${what} coach online for ${who}`;
-    case 'course':
-      return `best ${what} course 2026`; // §4: this template intentionally omits [who]
-    case 'professional':
-      return `best ${what} for ${who}`;
-    case 'local':
-      return `best ${what} in ${who}`; // [who] is a city here
-    case 'real_estate':
-      return `best realtor in ${who}`; // [who] is an area here
-    case 'other':
-    default:
-      // "Service provider — something else": NEVER the literal pill label.
-      return `best ${what} for ${who}`;
-  }
+// ── buyer-intent query (fix A) ───────────────────────────────────────────────
+// NO injected category nouns. The old templates hardcoded a noun the visitor
+// never said ("coach", "agency", "course", "realtor") — e.g. a chiropractic
+// clinic became "best Chiropractor coach online for Patients", searching for
+// coaching sold TO chiropractors. The visitor already told us [what]; the pill
+// only self-identifies them and drives analytics, never the query. Two shapes,
+// selected by whether they gave a location:
+//   located  → "best [what] in [location]"   (local businesses are unscoreable
+//                                              without this — "best chiropractor"
+//                                              nationally is meaningless)
+//   national → "best [what] for [who]"
+// Only visitor-supplied free text ([what]/[who]/[location]) ever enters the query,
+// so a pill label like "service provider" can still never be inserted.
+function buyerIntentQuery(what: string, who: string, location: string): string {
+  return location ? `best ${what} in ${location}` : `best ${what} for ${who}`;
 }
 
 // ── input sanitization (§7.6 — these strings go into live search queries) ────
@@ -112,12 +92,12 @@ interface DemoQuery {
   provisional?: boolean;
 }
 
-function buildQueries(name: string, category: string, what: string, who: string): DemoQuery[] {
+function buildQueries(name: string, what: string, who: string, location: string): DemoQuery[] {
   const queries: DemoQuery[] = [
     // §4 identity template — confirmed.
     { step: 1, kind: 'identity', text: `What is ${name}?` },
-    // §4 buyer-intent template — confirmed. This is "the moment" (§1).
-    { step: 2, kind: 'buyer_intent', text: buyerIntentQuery(category, what, who) },
+    // Buyer-intent (fix A) — noun-free, location- or audience-shaped. "The moment" (§1).
+    { step: 2, kind: 'buyer_intent', text: buyerIntentQuery(what, who, location) },
     // ⚑ SPEC GAP: §4 defines no comparative template. PROVISIONAL — surfaces
     // third-party descriptions for CLARITY criteria 3/5 (accuracy + consistency
     // across independent sources). Do not treat as final; pending §4 sign-off.
@@ -593,6 +573,8 @@ export async function POST(request: NextRequest) {
   const category = typeof body.category === 'string' ? body.category : 'other';
   const what = clean(body.what, CAP_WHAT);
   const who = clean(body.who, CAP_WHO);
+  // fix A: optional location. Blank = serves nationally → "best [what] for [who]".
+  const location = clean(body.location, CAP_LOCATION);
 
   if (!name) {
     return new Response(JSON.stringify({ ok: false, error: 'A business or brand name is required.' }), {
@@ -613,7 +595,7 @@ export async function POST(request: NextRequest) {
   const ip = clientIp(request);
   const ipHash = hashIp(ip);
 
-  const queries = buildQueries(name, category, what, who);
+  const queries = buildQueries(name, what, who, location);
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
@@ -687,7 +669,7 @@ export async function POST(request: NextRequest) {
         // web_search tool, so it cannot search and NEVER touches the 3-search cap.
         const synthesis = await synthesizeCall1(
           { name, url },
-          buyerIntentQuery(category, what, who),
+          buyerIntentQuery(what, who, location),
           call1Results,
         );
         inputTokens += synthesis.usage.input_tokens;
