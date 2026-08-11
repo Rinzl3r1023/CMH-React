@@ -18,13 +18,26 @@
   font-family: 'Manrope', system-ui, -apple-system, sans-serif;
   display: flex;
   justify-content: center;
-  padding: clamp(1.5rem, 5vw, 4rem) 1.25rem 5rem;
+  /* Generous outer room so the form glow has space to fall off before the edge;
+     wide screens get the centering gutter, narrow screens the padding. overflow-x
+     clip stops the soft glow from ever forcing a horizontal scrollbar. */
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 6vw, 5rem) 6rem;
+  overflow-x: hidden;
   line-height: 1.55;
 }
 
 .shell {
   width: 100%;
-  max-width: 640px;
+  max-width: 600px;
+}
+
+/* Opt the demo forms OUT of the global `form:focus-within` glow (globals.css),
+   which is too tight — 44px blur with a -6px (inset) spread hugs the block. Higher
+   specificity + !important beats the global !important. Wider blur, small positive
+   spread, lower opacity → a gradual falloff instead of a hard amber edge. */
+.page form:focus-within {
+  border-color: rgba(240, 169, 60, 0.45) !important;
+  box-shadow: 0 0 0 1px rgba(240, 169, 60, 0.22), 0 0 120px 10px rgba(240, 169, 60, 0.2) !important;
 }
 
 .eyebrow {
@@ -342,4 +355,53 @@
   font-size: 1.5rem;
   font-weight: 300;
   margin: 0 0 1.5rem;
+}
+
+/* Finding icon (C1) — the ✅/⚠️/❌ ahead of a section label. */
+.findingIcon {
+  margin-right: 0.45rem;
+}
+
+/* Pre-click time expectation (C2). */
+.timeHint {
+  color: var(--vd-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0.6rem 0 0;
+}
+
+/* Gate→score loading motion (C2) — a spinner inside the button. */
+.btnBusy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.btnSpinner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(26, 18, 5, 0.35);
+  border-top-color: #1a1205;
+  animation: vdspin 0.7s linear infinite;
+}
+
+/* "What this means" (C3) — a prominent, visually distinct receipt block. */
+.meaning {
+  background: var(--vd-amber-soft);
+  border: 1px solid rgba(240, 169, 60, 0.35);
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.meaningLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-amber);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.meaningBody {
+  margin: 0;
+  font-size: 1.05rem;
 }

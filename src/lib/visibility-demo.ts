@@ -118,10 +118,23 @@ export async function countSessionsThisMonth(): Promise<number | null> {
   return sbCount(`select=id&site_id=eq.${SITE_ID}&created_at=gte.${encodeURIComponent(monthStartIso())}`);
 }
 
-/** §7.3 — has this hashed IP started a run in the last 24h? null = unknown (skip). */
+/**
+ * §7.3 — has this hashed IP started a run in the last 24h? null = unknown (skip).
+ *
+ * Fix C4: a reservation is written at run START (map_generated_at NULL). If the
+ * connection drops before Call 1 finishes, that row would otherwise lock the IP
+ * out for 24h having received NOTHING — a dead end on paid traffic. So an
+ * ABANDONED reservation (map_generated_at IS NULL AND older than ~10 min) does
+ * NOT count: the row must either have completed (map_generated_at NOT NULL) or be
+ * a still-in-progress reservation (created within the last 10 min).
+ */
 export async function ipRunInLast24h(ipHash: string): Promise<boolean | null> {
   const since = new Date(Date.now() - IP_WINDOW_HOURS * 3600 * 1000).toISOString();
-  const n = await sbCount(`select=id&ip_hash=eq.${encodeURIComponent(ipHash)}&created_at=gte.${encodeURIComponent(since)}`);
+  const tenMinAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+  const n = await sbCount(
+    `select=id&ip_hash=eq.${encodeURIComponent(ipHash)}&created_at=gte.${encodeURIComponent(since)}` +
+      `&or=(map_generated_at.not.is.null,created_at.gte.${encodeURIComponent(tenMinAgo)})`,
+  );
   return n === null ? null : n > 0;
 }
 
