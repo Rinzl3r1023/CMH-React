@@ -81,6 +81,7 @@ export default function VisibilityDemo() {
   const [category, setCategory] = useState('');
   const [what, setWhat] = useState('');
   const [who, setWho] = useState('');
+  const [location, setLocation] = useState('');
   const [formError, setFormError] = useState('');
 
   // Turnstile.
@@ -196,7 +197,7 @@ export default function VisibilityDemo() {
       const res = await fetch('/api/visibility-demo', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, url, category, what, who, turnstileToken }),
+        body: JSON.stringify({ name, url, category, what, who, location, turnstileToken }),
       });
       if (!res.ok || !res.body) {
         toTerminal('error', 'Something went wrong starting your check. Please try again.', null);
@@ -406,6 +407,20 @@ export default function VisibilityDemo() {
                 Who do you serve? <span className={styles.count}>{who.length}/60</span>
               </label>
               <input id="vd-who" className={styles.input} value={who} maxLength={60} onChange={(e) => setWho(e.target.value)} placeholder="e-commerce brands" />
+            </div>
+
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="vd-location">
+                Where are you based? <span className={styles.hint}>— leave blank if you serve nationally</span>
+              </label>
+              <input
+                id="vd-location"
+                className={styles.input}
+                value={location}
+                maxLength={60}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Austin, TX"
+              />
             </div>
 
             {TURNSTILE_SITE_KEY && <div className={styles.turnstile} ref={turnstileRef} />}
