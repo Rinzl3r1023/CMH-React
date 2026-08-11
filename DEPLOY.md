@@ -79,29 +79,14 @@ set, run these against the deployed demo:
 
 ---
 
-## 4. Changelog INSERT (on deploy)
-
-Run against `zglwfshbrrkjrkhbarfx` after the deploy is green (§11 changelog row):
-
-```sql
-insert into changelog (product, type, title, description)
-values (
-  'platform',          -- ⚑ confirm bucket: none of the existing products (agents,
-                       --    concierge, connect, hub, platform, sparc-agents, dashboard)
-                       --    map cleanly to a public CMH marketing demo. 'platform' is
-                       --    the safe default; pick a dedicated value if you prefer.
-  'feature-launch',
-  'AI Visibility Demo live — "What does AI say about your business?"',
-  'Public lead-capture demo at chrismichaelharris.com/visibility. Live Sonnet 5 + web search (3-search hard cap, own Anthropic Workspace + $300/mo cap), free mirror/absence reveal, email gate to the Kit demo form, gated two-pillar score (Clarity /25 + Presence /25 = /50; Crawlability named-not-scored). Turnstile + one run/IP/24h + monthly ceiling. noindex, unlinked.'
-);
-```
-
----
-
-## 5. Deploy sequence
+## 4. Deploy sequence
 
 1. Set all 8 new env vars (+ confirm the 2 reused) on the Railway service.
 2. Confirm the 4 migrations are applied (they are, on `zglwfshbrrkjrkhbarfx`).
 3. Merge the branch → Railway builds from `main` (NEXT_PUBLIC vars must be set at build).
 4. Run the §3 launch-gate smoke test. **Block on it.**
-5. Insert the §4 changelog row.
+
+> No changelog row. The `changelog` table is **public SPARC release notes** for
+> SPARC buyers — this is a CMH marketing page, not a SPARC deployment, so a row
+> there would be a false record (and a new bucket would pollute the enum for a
+> one-off). Git history is the record. Same call applies to Kim's repurposing demo.
