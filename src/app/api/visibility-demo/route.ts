@@ -137,12 +137,14 @@ interface RawSearch {
   query: string;
   provisional?: boolean;
   results: unknown[]; // raw web_search_result blocks (or stub equivalents)
+  summary: string; // the model's plaintext reading of the results (feeds synthesis)
   usage: { input_tokens: number; output_tokens: number };
   stubbed: boolean;
 }
 
 interface AnthropicContentBlock {
   type: string;
+  text?: string;
   content?: unknown[];
 }
 interface AnthropicResponse {
@@ -150,7 +152,40 @@ interface AnthropicResponse {
   usage?: { input_tokens?: number; output_tokens?: number };
 }
 
-async function searchWeb(query: string): Promise<{ results: unknown[]; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
+// ── retry helpers (one retry on a bare 429, honoring Retry-After) ────────────
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// A single retry must not blow the 30–45s run budget (§1), so the wait is capped.
+const RETRY_CAP_MS = 5000;
+function retryAfterMs(header: string | null): number {
+  const DEFAULT = 1000;
+  if (!header) return DEFAULT;
+  const secs = Number(header);
+  if (Number.isFinite(secs) && secs >= 0) return Math.min(secs * 1000, RETRY_CAP_MS);
+  const when = Date.parse(header); // HTTP-date form
+  if (!Number.isNaN(when)) return Math.min(Math.max(when - Date.now(), 0), RETRY_CAP_MS);
+  return DEFAULT;
+}
+
+// Classify a non-OK Anthropic response. 'capacity' → route to "at capacity"
+// immediately (spend/billing/credit don't self-resolve). 'ratelimit' → a bare
+// 429, retried once before deciding. 'error' → generic graceful failure.
+function classifyFailure(status: number, errType: string, errMsg: string): 'capacity' | 'ratelimit' | 'error' {
+  const text = `${errType} ${errMsg}`;
+  // Billing/spend/credit is capacity regardless of status — a 429 that carries a
+  // spend message is the cap, not a transient limit, so it is NOT retried.
+  if (status === 402 || /credit|billing|spend|budget|quota|payment|balance/i.test(text)) {
+    return 'capacity';
+  }
+  if (status === 429) return 'ratelimit'; // bare rate limit — often transient
+  return 'error';
+}
+
+async function searchWeb(
+  query: string,
+): Promise<{ results: unknown[]; summary: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
   const key = process.env[ANTHROPIC_KEY_ENV];
 
   // STUB: no key → deterministic mock shaped like real web_search_result blocks,
@@ -160,34 +195,62 @@ async function searchWeb(query: string): Promise<{ results: unknown[]; usage: { 
       results: [
         { type: 'web_search_result', title: `[stub] result for: ${query}`, url: 'https://example.com/', page_age: null },
       ],
+      summary: `[stub] no live search ran for "${query}".`,
       usage: { input_tokens: 0, output_tokens: 0 },
       stubbed: true,
     };
   }
 
-  const res = await fetch(ANTHROPIC_MESSAGES_URL, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': key,
-      'anthropic-version': ANTHROPIC_VERSION,
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 1024,
-      // Hard cap layer 2: THIS call may perform at most one web search. Combined
-      // with the ≤3-iteration loop, total searches can never exceed 3 — and the
-      // model has no way to opt into more (not via tool_choice, not via prompt).
-      tools: [{ type: WEB_SEARCH_TOOL_TYPE, name: 'web_search', max_uses: 1 }],
-      messages: [{ role: 'user', content: `Run a single web search for: ${query}` }],
-    }),
+  const requestBody = JSON.stringify({
+    model: MODEL,
+    max_tokens: 1024,
+    // Hard cap layer 2: THIS call may perform at most one web search. Combined
+    // with the ≤3-iteration loop, total searches can never exceed 3 — and the
+    // model has no way to opt into more (not via tool_choice, not via prompt).
+    tools: [{ type: WEB_SEARCH_TOOL_TYPE, name: 'web_search', max_uses: 1 }],
+    messages: [{ role: 'user', content: `Run a single web search for: ${query}` }],
   });
 
-  if (!res.ok) {
-    // Distinguish a capacity condition (workspace $300 cap hit, or a sustained
-    // rate limit that means we effectively can't serve this visitor now) from a
-    // generic failure. Both stay off the page as raw errors; capacity routes to
-    // the shared "at capacity — book a call" state.
+  // Up to two HTTP attempts for ONE search. This retry does NOT consume a search
+  // from the 3-search cap: the cap counts searches ISSUED (one per query
+  // iteration in the caller), not HTTP attempts. A 429 is rejected before any
+  // search runs, so a retried call bills no extra search either.
+  let retried = false;
+  for (;;) {
+    const res = await fetch(ANTHROPIC_MESSAGES_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': ANTHROPIC_VERSION,
+      },
+      body: requestBody,
+    });
+
+    if (res.ok) {
+      const data = (await res.json()) as AnthropicResponse;
+      const results: unknown[] = [];
+      let summary = '';
+      for (const block of data.content ?? []) {
+        if (block.type === 'web_search_tool_result' && Array.isArray(block.content)) {
+          results.push(...block.content);
+        } else if (block.type === 'text' && typeof block.text === 'string') {
+          summary += block.text;
+        }
+      }
+      return {
+        results,
+        summary: summary.trim(),
+        usage: {
+          input_tokens: data.usage?.input_tokens ?? 0,
+          output_tokens: data.usage?.output_tokens ?? 0,
+        },
+        stubbed: false,
+      };
+    }
+
+    // Non-OK. Read the error body once, classify, and keep raw provider errors
+    // off the public page — capacity routes to the shared "at capacity" state.
     let errType = '';
     let errMsg = '';
     try {
@@ -195,33 +258,26 @@ async function searchWeb(query: string): Promise<{ results: unknown[]; usage: { 
       errType = j.error?.type ?? '';
       errMsg = j.error?.message ?? '';
     } catch {
-      /* non-JSON error body — fall through to status-based classification */
+      /* non-JSON error body — status-based classification only */
     }
-    const capacitySignal =
-      res.status === 429 || // rate/usage limit
-      res.status === 402 || // payment required
-      /credit|billing|spend|budget|quota|payment|balance/i.test(`${errType} ${errMsg}`);
-    if (capacitySignal) {
+    const cls = classifyFailure(res.status, errType, errMsg);
+
+    if (cls === 'capacity') {
       throw new CapacityError(`anthropic capacity ${res.status}`);
+    }
+    if (cls === 'ratelimit' && !retried) {
+      // One retry on a bare 429, honoring Retry-After (capped). Does not touch
+      // the search cap (see note above).
+      retried = true;
+      await sleep(retryAfterMs(res.headers.get('retry-after')));
+      continue;
+    }
+    if (cls === 'ratelimit') {
+      // Retry also rate-limited → treat as capacity (§ "if the retry also 429s").
+      throw new CapacityError('anthropic capacity 429 (after retry)');
     }
     throw new Error(`anthropic ${res.status}`);
   }
-
-  const data = (await res.json()) as AnthropicResponse;
-  const results: unknown[] = [];
-  for (const block of data.content ?? []) {
-    if (block.type === 'web_search_tool_result' && Array.isArray(block.content)) {
-      results.push(...block.content);
-    }
-  }
-  return {
-    results,
-    usage: {
-      input_tokens: data.usage?.input_tokens ?? 0,
-      output_tokens: data.usage?.output_tokens ?? 0,
-    },
-    stubbed: false,
-  };
 }
 
 // ── persistence: upsert the Call-1 payload into demo_sessions ────────────────
@@ -238,6 +294,8 @@ interface PersistInput {
   call1Results: RawSearch[];
   inputTokens: number;
   outputTokens: number;
+  mirrorVerdict: string;
+  appearedInBuyerQuery: boolean;
 }
 
 async function persistCall1(p: PersistInput): Promise<boolean> {
@@ -264,10 +322,271 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
       call1_results: p.call1Results,
       input_tokens: p.inputTokens,
       output_tokens: p.outputTokens,
+      // §8 — mirror_verdict (short text) + appeared_in_buyer_query (the single
+      // most valuable analytics field, §8) come out of the synthesis step.
+      mirror_verdict: p.mirrorVerdict || null,
+      appeared_in_buyer_query: p.appearedInBuyerQuery,
       map_generated_at: new Date().toISOString(),
     }),
   });
   return res.ok;
+}
+
+// ── State 2 + State 3 synthesis (mirror + absence), with the §6 honesty branch ─
+// A pure text call (NO web_search tool → cannot search, never touches the cap)
+// that reads the already-retrieved Call-1 results and composes:
+//   • MIRROR   (State 2): who AI currently thinks the subject is; where the
+//     answer is stale/wrong or collides with another entity, said plainly (§ State 2).
+//   • ABSENCE  (State 3): the buyer-intent query verbatim + what came back.
+//
+// The honesty branch (§6, the failure mode most likely to be written wrong):
+// if the subject DOES appear in the buyer-intent results, the copy must pivot to
+// WHERE and HOW they're described — it must NOT manufacture an absence. We anchor
+// that decision in code, not model whim: extractHost()/appearanceSignal() detect
+// the subject's own domain / name in the buyer-intent results. A domain match is
+// proof of appearance; if the model still returns an absence there, we override
+// it (never surface a false absence). The model writes the prose for the branch
+// the evidence supports.
+
+interface Synthesis {
+  mirror: { verdict: string; body: string };
+  absence: { appeared: boolean; query: string; recommended: string[]; body: string };
+  usage: { input_tokens: number; output_tokens: number };
+}
+
+function extractHost(url: string): string {
+  if (!url) return '';
+  try {
+    const withProto = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+    return new URL(withProto).hostname.replace(/^www\./i, '').toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
+interface WebResult {
+  title?: string;
+  url?: string;
+}
+
+// Flatten the buyer-intent search's result blocks into {title,url} for matching.
+function buyerIntentResults(call1Results: RawSearch[]): WebResult[] {
+  const buyer = call1Results.find((r) => r.kind === 'buyer_intent');
+  if (!buyer) return [];
+  const out: WebResult[] = [];
+  for (const block of buyer.results) {
+    if (block && typeof block === 'object') {
+      const b = block as { title?: unknown; url?: unknown };
+      out.push({
+        title: typeof b.title === 'string' ? b.title : undefined,
+        url: typeof b.url === 'string' ? b.url : undefined,
+      });
+    }
+  }
+  return out;
+}
+
+// Code-anchored appearance detection over the buyer-intent results.
+// domainMatch (subject's own host in a result URL) is high-confidence proof of
+// appearance; nameMatch (subject name in a title/url) is a softer signal.
+function appearanceSignal(
+  results: WebResult[],
+  subjectName: string,
+  subjectHost: string,
+): { domainMatch: boolean; nameMatch: boolean } {
+  const nameNorm = subjectName.trim().toLowerCase();
+  let domainMatch = false;
+  let nameMatch = false;
+  for (const r of results) {
+    const host = extractHost(r.url ?? '');
+    if (subjectHost && host && (host === subjectHost || host.endsWith(`.${subjectHost}`))) {
+      domainMatch = true;
+    }
+    const hay = `${r.title ?? ''} ${r.url ?? ''}`.toLowerCase();
+    if (nameNorm.length >= 3 && hay.includes(nameNorm)) {
+      nameMatch = true;
+    }
+  }
+  return { domainMatch, nameMatch };
+}
+
+// Compact, plaintext digest of the retrieved results for the synthesis prompt.
+function resultsDigest(call1Results: RawSearch[]): string {
+  return call1Results
+    .map((r) => {
+      const items = (r.results as Array<{ title?: unknown; url?: unknown; page_age?: unknown }>)
+        .map((b, i) => {
+          const title = typeof b?.title === 'string' ? b.title : '(no title)';
+          const u = typeof b?.url === 'string' ? b.url : '';
+          const age = typeof b?.page_age === 'string' ? ` [${b.page_age}]` : '';
+          return `    ${i + 1}. ${title} — ${u}${age}`;
+        })
+        .join('\n');
+      const obs = r.summary ? `\n  reading: ${r.summary}` : '';
+      return `[${r.kind}] query: ${r.query}${obs}\n  results:\n${items || '    (none)'}`;
+    })
+    .join('\n\n');
+}
+
+const SYNTHESIS_MAX_TOKENS = 1200;
+
+async function synthesizeCall1(
+  subject: { name: string; url: string },
+  buyerQuery: string,
+  call1Results: RawSearch[],
+): Promise<Synthesis> {
+  const subjectHost = extractHost(subject.url);
+  const signal = appearanceSignal(buyerIntentResults(call1Results), subject.name, subjectHost);
+  // Bias against a false absence: any code signal of appearance flips the default.
+  const codeSuggestsAppeared = signal.domainMatch || signal.nameMatch;
+
+  const key = process.env[ANTHROPIC_KEY_ENV];
+
+  // STUB: no key → deterministic copy derived from the code signal, so both
+  // branches are exercisable without a live key. (The stub search injects no
+  // subject match, so the keyless path demonstrates the ABSENCE branch; the
+  // APPEARS branch is proven with a live key + a subject known to rank.)
+  if (!key) {
+    if (codeSuggestsAppeared) {
+      return {
+        mirror: {
+          verdict: 'stub',
+          body: `[stub] Mirror for ${subject.name}. Run with a live key for the real reading.`,
+        },
+        absence: {
+          appeared: true,
+          query: buyerQuery,
+          recommended: [],
+          body: `[stub] ${subject.name} appears in "${buyerQuery}". The live copy pivots to where and how they're described.`,
+        },
+        usage: { input_tokens: 0, output_tokens: 0 },
+      };
+    }
+    return {
+      mirror: {
+        verdict: 'stub',
+        body: `[stub] Mirror for ${subject.name}. Run with a live key for the real reading.`,
+      },
+      absence: {
+        appeared: false,
+        query: buyerQuery,
+        recommended: [],
+        body: `[stub] For "${buyerQuery}", ${subject.name} did not appear in the stub results.`,
+      },
+      usage: { input_tokens: 0, output_tokens: 0 },
+    };
+  }
+
+  const digest = resultsDigest(call1Results);
+  const codeNote = signal.domainMatch
+    ? `A code check found ${subject.name}'s OWN domain (${subjectHost}) among the buyer-intent results — they DO appear. Do not write an absence.`
+    : signal.nameMatch
+      ? `A code check found ${subject.name}'s name among the buyer-intent results — they likely appear. Look closely before writing any absence.`
+      : `A code check did NOT find ${subject.name} in the buyer-intent results. If the actual results below still show them in any form, trust the results, not this note.`;
+
+  const prompt = [
+    `You are analyzing live web-search results to tell ${subject.name}${subject.url ? ` (${subject.url})` : ''} what AI currently says about them. Use ONLY the results below — never invent competitors, rankings, or descriptions.`,
+    ``,
+    `SEARCH RESULTS:`,
+    digest,
+    ``,
+    `CODE SIGNAL: ${codeNote}`,
+    ``,
+    `Write two things, honestly (this is a diagnostic — never manufacture a problem):`,
+    `1) MIRROR: In plain language, who does AI currently think ${subject.name} is, based on the identity and comparative results? Where the answer is stale, wrong, or collides with a DIFFERENT organization sharing the name, say so directly — no hedging. If it's actually accurate, say that.`,
+    `2) ABSENCE: For the buyer-intent query "${buyerQuery}", report what actually came back. If ${subject.name} is NOT among the results, name who is recommended instead and state plainly that they're not on the list. If ${subject.name} IS present in any form, set appeared=true and pivot to WHERE they rank and HOW they're described — do NOT claim an absence. Only claim absence when they are genuinely missing.`,
+    ``,
+    `Respond with ONLY a JSON object, no prose around it:`,
+    `{"mirror":{"verdict":"<=10 word summary","body":"2-4 sentences"},"absence":{"appeared":true|false,"recommended":["names actually returned"],"body":"2-4 sentences"}}`,
+  ].join('\n');
+
+  const res = await fetch(ANTHROPIC_MESSAGES_URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': key,
+      'anthropic-version': ANTHROPIC_VERSION,
+    },
+    // NO tools → this call physically cannot issue a web search.
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: SYNTHESIS_MAX_TOKENS,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    // Same capacity/error discipline as searchWeb; no retry needed on synthesis
+    // (no search billed), but capacity still routes to "at capacity".
+    let errType = '';
+    let errMsg = '';
+    try {
+      const j = (await res.json()) as { error?: { type?: string; message?: string } };
+      errType = j.error?.type ?? '';
+      errMsg = j.error?.message ?? '';
+    } catch {
+      /* non-JSON */
+    }
+    if (classifyFailure(res.status, errType, errMsg) === 'capacity') {
+      throw new CapacityError(`anthropic capacity ${res.status}`);
+    }
+    throw new Error(`anthropic ${res.status}`);
+  }
+
+  const data = (await res.json()) as AnthropicResponse;
+  let text = '';
+  for (const block of data.content ?? []) {
+    if (block.type === 'text' && typeof block.text === 'string') text += block.text;
+  }
+
+  // Defensive parse — a public page must never show malformed model output.
+  let parsed: {
+    mirror?: { verdict?: unknown; body?: unknown };
+    absence?: { appeared?: unknown; recommended?: unknown; body?: unknown };
+  } = {};
+  try {
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    if (start >= 0 && end > start) parsed = JSON.parse(text.slice(start, end + 1));
+  } catch {
+    /* fall through to safe fallback below */
+  }
+
+  const usage = {
+    input_tokens: data.usage?.input_tokens ?? 0,
+    output_tokens: data.usage?.output_tokens ?? 0,
+  };
+
+  const mirrorVerdict = typeof parsed.mirror?.verdict === 'string' ? parsed.mirror.verdict : '';
+  const mirrorBody =
+    typeof parsed.mirror?.body === 'string' && parsed.mirror.body.trim()
+      ? parsed.mirror.body.trim()
+      : `Here's what AI currently surfaces about ${subject.name}.`;
+
+  let appeared = parsed.absence?.appeared === true;
+  // Honesty override: a domain match is proof of appearance. Never let a model
+  // false-absence reach the page — if the evidence says they appear, they appear.
+  if (signal.domainMatch && !appeared) {
+    appeared = true;
+  }
+  const recommended = Array.isArray(parsed.absence?.recommended)
+    ? (parsed.absence!.recommended as unknown[]).filter((x): x is string => typeof x === 'string')
+    : [];
+  let absenceBody =
+    typeof parsed.absence?.body === 'string' && parsed.absence.body.trim() ? parsed.absence.body.trim() : '';
+  if (!absenceBody || (signal.domainMatch && parsed.absence?.appeared !== true)) {
+    // Safe, non-manufacturing fallback when copy is missing or the model tried to
+    // claim an absence the evidence contradicts.
+    absenceBody = appeared
+      ? `For "${buyerQuery}", ${subject.name} does appear in the results — the full report covers where they rank and how they're described.`
+      : `For "${buyerQuery}", here's who the results surface.`;
+  }
+
+  return {
+    mirror: { verdict: mirrorVerdict, body: mirrorBody },
+    absence: { appeared, query: buyerQuery, recommended, body: absenceBody },
+    usage,
+  };
 }
 
 // ── route ────────────────────────────────────────────────────────────────────
@@ -322,7 +641,7 @@ export async function POST(request: NextRequest) {
           if (searchesRun >= MAX_SEARCHES) break;
 
           send({ type: 'search_started', step: q.step, kind: q.kind });
-          const { results, usage, stubbed } = await searchWeb(q.text);
+          const { results, summary, usage, stubbed } = await searchWeb(q.text);
           searchesRun += 1;
           inputTokens += usage.input_tokens;
           outputTokens += usage.output_tokens;
@@ -332,11 +651,34 @@ export async function POST(request: NextRequest) {
             query: q.text,
             provisional: q.provisional,
             results,
+            summary,
             usage,
             stubbed,
           });
           send({ type: 'search_complete', step: q.step, kind: q.kind, count: results.length });
         }
+
+        // ── State 2 + State 3: synthesize the mirror and the absence ──────────
+        // A pure text call over the already-retrieved results. It declares NO
+        // web_search tool, so it cannot search and NEVER touches the 3-search cap.
+        const synthesis = await synthesizeCall1(
+          { name, url },
+          buyerIntentQuery(category, what, who),
+          call1Results,
+        );
+        inputTokens += synthesis.usage.input_tokens;
+        outputTokens += synthesis.usage.output_tokens;
+
+        // MIRROR (State 2) — who AI thinks they are, stale/wrong/collision said plainly.
+        send({ type: 'mirror', verdict: synthesis.mirror.verdict, body: synthesis.mirror.body });
+        // ABSENCE (State 3) — §6 honesty branch already resolved inside synthesis.
+        send({
+          type: 'absence',
+          appeared: synthesis.absence.appeared,
+          query: synthesis.absence.query,
+          recommended: synthesis.absence.recommended,
+          body: synthesis.absence.body,
+        });
 
         const persisted = await persistCall1({
           sessionToken,
@@ -347,6 +689,8 @@ export async function POST(request: NextRequest) {
           call1Results,
           inputTokens,
           outputTokens,
+          mirrorVerdict: synthesis.mirror.verdict,
+          appearedInBuyerQuery: synthesis.absence.appeared,
         });
 
         send({
