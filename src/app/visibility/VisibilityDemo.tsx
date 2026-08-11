@@ -52,16 +52,24 @@ const STEP_ORDER = ['identity', 'buyer_intent', 'comparative'];
 
 type Phase = 'form' | 'running' | 'reveal' | 'gate' | 'scoring' | 'score' | 'at_capacity' | 'rate_limited' | 'error';
 
-interface Mirror {
-  verdict?: string;
-  body: string;
-  accurate: boolean; // code signal (C1): ✅ accurate vs ⚠️ stale/colliding/wrong
+// Each reveal section is a three-layer read (items 3+4): a one-line verdict, up
+// to 3 scannable bullets, and a collapsed detail paragraph.
+interface RevealSection {
+  verdict: string;
+  bullets: string[];
+  detail: string;
 }
-interface Absence {
-  appeared: boolean;
+interface Mirror extends RevealSection {
+  // Two amber triggers. accurate = code signal (identity match); collision =
+  // guarded model signal (a distinct NAMED org sharing the name). The section is
+  // ✅ ONLY when accurate AND no collision — a collision forces ⚠️ regardless.
+  accurate: boolean;
+  collision: boolean;
+}
+interface Absence extends RevealSection {
+  appeared: boolean; // code-anchored ✅ appears / ❌ absent
   query: string;
   recommended: string[];
-  body: string;
 }
 interface Criterion {
   name: string;
@@ -120,6 +128,9 @@ export default function VisibilityDemo() {
   const [activeSteps, setActiveSteps] = useState<Record<string, 'active' | 'done'>>({});
   const [mirror, setMirror] = useState<Mirror | null>(null);
   const [absence, setAbsence] = useState<Absence | null>(null);
+  // "The opportunity" (item 4) — the pre-gate tease, guarded server-side against
+  // vague filler, so an empty string means "not received yet", never manufactured.
+  const [opportunity, setOpportunity] = useState('');
 
   // Gate.
   const [email, setEmail] = useState('');
@@ -220,6 +231,7 @@ export default function VisibilityDemo() {
     setActiveSteps({});
     setMirror(null);
     setAbsence(null);
+    setOpportunity('');
 
     try {
       const res = await fetch('/api/visibility-demo/', {
@@ -274,17 +286,28 @@ export default function VisibilityDemo() {
         if (typeof evt.kind === 'string') setActiveSteps((s) => ({ ...s, [evt.kind as string]: 'done' }));
         break;
       case 'mirror':
-        setMirror({ verdict: evt.verdict as string | undefined, body: String(evt.body ?? ''), accurate: evt.accurate === true });
+        setMirror({
+          verdict: String(evt.verdict ?? ''),
+          bullets: Array.isArray(evt.bullets) ? (evt.bullets as string[]) : [],
+          detail: String(evt.detail ?? ''),
+          accurate: evt.accurate === true,
+          collision: evt.collision === true,
+        });
         setPhase('reveal');
         break;
       case 'absence':
         setAbsence({
+          verdict: String(evt.verdict ?? ''),
+          bullets: Array.isArray(evt.bullets) ? (evt.bullets as string[]) : [],
+          detail: String(evt.detail ?? ''),
           appeared: evt.appeared === true,
           query: String(evt.query ?? ''),
           recommended: Array.isArray(evt.recommended) ? (evt.recommended as string[]) : [],
-          body: String(evt.body ?? ''),
         });
         setPhase('reveal');
+        break;
+      case 'opportunity':
+        if (typeof evt.text === 'string') setOpportunity(evt.text);
         break;
       case 'call1_complete':
         setPhase('gate');
@@ -545,20 +568,35 @@ export default function VisibilityDemo() {
           <div>
             <p className={styles.eyebrow}>What AI says about {name || 'you'}</p>
 
-            {/* Section 1 — label follows the finding (C1): ✅ accurate / ⚠️ not. */}
+            {/* Section 1 — verdict → bullets → collapsed detail. Icon follows the
+                finding: ✅ ONLY when accurate AND no collision; a named-entity
+                collision forces ⚠️ regardless of description accuracy. */}
             {mirror && (
               <div className={styles.card}>
                 <p className={styles.cardLabel}>
                   <span className={styles.findingIcon} aria-hidden="true">
-                    {mirror.accurate ? '✅' : '⚠️'}
+                    {mirror.accurate && !mirror.collision ? '✅' : '⚠️'}
                   </span>
                   What AI says about you
                 </p>
-                <p className={styles.cardBody}>{mirror.body}</p>
+                {mirror.verdict && <p className={styles.verdict}>{mirror.verdict}</p>}
+                {mirror.bullets.length > 0 && (
+                  <ul className={styles.bullets}>
+                    {mirror.bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                )}
+                {mirror.detail && (
+                  <details className={styles.detail}>
+                    <summary className={styles.detailSummary}>The full reading</summary>
+                    <p className={styles.detailBody}>{mirror.detail}</p>
+                  </details>
+                )}
               </div>
             )}
 
-            {/* Section 2 — ✅ they appear / ❌ absent (C1). */}
+            {/* Section 2 — ✅ they appear / ❌ absent (code-anchored). */}
             {absence && (
               <div className={styles.card}>
                 <p className={styles.cardLabel}>
@@ -568,14 +606,41 @@ export default function VisibilityDemo() {
                   When your buyers search
                 </p>
                 {absence.query && <p className={styles.queryLine}>&ldquo;{absence.query}&rdquo;</p>}
-                <p className={styles.cardBody}>{absence.body}</p>
-                {absence.recommended.length > 0 && (
-                  <ul className={styles.recList}>
-                    {absence.recommended.map((r, i) => (
-                      <li key={i}>{r}</li>
+                {absence.verdict && <p className={styles.verdict}>{absence.verdict}</p>}
+                {absence.bullets.length > 0 && (
+                  <ul className={styles.bullets}>
+                    {absence.bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
                     ))}
                   </ul>
                 )}
+                {absence.recommended.length > 0 && (
+                  <>
+                    <ul className={styles.recList}>
+                      {absence.recommended.slice(0, 5).map((r, i) => (
+                        <li key={i}>{r}</li>
+                      ))}
+                    </ul>
+                    {absence.recommended.length > 5 && (
+                      <p className={styles.moreCount}>and {absence.recommended.length - 5} more</p>
+                    )}
+                  </>
+                )}
+                {absence.detail && (
+                  <details className={styles.detail}>
+                    <summary className={styles.detailSummary}>The full detail</summary>
+                    <p className={styles.detailBody}>{absence.detail}</p>
+                  </details>
+                )}
+              </div>
+            )}
+
+            {/* "The opportunity" (item 4) — the pre-gate tease. Server-guarded to
+                reference a concrete finding, so it's never vague filler. */}
+            {opportunity && (
+              <div className={styles.opportunity}>
+                <p className={styles.opportunityLabel}>The opportunity</p>
+                <p className={styles.opportunityBody}>{opportunity}</p>
               </div>
             )}
 
@@ -630,6 +695,11 @@ export default function VisibilityDemo() {
               <span className={styles.scoreBig}>{payoff.score.total}</span>
               <span className={styles.scoreOf}>/ {payoff.score.outOf}</span>
             </div>
+            {/* Run-to-run variance — a live search is a point-in-time snapshot.
+                Quiet, near the score; stated once, not over-explained. */}
+            <p className={styles.varianceLine}>
+              This is a live search from right now. Run it again another day and the ranking may shift.
+            </p>
 
             <div className={styles.pillars}>
               <ScorePillar name="Clarity" score={payoff.score.clarity} criteria={payoff.pillars?.clarity?.criteria ?? []} />

@@ -440,7 +440,7 @@ const SYNTHESIS_MAX_TOKENS = 1600;
 const SYNTHESIS_SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['mirror', 'absence', 'opportunity'],
+  required: ['mirror', 'absence', 'opportunity', 'opportunity_anchor'],
   properties: {
     mirror: {
       type: 'object',
@@ -466,6 +466,12 @@ const SYNTHESIS_SCHEMA = {
       },
     },
     opportunity: { type: 'string' },
+    // Specificity guard (same pattern as collision_entity): which concrete
+    // finding from THIS run the opportunity is built on — the collision entity,
+    // a named competitor from recommended, the rank position, or the query. Code
+    // asserts it non-empty; an unanchored opportunity is generic filler and is
+    // replaced with a deterministic, finding-referencing fallback.
+    opportunity_anchor: { type: 'string' },
   },
 } as const;
 
@@ -581,6 +587,7 @@ async function synthesizeCall1(
     `   Do NOT state whether ${subject.name} appeared — that is decided separately in code. Just report what the results contain.`,
     ``,
     `3) OPPORTUNITY — one short paragraph. ${opportunityGuidance}`,
+    `   • opportunity_anchor: name the ONE concrete finding from THIS run that the paragraph is built on — the colliding entity, a specific competitor from the buyer-intent results, the rank position, or the query "${buyerQuery}" itself. It must be something that actually appeared in the results above. A generic "improvements are available" is NOT anchored — if you cannot tie it to a concrete finding, leave opportunity_anchor empty.`,
   ].join('\n');
 
   const { text, usage } = await callClaudeText(prompt, SYNTHESIS_MAX_TOKENS, {
@@ -593,6 +600,7 @@ async function synthesizeCall1(
     mirror?: { verdict?: unknown; bullets?: unknown; detail?: unknown; collision?: unknown; collision_entity?: unknown };
     absence?: { verdict?: unknown; bullets?: unknown; detail?: unknown; recommended?: unknown };
     opportunity?: unknown;
+    opportunity_anchor?: unknown;
   } = {};
   try {
     const start = text.indexOf('{');
@@ -630,12 +638,21 @@ async function synthesizeCall1(
     ? (parsed.absence!.recommended as unknown[]).filter((x): x is string => typeof x === 'string' && x.trim().length > 0)
     : [];
 
+  // OPPORTUNITY SPECIFICITY GUARD (code): the model's paragraph is only used if it
+  // named the concrete finding it's built on (opportunity_anchor non-empty). An
+  // unanchored paragraph is generic filler ("improvements are available") and is
+  // replaced with a deterministic fallback that references THIS run's query — so
+  // the opportunity can never be manipulative-vague. Same pattern as the collision
+  // named-entity guard; not a precedent for `appeared`.
+  const opportunityAnchor =
+    typeof parsed.opportunity_anchor === 'string' ? parsed.opportunity_anchor.trim() : '';
+  const modelOpportunity = typeof parsed.opportunity === 'string' ? parsed.opportunity.trim() : '';
   const opportunity =
-    typeof parsed.opportunity === 'string' && parsed.opportunity.trim()
-      ? parsed.opportunity.trim()
+    modelOpportunity && opportunityAnchor.length > 0
+      ? modelOpportunity
       : appeared
-        ? `The full report scores how strongly and accurately ${subject.name} shows up for buyers, and where that presence can be sharpened.`
-        : `The full report shows what's missing between ${subject.name} and the buyers searching — the gap to close to become findable.`;
+        ? `The full report scores how strongly and accurately ${subject.name} shows up for "${buyerQuery}", and where that presence can be sharpened.`
+        : `For "${buyerQuery}", the full report shows what's missing between ${subject.name} and the buyers searching — the gap to close to become findable.`;
 
   return {
     mirror: { ...mirrorSection, accurate, collision },
