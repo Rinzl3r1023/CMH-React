@@ -29,7 +29,72 @@ import {
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-const SCORE_MAX_TOKENS = 1500;
+// Raised from 1500 — a verbose rubric could truncate mid-JSON and fail to parse.
+const SCORE_MAX_TOKENS = 3000;
+
+// A parse/validation failure is NOT a low score — it's a scoring FAILURE. Never
+// fabricate a number: this routes to a loud, honest "book a call" instead.
+class ScoringError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    this.name = 'ScoringError';
+  }
+}
+
+// Structured-outputs schema (durability layer) — forces schema-valid JSON so the
+// model physically cannot return the malformed/preamble/truncated output that hit
+// the fabricating fallback. output_config format: { type: 'json_schema', schema }.
+const CRITERION_SCHEMA = {
+  type: 'object',
+  properties: {
+    score: { type: 'integer', minimum: 1, maximum: 5 },
+    note: { type: 'string' },
+  },
+  required: ['score', 'note'],
+  additionalProperties: false,
+};
+const PILLAR_SCHEMA = {
+  type: 'object',
+  properties: { criteria: { type: 'array', items: CRITERION_SCHEMA, minItems: 5, maxItems: 5 } },
+  required: ['criteria'],
+  additionalProperties: false,
+};
+const SCORE_SCHEMA = {
+  type: 'object',
+  properties: {
+    clarity: PILLAR_SCHEMA,
+    presence: PILLAR_SCHEMA,
+    fixes: { type: 'array', items: { type: 'string' }, minItems: 1, maxItems: 3 },
+    crawlability_note: { type: 'string' },
+  },
+  required: ['clarity', 'presence', 'fixes', 'crawlability_note'],
+  additionalProperties: false,
+};
+
+// Robust extraction backstop (for the non-structured path / stray wrappers):
+// strip markdown fences, then take the first balanced {...} object.
+function extractJsonObject(text: string): string | null {
+  const stripped = text.replace(/```(?:json)?/gi, '').trim();
+  const start = stripped.indexOf('{');
+  if (start < 0) return null;
+  let depth = 0;
+  let inStr = false;
+  let esc = false;
+  for (let i = start; i < stripped.length; i++) {
+    const ch = stripped[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (ch === '\\') esc = true;
+      else if (ch === '"') inStr = false;
+    } else if (ch === '"') inStr = true;
+    else if (ch === '{') depth++;
+    else if (ch === '}') {
+      depth--;
+      if (depth === 0) return stripped.slice(start, i + 1);
+    }
+  }
+  return null; // unbalanced → truncated
+}
 
 // All five score from SEARCH 1 (identity) only — the comparative query is cut
 // (fix B1/B2). The identity search returns multiple independent sources, so
@@ -172,27 +237,56 @@ function stubPayload(): ScorePayload {
 type Usage = { input_tokens: number; output_tokens: number };
 
 async function scoreSession(row: DemoSessionRow): Promise<{ payload: ScorePayload; usage: Usage }> {
-  const { text, usage, stubbed } = await callClaudeText(buildScorePrompt(row), SCORE_MAX_TOKENS);
-  if (stubbed || !text) {
-    return { payload: stubPayload(), usage };
-  }
+  const { text, usage, stubbed } = await callClaudeText(buildScorePrompt(row), SCORE_MAX_TOKENS, {
+    format: { type: 'json_schema', schema: SCORE_SCHEMA },
+  });
+  // Dev-only stub (no key). In PRODUCTION (key present) a failure must NEVER stub
+  // or fall back — that fabricates a number. It fails loudly below instead.
+  if (stubbed) return { payload: stubPayload(), usage };
 
+  // Parse. Structured outputs makes `text` clean schema-valid JSON; the balanced
+  // extractor is a backstop for any stray wrapper.
   let parsed: {
     clarity?: { criteria?: unknown };
     presence?: { criteria?: unknown };
     fixes?: unknown;
     crawlability_note?: unknown;
-  } = {};
-  try {
-    const start = text.indexOf('{');
-    const end = text.lastIndexOf('}');
-    if (start >= 0 && end > start) parsed = JSON.parse(text.slice(start, end + 1));
-  } catch {
-    /* fall through to conservative normalization below */
+  } | null = null;
+  const jsonStr = extractJsonObject(text);
+  if (jsonStr) {
+    try {
+      parsed = JSON.parse(jsonStr);
+    } catch {
+      /* parsed stays null → loud fail below */
+    }
+  }
+
+  // A wholesale missing / unparseable rubric is a FAILURE, not a low score. Require
+  // both pillars to be present as 5-item arrays (structure). A single unassessable
+  // criterion WITHIN a valid rubric still scores conservatively via clampCriterion.
+  const validPillar = (a: unknown): boolean => Array.isArray(a) && a.length >= 5;
+  if (!parsed || !validPillar(parsed.clarity?.criteria) || !validPillar(parsed.presence?.criteria)) {
+    // Log the RAW model output so the cause is captured (it wasn't, before).
+    console.error(
+      `[visibility-demo] Call-2 scoring FAILED (unparseable/incomplete rubric) session=${row.session_token} len=${text.length} raw=${text.slice(0, 2000)}`,
+    );
+    throw new ScoringError('unparseable or incomplete rubric');
   }
 
   const clarity = normalizeCriteria(parsed.clarity?.criteria, CLARITY_CRITERIA);
   const presence = normalizeCriteria(parsed.presence?.criteria, PRESENCE_CRITERIA);
+
+  // Invariant tripwire (the cheap check that would have caught this bug): the
+  // code-anchored appeared signal and the rubric must not contradict. If the code
+  // proved they appear, "Appear in the buyer-intent results at all" cannot score
+  // ≤2 — a contradiction means the rubric is untrustworthy → fail loudly.
+  if (row.appeared_in_buyer_query === true && presence[0].score <= 2) {
+    console.error(
+      `[visibility-demo] Call-2 INVARIANT violated (appeared=true, presence#1=${presence[0].score}) session=${row.session_token} raw=${text.slice(0, 2000)}`,
+    );
+    throw new ScoringError('rubric contradicts code-anchored appeared signal');
+  }
+
   const fixes = Array.isArray(parsed.fixes)
     ? (parsed.fixes as unknown[]).filter((x): x is string => typeof x === 'string').slice(0, 3)
     : [];
@@ -278,11 +372,15 @@ export async function POST(request: Request) {
     });
     return Response.json({ ok: true, ...payload });
   } catch (err) {
-    // Same capacity discipline — never surface a raw provider error on a public page.
+    // Capacity → the shared "at capacity" state (book a call).
     if (err instanceof CapacityError) {
       return Response.json({ ok: false, at_capacity: true }, { status: 503 });
     }
-    console.error('[visibility-demo] score synthesis failed', err);
-    return Response.json({ ok: false, error: 'Scoring could not complete.' }, { status: 502 });
+    // ANY other failure — unparseable/incomplete rubric (ScoringError), invariant
+    // violation, or a provider error — FAILS LOUDLY. We persisted NO score (so a
+    // fabricated number never reaches the DB or the visitor), and route to a book-a-
+    // call. Replay re-attempts a real score rather than serving a cached lie.
+    console.error('[visibility-demo] score FAILED (no number shown) session=%s', sessionToken, err);
+    return Response.json({ ok: false, scoring_failed: true }, { status: 502 });
   }
 }

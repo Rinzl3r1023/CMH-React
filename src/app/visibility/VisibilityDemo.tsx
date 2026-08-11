@@ -336,7 +336,13 @@ export default function VisibilityDemo() {
         return;
       }
       if (!s.ok || !(sj as { score?: unknown }).score) {
-        toTerminal('error', 'Your score could not be generated. Please try again.', null);
+        // Scoring failed — NEVER fabricate a number. Route to a real conversation
+        // rather than a looping "try again" that would spend again.
+        toTerminal(
+          'error',
+          "We couldn't generate your score right now — grab a slot and I'll walk you through your visibility personally.",
+          'calendly',
+        );
         return;
       }
       setPayoff(sj as Payoff);
