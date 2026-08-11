@@ -1,16 +1,28 @@
 import type { NextRequest } from 'next/server';
+import {
+  clientIp,
+  hashIp,
+  verifyTurnstile,
+  countSessionsThisMonth,
+  ipRunInLast24h,
+  reserveSession,
+  MONTHLY_CEILING,
+} from '@/lib/visibility-demo';
 
-// AI Visibility Demo — Call 1 (free), STUBBED so it compiles/runs without the
-// live ANTHROPIC_API_KEY_DEMO or Supabase creds. Scope of THIS piece (per build plan):
+// AI Visibility Demo — the RUN route (/api/visibility-demo). STUBBED so it
+// compiles/runs without the live ANTHROPIC_API_KEY_DEMO, Turnstile, or Supabase
+// creds. Responsibilities now in this route:
+//   0. Pre-run gate (§7): Turnstile → IP-24h → monthly ceiling, BEFORE any spend.
+//      The ceiling emits the same at_capacity event as the workspace spend cap.
 //   1. Query construction from the 5 inputs + §4 category template.
-//   2. The 3-search loop, with the hard cap enforced IN CODE (a for-loop over a
-//      fixed queries array + max_uses:1 per call) — NOT tool_choice, NOT a prompt
-//      instruction. The model physically cannot search a 4th time.
-//   3. Persistence of raw results to demo_sessions.call1_results.
-//   4. Real SSE scaffolding — one event per search as it returns.
+//   2. The 3-search loop, hard-capped IN CODE (fixed queries array + max_uses:1 +
+//      a counter) — NOT tool_choice, NOT a prompt. No 4th search is reachable.
+//   3. Mirror + absence synthesis (State 2/3) with the code-anchored §6 honesty
+//      branch; persistence of raw results + verdict to demo_sessions.
+//   4. Real SSE — one event per search, then mirror + absence.
 //
-// EXPLICITLY NOT in this piece: mirror/absence copy generation, the email gate,
-// Turnstile verification, Call 2 (scoring). Those land as later pieces.
+// EXPLICITLY NOT in this route: the email capture + Kit subscribe (that's the
+// /api/visibility-demo/gate route) and Call 2 (scoring).
 //
 // SPEC GAP flagged in this file (see COMPARATIVE_QUERY below): §4 defines the
 // identity template and the buyer-intent category templates, but NOT the
@@ -296,6 +308,7 @@ interface PersistInput {
   outputTokens: number;
   mirrorVerdict: string;
   appearedInBuyerQuery: boolean;
+  ipHash: string;
 }
 
 async function persistCall1(p: PersistInput): Promise<boolean> {
@@ -322,6 +335,7 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
       call1_results: p.call1Results,
       input_tokens: p.inputTokens,
       output_tokens: p.outputTokens,
+      ip_hash: p.ipHash,
       // §8 — mirror_verdict (short text) + appeared_in_buyer_query (the single
       // most valuable analytics field, §8) come out of the synthesis step.
       mirror_verdict: p.mirrorVerdict || null,
@@ -621,6 +635,11 @@ export async function POST(request: NextRequest) {
       ? body.session_token
       : crypto.randomUUID();
 
+  // §7 gate inputs — resolved before the stream so guards run before any spend.
+  const turnstileToken = typeof body.turnstileToken === 'string' ? body.turnstileToken : '';
+  const ip = clientIp(request);
+  const ipHash = hashIp(ip);
+
   const queries = buildQueries(name, category, what, who);
 
   const encoder = new TextEncoder();
@@ -628,6 +647,32 @@ export async function POST(request: NextRequest) {
     async start(controller) {
       const send = (obj: unknown) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(obj)}\n\n`));
       try {
+        // ── Pre-run gate (§7), BEFORE any search spends money ────────────────
+        // 1. Turnstile (§7.2) — fail-closed in prod (secret set), fail-open only
+        //    in dev when no secret is configured.
+        const ts = await verifyTurnstile(turnstileToken, ip);
+        if (!ts.ok) {
+          send({ type: 'error', message: 'Verification failed. Please try again.' });
+          controller.close();
+          return;
+        }
+        // 2. One free run per IP per 24h (§7.3).
+        if ((await ipRunInLast24h(ipHash)) === true) {
+          send({ type: 'rate_limited', scope: 'ip' });
+          controller.close();
+          return;
+        }
+        // 3. Monthly session ceiling (§7.5) — SAME at_capacity state as the
+        //    workspace spend cap. One handler, two triggers.
+        const monthly = await countSessionsThisMonth();
+        if (monthly !== null && monthly >= MONTHLY_CEILING) {
+          send({ type: 'at_capacity' });
+          controller.close();
+          return;
+        }
+        // Record the run now so the IP window holds even for concurrent runs.
+        await reserveSession(sessionToken, ipHash);
+
         send({ type: 'session', session_token: sessionToken });
 
         const call1Results: RawSearch[] = [];
@@ -691,6 +736,7 @@ export async function POST(request: NextRequest) {
           outputTokens,
           mirrorVerdict: synthesis.mirror.verdict,
           appearedInBuyerQuery: synthesis.absence.appeared,
+          ipHash,
         });
 
         send({
