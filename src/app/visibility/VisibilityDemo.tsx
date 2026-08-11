@@ -24,6 +24,10 @@ const PILLS: { key: string; label: string }[] = [
   { key: 'other', label: 'Service provider — something else' },
 ];
 
+// Pills where location is expected (fix B4a) — the placeholder invites a city.
+// Every other pill reads "Optional" and can be skipped without a decision.
+const LOCAL_PILLS = new Set(['local', 'real_estate', 'health']);
+
 // §1 running narration, keyed by the search kind the server streams.
 const NARRATION: Record<string, string> = {
   identity: 'Asking what AI thinks your business is…',
@@ -395,6 +399,26 @@ export default function VisibilityDemo() {
               </div>
             </div>
 
+            {/* Location follows the pill while that context is fresh (fix B4b). The
+                pill the visitor just tapped answers "are you location-based?" — so
+                the placeholder, not a static hint, sets the expectation: local
+                pills invite a city, everything else reads "Optional" and is skipped
+                without a decision. Always optional (a mobile/virtual practice must
+                never hit a wall on a lead magnet). */}
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="vd-location">
+                Where are you based?
+              </label>
+              <input
+                id="vd-location"
+                className={styles.input}
+                value={location}
+                maxLength={60}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder={LOCAL_PILLS.has(category) ? 'City or region' : 'Optional — city or region'}
+              />
+            </div>
+
             <div className={styles.field}>
               <label className={styles.label} htmlFor="vd-what">
                 What do you do? <span className={styles.count}>{what.length}/40</span>
@@ -407,20 +431,6 @@ export default function VisibilityDemo() {
                 Who do you serve? <span className={styles.count}>{who.length}/60</span>
               </label>
               <input id="vd-who" className={styles.input} value={who} maxLength={60} onChange={(e) => setWho(e.target.value)} placeholder="e-commerce brands" />
-            </div>
-
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="vd-location">
-                Where are you based? <span className={styles.hint}>— leave blank if you serve nationally</span>
-              </label>
-              <input
-                id="vd-location"
-                className={styles.input}
-                value={location}
-                maxLength={60}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Austin, TX"
-              />
             </div>
 
             {TURNSTILE_SITE_KEY && <div className={styles.turnstile} ref={turnstileRef} />}
