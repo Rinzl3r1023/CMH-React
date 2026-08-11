@@ -2,6 +2,7 @@ import {
   emailUsed,
   markGated,
   markKitSynced,
+  persistSubscriberId,
   subscribeDemoLead,
   supabaseConfigured,
 } from '@/lib/visibility-demo';
@@ -64,20 +65,24 @@ export async function POST(request: Request) {
   // (invalid/unknown) OR Supabase is unconfigured; only the invalid-token case is
   // an error — in dev (unconfigured) we let the gate open so the flow is testable.
   const gated = await markGated(sessionToken, email);
-  if (!gated && supabaseConfigured()) {
+  if (!gated.ok && supabaseConfigured()) {
     return Response.json({ ok: false, error: 'Session not found. Please re-run the check.' }, { status: 400 });
   }
 
-  // Lead capture to the separate demo form. Best-effort: a Kit hiccup must not
-  // cost the visitor the score they just unlocked — but the outcome IS recorded.
-  // On success we stamp kit_synced_at; on failure we log and leave it NULL, which
-  // makes "email set, kit_synced_at null" a recoverable backfill queue.
-  const kit = await subscribeDemoLead(email);
-  if (kit === 'ok') {
+  // Lead capture to the separate demo form (WRITE 1). Best-effort: a Kit hiccup
+  // must not cost the visitor the score they just unlocked — but the outcome IS
+  // recorded. Sends ai_business_name (known here), captures the subscriber id for
+  // write 2, and persists it. On success we stamp kit_synced_at; on failure we log
+  // and leave it NULL, which makes "email set, kit_synced_at null" a recoverable
+  // backfill queue.
+  const businessName = gated.subjectName;
+  const kit = await subscribeDemoLead(email, businessName ? { ai_business_name: businessName } : undefined);
+  if (kit.status === 'ok') {
+    if (kit.subscriberId) await persistSubscriberId(sessionToken, kit.subscriberId);
     await markKitSynced(sessionToken);
-  } else if (kit === 'failed') {
+  } else if (kit.status === 'failed') {
     console.error(`[visibility-demo] Kit sync failed for gated session ${sessionToken} (email captured, kit_synced_at left null for backfill)`);
   }
 
-  return Response.json({ ok: true, unlocked: true, kit });
+  return Response.json({ ok: true, unlocked: true, kit: kit.status });
 }

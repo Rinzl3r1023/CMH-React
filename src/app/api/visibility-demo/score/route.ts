@@ -5,6 +5,8 @@ import {
   estCostUsd,
   CapacityError,
   supabaseConfigured,
+  updateKitScoreFields,
+  markKitScoreSynced,
   type DemoSessionRow,
 } from '@/lib/visibility-demo';
 
@@ -402,6 +404,32 @@ export async function POST(request: Request) {
       outputTokens: totalOut,
       estCostUsd: totalEst,
     });
+
+    // WRITE 2 (Kit score fields) — best-effort. This runs ONLY on a FRESH score:
+    // the idempotent cached-replay path returned above, and any scoring failure
+    // throws to the catch below BEFORE this line, so a fabricated/absent number can
+    // never reach Kit. If write 1 never captured a subscriber_id, log and leave
+    // kit_score_synced_at null for the backfill queue — NO lookup-by-email fallback.
+    if (row.subscriber_id) {
+      const kit = await updateKitScoreFields(row.subscriber_id, {
+        ai_score: String(payload.score.total),
+        ai_score_clarity: String(payload.score.clarity),
+        ai_score_presence: String(payload.score.presence),
+        ai_appeared: row.appeared_in_buyer_query === true ? 'yes' : 'no',
+      });
+      if (kit === 'ok') {
+        await markKitScoreSynced(sessionToken);
+      } else if (kit === 'failed') {
+        console.error(
+          `[visibility-demo] Kit score write failed for session ${sessionToken} (score persisted, kit_score_synced_at left null for backfill)`,
+        );
+      }
+    } else {
+      console.error(
+        `[visibility-demo] no subscriber_id for session ${sessionToken} (write 1 didn't capture one) — leaving kit_score_synced_at null for backfill`,
+      );
+    }
+
     return Response.json({ ok: true, ...payload });
   } catch (err) {
     // Capacity → the shared "at capacity" state (book a call).

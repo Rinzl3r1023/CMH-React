@@ -168,40 +168,120 @@ export async function reserveSession(sessionToken: string, ipHash: string): Prom
  * Email gate (State 4): set email + gated_at on the existing session row. Returns
  * false when Supabase is unconfigured OR no row matched the token (invalid token).
  */
-export async function markGated(sessionToken: string, email: string): Promise<boolean> {
+// Returns { ok, subjectName }. `ok` is false when the token matches no row
+// (invalid/unknown) or Supabase is unconfigured. subjectName is pulled from the
+// representation this PATCH already returns, so write 1 gets ai_business_name
+// without a second query.
+export async function markGated(
+  sessionToken: string,
+  email: string,
+): Promise<{ ok: boolean; subjectName: string | null }> {
   const base = envTrim('SUPABASE_URL');
   const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
-  if (!base || !svc) return false;
+  if (!base || !svc) return { ok: false, subjectName: null };
   try {
     const res = await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
       method: 'PATCH',
       headers: { ...sbAuth(svc), 'content-type': 'application/json', prefer: 'return=representation' },
       body: JSON.stringify({ email, gated_at: new Date().toISOString() }),
     });
-    if (!res.ok) return false;
-    const rows = (await res.json()) as unknown[];
-    return Array.isArray(rows) && rows.length > 0; // no row = invalid/unknown token
+    if (!res.ok) return { ok: false, subjectName: null };
+    const rows = (await res.json()) as Array<{ subject_name?: string | null }>;
+    if (!Array.isArray(rows) || rows.length === 0) return { ok: false, subjectName: null }; // unknown token
+    return { ok: true, subjectName: typeof rows[0].subject_name === 'string' ? rows[0].subject_name : null };
   } catch {
-    return false;
+    return { ok: false, subjectName: null };
   }
 }
 
 // ── Kit (ConvertKit) — demo leads go to KIT_DEMO_FORM_ID, NOT the main form ───
 // Mirrors the /api/subscribe pattern (v3 form-subscribe; idempotent). Demo leads
 // must NOT pool with the main audience (§1) — hence the separate form.
-export async function subscribeDemoLead(email: string): Promise<'ok' | 'unconfigured' | 'failed'> {
+// Write 1: subscribe the lead to the demo form, optionally sending custom fields
+// (ai_business_name), and capture the Kit subscriber id from the response so
+// write 2 (the score PUT) needs no lookup. v3 form-subscribe returns
+// { subscription: { subscriber: { id } } }.
+export async function subscribeDemoLead(
+  email: string,
+  fields?: Record<string, string>,
+): Promise<{ status: 'ok' | 'unconfigured' | 'failed'; subscriberId: string | null }> {
   const apiKey = envTrim('KIT_API_KEY');
   const formId = envTrim('KIT_DEMO_FORM_ID');
-  if (!apiKey || !formId) return 'unconfigured';
+  if (!apiKey || !formId) return { status: 'unconfigured', subscriberId: null };
   try {
     const res = await fetch(`https://api.convertkit.com/v3/forms/${encodeURIComponent(formId)}/subscribe`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ api_key: apiKey, email }),
+      body: JSON.stringify({ api_key: apiKey, email, ...(fields ? { fields } : {}) }),
+    });
+    if (!res.ok) return { status: 'failed', subscriberId: null };
+    let subscriberId: string | null = null;
+    try {
+      const j = (await res.json()) as { subscription?: { subscriber?: { id?: unknown } } };
+      const id = j.subscription?.subscriber?.id;
+      if (typeof id === 'number' || typeof id === 'string') subscriberId = String(id);
+    } catch {
+      /* subscribed OK but body unparseable → id stays null (backfill handles it) */
+    }
+    return { status: 'ok', subscriberId };
+  } catch {
+    return { status: 'failed', subscriberId: null };
+  }
+}
+
+// Write 2: update the subscriber's score fields. PUT /v3/subscribers/{id} — note
+// this endpoint authenticates with api_SECRET, not api_key (KIT_API_SECRET, read
+// through envTrim like every other env). Best-effort; never blocks the score.
+export async function updateKitScoreFields(
+  subscriberId: string,
+  fields: Record<string, string>,
+): Promise<'ok' | 'unconfigured' | 'failed'> {
+  const apiSecret = envTrim('KIT_API_SECRET');
+  if (!apiSecret) return 'unconfigured';
+  try {
+    const res = await fetch(`https://api.convertkit.com/v3/subscribers/${encodeURIComponent(subscriberId)}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ api_secret: apiSecret, fields }),
     });
     return res.ok ? 'ok' : 'failed';
   } catch {
     return 'failed';
+  }
+}
+
+// Persist the Kit subscriber id onto the run row (best-effort). Enables write 2
+// with no lookup; a null id after a successful gate is the backfill signal.
+export async function persistSubscriberId(sessionToken: string, subscriberId: string): Promise<void> {
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
+  if (!base || !svc) return;
+  try {
+    await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
+      method: 'PATCH',
+      headers: { ...sbAuth(svc), 'content-type': 'application/json', prefer: 'return=minimal' },
+      body: JSON.stringify({ subscriber_id: subscriberId }),
+    });
+  } catch {
+    /* best-effort */
+  }
+}
+
+// Observability for write 2: stamp kit_score_synced_at on a successful score PUT.
+// Left null on failure so "gated + scored, kit_score_synced_at null" is a
+// recoverable backfill queue (mirrors kit_synced_at for write 1). Best-effort.
+export async function markKitScoreSynced(sessionToken: string): Promise<void> {
+  const base = envTrim('SUPABASE_URL');
+  const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
+  if (!base || !svc) return;
+  try {
+    await fetch(`${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}`, {
+      method: 'PATCH',
+      headers: { ...sbAuth(svc), 'content-type': 'application/json', prefer: 'return=minimal' },
+      body: JSON.stringify({ kit_score_synced_at: new Date().toISOString() }),
+    });
+  } catch {
+    /* best-effort — the null timestamp is the backfill signal */
   }
 }
 
@@ -266,6 +346,8 @@ export interface DemoSessionRow {
   output_tokens: number | null;
   est_cost_usd: number | string | null; // PostgREST may serialize numeric as string
   appeared_in_buyer_query: boolean | null; // code-anchored truth for the Call-2 invariant
+  subscriber_id: string | null; // Kit subscriber id, captured at the gate (write 1)
+  kit_score_synced_at: string | null; // write-2 stamp; null after a gated score = backfill
 }
 
 /** Fetch a session row by token for Call 2. null = not found / unconfigured. */
@@ -274,7 +356,7 @@ export async function getSession(sessionToken: string): Promise<DemoSessionRow |
   const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return null;
   const cols =
-    'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff,input_tokens,output_tokens,est_cost_usd,appeared_in_buyer_query';
+    'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff,input_tokens,output_tokens,est_cost_usd,appeared_in_buyer_query,subscriber_id,kit_score_synced_at';
   try {
     const res = await fetch(
       `${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}&select=${cols}&limit=1`,

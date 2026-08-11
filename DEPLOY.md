@@ -33,7 +33,8 @@ build, then redeploy.
 
 | Var | Scope | Used by |
 |---|---|---|
-| `KIT_API_KEY` | server | Existing Kit key; demo reuses it with `KIT_DEMO_FORM_ID`. |
+| `KIT_API_KEY` | server | Existing Kit key; demo reuses it for the form subscribe + `ai_business_name` (Kit write 1). |
+| `KIT_API_SECRET` | server (secret) | Kit **secret** key. `PUT /v3/subscribers/{id}` (score write 2 — `ai_score*`, `ai_appeared`) authenticates with `api_secret`, NOT `api_key`. Read through `envTrim`. Missing → write 2 skips, `kit_score_synced_at` left null (backfill). |
 | `NEXT_PUBLIC_CALENDLY_URL` | public | The `at_capacity` CTA (book a call — a human conversation salvages a lead that got nothing). |
 
 If a var is missing, that path **degrades gracefully** (Turnstile fail-opens with
@@ -44,17 +45,31 @@ abuse controls. Verify all 8 are set before launch.
 
 ## 2. Migrations (apply order)
 
-All four are **already applied** to `zglwfshbrrkjrkhbarfx` via the Supabase MCP.
+All are **already applied** to `zglwfshbrrkjrkhbarfx` via the Supabase MCP.
 Listed here for the record and for rebuilding another environment — apply in this
 order:
 
 1. `create_demo_sessions` — base table (29 cols), RLS on, no policies, 3 indexes.
 2. `demo_sessions_guards` — `session_token` NOT NULL; `site_id` DEFAULT `'demo-visibility'`.
-3. `demo_sessions_kit_synced_at` — `kit_synced_at timestamptz` (Kit-sync observability / backfill queue).
+3. `demo_sessions_kit_synced_at` — `kit_synced_at timestamptz` (Kit write-1 observability / backfill queue).
 4. `demo_sessions_payoff` — `payoff jsonb` (full Call-2 output for idempotent replay).
+5. `demo_sessions_kit_subscriber_fields` — `subscriber_id text` (Kit id from write 1) + `kit_score_synced_at timestamptz` (Kit write-2 observability / backfill queue).
 
 RLS is on with **no policies** → all anon/authenticated access denied; only the
 server routes (service role) read/write. Do not add policies.
+
+**Kit backfill queues** (best-effort writes leave a null timestamp on failure, never silent loss):
+
+```sql
+-- Write 1 failed (lead not on the Kit form):
+select session_token, email from demo_sessions
+where email is not null and kit_synced_at is null;
+
+-- Write 2 failed (scored, but score fields never reached Kit):
+select session_token, email, subscriber_id, score_clarity, score_presence
+from demo_sessions
+where score_clarity is not null and gated_at is not null and kit_score_synced_at is null;
+```
 
 ---
 
@@ -110,7 +125,8 @@ Exercise each of these on the deployed site, not just in a green build:
 | Live search + **mirror/absence** synthesis, incl. the §6 **appears** branch | `ANTHROPIC_API_KEY_DEMO` | unset → deterministic stub returns the absence branch only |
 | Call-2 **rubric scoring** + JSON parse of live model output | `ANTHROPIC_API_KEY_DEMO` | unset → stub payoff, real rubric never runs |
 | **Supabase** persistence, IP-24h + ceiling counts, `markGated` PATCH | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | unset → checks return null / writes no-op |
-| **Kit** demo subscribe + `kit_synced_at` | `KIT_API_KEY` / `KIT_DEMO_FORM_ID` | unset → subscribe skipped |
+| **Kit write 1** — form subscribe + `ai_business_name`, capture `subscriber_id`, `kit_synced_at` | `KIT_API_KEY` / `KIT_DEMO_FORM_ID` | unset → subscribe skipped |
+| **Kit write 2** — score PUT (`ai_score`, `ai_score_clarity`, `ai_score_presence`, `ai_appeared`) + `kit_score_synced_at`, FRESH score only | `KIT_API_SECRET` (+ a captured `subscriber_id`) | unset → PUT skipped; runs only after a real gated score, never on replay or a scoring failure |
 
 The §3 launch-gate smoke test is what actually exercises the live model paths;
 the widget + a real submit exercise Turnstile + Supabase. **Run a full flow on the
