@@ -343,6 +343,7 @@ export function classifyFailure(status: number, errType: string, errMsg: string)
 interface ClaudeTextResponse {
   content?: Array<{ type: string; text?: string }>;
   usage?: { input_tokens?: number; output_tokens?: number };
+  stop_reason?: string | null;
 }
 
 export async function callClaudeText(
@@ -351,9 +352,19 @@ export async function callClaudeText(
   // Optional structured-outputs config, e.g. { format: { type: 'json_schema',
   // schema } } — forces schema-valid JSON so the response can't be malformed.
   outputConfig?: unknown,
-): Promise<{ text: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
+): Promise<{
+  text: string;
+  usage: { input_tokens: number; output_tokens: number };
+  stubbed: boolean;
+  // Diagnostics: stop_reason (e.g. 'max_tokens' when the JSON was truncated) and
+  // the response content block types (to catch a structured-output block that
+  // isn't 'text'). Both help distinguish truncation from a shape mismatch.
+  stopReason: string | null;
+  contentTypes: string[];
+}> {
   const key = envTrim(ANTHROPIC_KEY_ENV);
-  if (!key) return { text: '', usage: { input_tokens: 0, output_tokens: 0 }, stubbed: true };
+  if (!key)
+    return { text: '', usage: { input_tokens: 0, output_tokens: 0 }, stubbed: true, stopReason: null, contentTypes: [] };
 
   const res = await fetch(ANTHROPIC_MESSAGES_URL, {
     method: 'POST',
@@ -392,5 +403,7 @@ export async function callClaudeText(
     text,
     usage: { input_tokens: data.usage?.input_tokens ?? 0, output_tokens: data.usage?.output_tokens ?? 0 },
     stubbed: false,
+    stopReason: data.stop_reason ?? null,
+    contentTypes: (data.content ?? []).map((b) => b.type),
   };
 }
