@@ -62,8 +62,8 @@ const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || '#';
 
 declare global {
   interface Window {
+    onTurnstileLoad?: () => void;
     turnstile?: {
-      ready?: (cb: () => void) => void;
       render: (el: HTMLElement, opts: { sitekey: string; callback: (t: string) => void; 'error-callback'?: () => void; theme?: string }) => string;
       reset: (id?: string) => void;
     };
@@ -129,14 +129,12 @@ export default function VisibilityDemo() {
       });
     };
 
-    // Cloudflare's documented requirement: call render() inside turnstile.ready(),
-    // NOT directly on script load. `window.turnstile` can exist before the API is
-    // ready, in which case a bare render() silently no-ops — container present, no
-    // widget, no token (the exact prod symptom). ready() defers until it can run.
-    const ready = () => {
-      if (typeof window.turnstile?.ready === 'function') window.turnstile.ready(doRender);
-      else doRender();
-    };
+    // Explicit-render + onload path. turnstile.ready() is INCOMPATIBLE with an
+    // async/defer script tag (the API rejects it), and a blocking script on a
+    // paid-traffic landing page is the wrong trade — so keep async/defer and load
+    // `api.js?render=explicit&onload=onTurnstileLoad`. The global MUST be defined
+    // BEFORE the tag is injected so the callback exists when the API fires it.
+    window.onTurnstileLoad = doRender;
 
     // Never-dead-end: if no token has been produced within the window (script
     // blocked, failed to load, or silently no-op'd), surface an honest failure
@@ -147,13 +145,16 @@ export default function VisibilityDemo() {
     }, 8000);
 
     if (window.turnstile) {
-      ready();
-    } else {
+      // API already present (e.g. client-side nav back to the form) — render now.
+      doRender();
+    } else if (!document.querySelector('script[data-turnstile]')) {
+      // Inject EXACTLY once: the data-turnstile marker guards against a second
+      // tag on re-render/remount (the query survives new component instances).
       const s = document.createElement('script');
-      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad';
       s.async = true;
       s.defer = true;
-      s.onload = ready;
+      s.setAttribute('data-turnstile', '');
       s.onerror = () => setTurnstileFailed(true);
       document.head.appendChild(s);
     }
