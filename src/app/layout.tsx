@@ -5,6 +5,7 @@ import './globals.css';
 import ClientEnhancer from '@/components/ClientEnhancer';
 import BookCallController from '@/components/BookCallController';
 import PromoBar from '@/components/PromoBar';
+import SmoothAnchors from '@/components/SmoothAnchors';
 import Analytics from '@/components/Analytics';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClientEnhancer />
         <BookCallController />
         <PromoBar />
+        <SmoothAnchors />
         <Analytics />
       </body>
     </html>

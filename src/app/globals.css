@@ -9,7 +9,11 @@
 
 * { box-sizing:border-box; }
 
-html { scroll-behavior:smooth; }
+/* Scroll-behavior is intentionally NOT smooth globally. A global `html{scroll-behavior:smooth}`
+   animates the browser/Next scroll-to-top on load and route changes, which reads as
+   "the page opens partway down, then scrolls up." Smooth is kept ONLY for in-page
+   anchor jumps (#capture/#read/#watch/#contact), applied per-click by the
+   SmoothAnchors handler — so load/nav corrections stay instant. */
 
 body {
   margin:0; background:#05050A; color:#EDEAE4; font-family:'Manrope','Manrope Fallback',Arial,sans-serif;
