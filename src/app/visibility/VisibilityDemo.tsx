@@ -41,6 +41,7 @@ type Phase = 'form' | 'running' | 'reveal' | 'gate' | 'scoring' | 'score' | 'at_
 interface Mirror {
   verdict?: string;
   body: string;
+  accurate: boolean; // code signal (C1): ✅ accurate vs ⚠️ stale/colliding/wrong
 }
 interface Absence {
   appeared: boolean;
@@ -87,6 +88,10 @@ export default function VisibilityDemo() {
   const [who, setWho] = useState('');
   const [location, setLocation] = useState('');
   const [formError, setFormError] = useState('');
+  // Re-entry guards (C2): a double-click must never fire a duplicate run — that
+  // one costs real money (search fees + a Call), not just a conversion.
+  const runningRef = useRef(false);
+  const gatingRef = useRef(false);
 
   // Turnstile.
   const [turnstileToken, setTurnstileToken] = useState('');
@@ -191,6 +196,10 @@ export default function VisibilityDemo() {
       setFormError('Please complete the verification.');
       return;
     }
+    // Double-click guard (C2): a second click in the same tick would fire a second
+    // paid run before React unmounts the form. The ref blocks it synchronously.
+    if (runningRef.current) return;
+    runningRef.current = true;
 
     setPhase('running');
     setActiveSteps({});
@@ -250,7 +259,7 @@ export default function VisibilityDemo() {
         if (typeof evt.kind === 'string') setActiveSteps((s) => ({ ...s, [evt.kind as string]: 'done' }));
         break;
       case 'mirror':
-        setMirror({ verdict: evt.verdict as string | undefined, body: String(evt.body ?? '') });
+        setMirror({ verdict: evt.verdict as string | undefined, body: String(evt.body ?? ''), accurate: evt.accurate === true });
         setPhase('reveal');
         break;
       case 'absence':
@@ -293,6 +302,10 @@ export default function VisibilityDemo() {
       setGateError('Please enter a valid email.');
       return;
     }
+    // Double-click guard (C2): Call 2 spends tokens; a duplicate submit before the
+    // first persists would double-charge. Block re-entry synchronously.
+    if (gatingRef.current) return;
+    gatingRef.current = true;
     setGateBusy(true);
     try {
       const g = await fetch('/api/visibility-demo/gate', {
@@ -304,6 +317,7 @@ export default function VisibilityDemo() {
       if (!g.ok || !gj.ok) {
         setGateError(gj.error || 'Could not unlock. Please try again.');
         setGateBusy(false);
+        gatingRef.current = false; // allow a genuine retry
         return;
       }
       setPhase('scoring');
@@ -330,6 +344,7 @@ export default function VisibilityDemo() {
     } catch {
       setGateError('Could not unlock. Please try again.');
       setGateBusy(false);
+      gatingRef.current = false; // allow a genuine retry
     }
   }
 
@@ -354,7 +369,15 @@ export default function VisibilityDemo() {
                 Claim 50% off your first month
               </a>
             ) : (
-              <button className={styles.buttonGhost} style={{ width: 'auto', padding: '0.9rem 1.6rem' }} onClick={() => setPhase('form')}>
+              <button
+                className={styles.buttonGhost}
+                style={{ width: 'auto', padding: '0.9rem 1.6rem' }}
+                onClick={() => {
+                  runningRef.current = false; // allow a fresh run after an error
+                  gatingRef.current = false;
+                  setPhase('form');
+                }}
+              >
                 Try again
               </button>
             )}
@@ -450,6 +473,8 @@ export default function VisibilityDemo() {
             <button className={styles.button} type="submit">
               Check my visibility
             </button>
+            {/* Pre-click time expectation (C2) — under-promise; early feels fast. */}
+            <p className={styles.timeHint}>Takes about 30 seconds — we run live searches.</p>
             {formError && <p className={styles.error}>{formError}</p>}
           </form>
         )}
@@ -480,16 +505,28 @@ export default function VisibilityDemo() {
           <div>
             <p className={styles.eyebrow}>What AI says about {name || 'you'}</p>
 
+            {/* Section 1 — label follows the finding (C1): ✅ accurate / ⚠️ not. */}
             {mirror && (
               <div className={styles.card}>
-                <p className={styles.cardLabel}>The mirror</p>
+                <p className={styles.cardLabel}>
+                  <span className={styles.findingIcon} aria-hidden="true">
+                    {mirror.accurate ? '✅' : '⚠️'}
+                  </span>
+                  What AI says about you
+                </p>
                 <p className={styles.cardBody}>{mirror.body}</p>
               </div>
             )}
 
+            {/* Section 2 — ✅ they appear / ❌ absent (C1). */}
             {absence && (
               <div className={styles.card}>
-                <p className={styles.cardLabel}>{absence.appeared ? 'Where you show up' : 'The absence'}</p>
+                <p className={styles.cardLabel}>
+                  <span className={styles.findingIcon} aria-hidden="true">
+                    {absence.appeared ? '✅' : '❌'}
+                  </span>
+                  When your buyers search
+                </p>
                 {absence.query && <p className={styles.queryLine}>&ldquo;{absence.query}&rdquo;</p>}
                 <p className={styles.cardBody}>{absence.body}</p>
                 {absence.recommended.length > 0 && (
@@ -527,8 +564,18 @@ export default function VisibilityDemo() {
                   />
                 </div>
                 <button className={styles.button} type="submit" disabled={gateBusy}>
-                  {phase === 'scoring' ? 'Building your score…' : 'Unlock my score'}
+                  {phase === 'scoring' ? (
+                    <span className={styles.btnBusy}>
+                      <span className={styles.btnSpinner} aria-hidden="true" />
+                      Scoring your visibility…
+                    </span>
+                  ) : (
+                    'Unlock my score'
+                  )}
                 </button>
+                {/* Pre-click time expectation (C2). Silence at this click = the most
+                    expensive abandonment in the funnel; the spinner above kills it. */}
+                {phase !== 'scoring' && <p className={styles.timeHint}>Takes a few seconds.</p>}
                 {gateError && <p className={styles.error}>{gateError}</p>}
               </form>
             )}
@@ -557,6 +604,21 @@ export default function VisibilityDemo() {
                     <li key={i}>{f}</li>
                   ))}
                 </ol>
+              </div>
+            )}
+
+            {/* "What this means" (C3) — a RECEIPT, not a prediction. Variant chosen
+                by the code-anchored appeared_in_buyer_query signal, never the model.
+                HARD CONSTRAINT: no comparative/percentile claim — there's no
+                benchmark yet, and that clause is the first thing a skeptic breaks. */}
+            {absence && (
+              <div className={styles.meaning}>
+                <p className={styles.meaningLabel}>What this means</p>
+                <p className={styles.meaningBody}>
+                  {absence.appeared
+                    ? "When someone asks AI for a recommendation in your category, you're in the set it draws from. That's the position most businesses in your category haven't reached yet."
+                    : "When someone asks AI for a recommendation in your category, it pulls from sources like the ones above. You weren't in them. That doesn't mean AI has never heard of you — it means you're not in the set it draws from when a buyer is deciding."}
+                </p>
               </div>
             )}
 

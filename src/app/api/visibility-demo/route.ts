@@ -321,7 +321,9 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
 // the evidence supports.
 
 interface Synthesis {
-  mirror: { verdict: string; body: string };
+  // `accurate` (fix C1) is a CODE signal, not model output: whether AI's identity
+  // results point at the subject's own domain/name. Drives the ✅/⚠️ on State 2.
+  mirror: { verdict: string; body: string; accurate: boolean };
   absence: { appeared: boolean; query: string; recommended: string[]; body: string };
   usage: { input_tokens: number; output_tokens: number };
 }
@@ -341,12 +343,12 @@ interface WebResult {
   url?: string;
 }
 
-// Flatten the buyer-intent search's result blocks into {title,url} for matching.
-function buyerIntentResults(call1Results: RawSearch[]): WebResult[] {
-  const buyer = call1Results.find((r) => r.kind === 'buyer_intent');
-  if (!buyer) return [];
+// Flatten a given search's result blocks into {title,url} for matching.
+function resultsOfKind(call1Results: RawSearch[], kind: QueryKind): WebResult[] {
+  const r = call1Results.find((x) => x.kind === kind);
+  if (!r) return [];
   const out: WebResult[] = [];
-  for (const block of buyer.results) {
+  for (const block of r.results) {
     if (block && typeof block === 'object') {
       const b = block as { title?: unknown; url?: unknown };
       out.push({
@@ -408,9 +410,15 @@ async function synthesizeCall1(
   call1Results: RawSearch[],
 ): Promise<Synthesis> {
   const subjectHost = extractHost(subject.url);
-  const signal = appearanceSignal(buyerIntentResults(call1Results), subject.name, subjectHost);
+  const signal = appearanceSignal(resultsOfKind(call1Results, 'buyer_intent'), subject.name, subjectHost);
   // Bias against a false absence: any code signal of appearance flips the default.
   const codeSuggestsAppeared = signal.domainMatch || signal.nameMatch;
+
+  // fix C1: mirror accuracy from the IDENTITY results — if AI's "what is X?" points
+  // at the subject's own domain/name, it identifies them correctly (✅); otherwise
+  // it's stale/colliding/wrong (⚠️). Code-anchored, no model output.
+  const idSignal = appearanceSignal(resultsOfKind(call1Results, 'identity'), subject.name, subjectHost);
+  const accurate = idSignal.domainMatch || idSignal.nameMatch;
 
   const key = envTrim(ANTHROPIC_KEY_ENV);
 
@@ -424,6 +432,7 @@ async function synthesizeCall1(
         mirror: {
           verdict: 'stub',
           body: `[stub] Mirror for ${subject.name}. Run with a live key for the real reading.`,
+          accurate,
         },
         absence: {
           appeared: true,
@@ -438,6 +447,7 @@ async function synthesizeCall1(
       mirror: {
         verdict: 'stub',
         body: `[stub] Mirror for ${subject.name}. Run with a live key for the real reading.`,
+        accurate,
       },
       absence: {
         appeared: false,
@@ -555,7 +565,7 @@ async function synthesizeCall1(
   }
 
   return {
-    mirror: { verdict: mirrorVerdict, body: mirrorBody },
+    mirror: { verdict: mirrorVerdict, body: mirrorBody, accurate },
     absence: { appeared, query: buyerQuery, recommended, body: absenceBody },
     usage,
   };
@@ -681,7 +691,7 @@ export async function POST(request: NextRequest) {
         outputTokens += synthesis.usage.output_tokens;
 
         // MIRROR (State 2) — who AI thinks they are, stale/wrong/collision said plainly.
-        send({ type: 'mirror', verdict: synthesis.mirror.verdict, body: synthesis.mirror.body });
+        send({ type: 'mirror', verdict: synthesis.mirror.verdict, body: synthesis.mirror.body, accurate: synthesis.mirror.accurate });
         // ABSENCE (State 3) — §6 honesty branch already resolved inside synthesis.
         send({
           type: 'absence',
