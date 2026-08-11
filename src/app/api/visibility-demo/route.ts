@@ -813,6 +813,18 @@ export async function POST(request: NextRequest) {
 
   const queries = buildQueries(name, what, who, serviceArea, location);
 
+  // Query-provenance log (permanent): the composed buyer-intent query beside the
+  // raw inputs it was built from. The reveal quotes this query back to the visitor
+  // as "when your buyers search", so this line proves — per run — that it's a
+  // verbatim composition of what they typed, not a silent rewrite. buyerIntentQuery
+  // interpolates [what]/[who]/[location] directly (no noun-map/casing), so raw and
+  // composed always line up; if they ever diverge, this is where it shows.
+  console.log(
+    `[visibility-query] what=${JSON.stringify(what)} who=${JSON.stringify(who)} ` +
+      `serviceArea=${JSON.stringify(serviceArea)} location=${JSON.stringify(location)} ` +
+      `composed_buyer_intent=${JSON.stringify(buyerIntentQuery(what, who, serviceArea, location))}`,
+  );
+
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
