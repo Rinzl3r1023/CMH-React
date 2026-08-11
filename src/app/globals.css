@@ -72,7 +72,12 @@ a:hover { color:#FFD79A; }
 
 input::placeholder { color:#8A8378; }
 input:focus { outline:2px solid #F0A93C !important; outline-offset:-2px !important; }
-form:focus-within { border-color:#F0A93C !important; box-shadow:0 0 0 1px rgba(240,169,60,.4), 0 0 44px -6px rgba(240,169,60,.75) !important; }
+/* :not([data-no-global-glow]) lets a form OPT OUT of the site-wide focus glow.
+   The /visibility demo forms carry that attribute and style their own softer glow
+   in their CSS module — this way the global rule can't MATCH them at all, so the
+   demo's glow wins regardless of stylesheet load order (an !important-vs-!important
+   fight was order-dependent and lost in the production bundle). */
+form:not([data-no-global-glow]):focus-within { border-color:#F0A93C !important; box-shadow:0 0 0 1px rgba(240,169,60,.4), 0 0 44px -6px rgba(240,169,60,.75) !important; }
 a:focus-visible, button:focus-visible { outline:2px solid #F0A93C; outline-offset:3px; }
 
 .node { transition:border-color .7s ease, box-shadow .7s ease, color .7s ease; }
