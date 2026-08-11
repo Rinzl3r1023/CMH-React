@@ -58,6 +58,7 @@ interface Payoff {
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 const COMMUNITY_URL = process.env.NEXT_PUBLIC_COMMUNITY_URL || '#';
+const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || '#';
 
 declare global {
   interface Window {
@@ -101,7 +102,7 @@ export default function VisibilityDemo() {
 
   // Terminal.
   const [terminalMsg, setTerminalMsg] = useState('');
-  const [terminalCta, setTerminalCta] = useState<'community' | null>(null);
+  const [terminalCta, setTerminalCta] = useState<'community' | 'calendly' | null>(null);
 
   // Load + render Turnstile once, only when a site key is configured.
   useEffect(() => {
@@ -128,7 +129,7 @@ export default function VisibilityDemo() {
     document.head.appendChild(s);
   }, []);
 
-  function toTerminal(kind: 'at_capacity' | 'rate_limited' | 'error', msg: string, cta: 'community' | null) {
+  function toTerminal(kind: 'at_capacity' | 'rate_limited' | 'error', msg: string, cta: 'community' | 'calendly' | null) {
     setTerminalMsg(msg);
     setTerminalCta(cta);
     setPhase(kind);
@@ -225,7 +226,11 @@ export default function VisibilityDemo() {
         setPhase('gate');
         break;
       case 'at_capacity':
-        toTerminal('at_capacity', "We're at capacity right now. The full framework is open, though.", 'community');
+        toTerminal(
+          'at_capacity',
+          "We're at capacity right now. Rather than leave you with nothing — grab a slot and I'll walk you through your visibility personally.",
+          'calendly',
+        );
         break;
       case 'rate_limited':
         toTerminal(
@@ -269,7 +274,11 @@ export default function VisibilityDemo() {
       });
       const sj = (await s.json()) as (Payoff & { ok?: boolean; at_capacity?: boolean }) | { ok: false; at_capacity?: boolean };
       if (s.status === 503 || (sj as { at_capacity?: boolean }).at_capacity) {
-        toTerminal('at_capacity', "We're at capacity right now. The full framework is open, though.", 'community');
+        toTerminal(
+          'at_capacity',
+          "We're at capacity right now. Rather than leave you with nothing — grab a slot and I'll walk you through your visibility personally.",
+          'calendly',
+        );
         return;
       }
       if (!s.ok || !(sj as { score?: unknown }).score) {
@@ -292,7 +301,14 @@ export default function VisibilityDemo() {
         {(phase === 'at_capacity' || phase === 'rate_limited' || phase === 'error') && (
           <div className={styles.terminal}>
             <p className={styles.terminalMsg}>{terminalMsg}</p>
-            {terminalCta === 'community' ? (
+            {terminalCta === 'calendly' ? (
+              // at_capacity: they got nothing — a human conversation salvages the
+              // lead. A $199 ask here would read as tone-deaf (§ at_capacity ≠ rate_limited).
+              <a className={styles.button} href={CALENDLY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
+                Grab a slot
+              </a>
+            ) : terminalCta === 'community' ? (
+              // rate_limited: they already got the value — community is the next step.
               <a className={styles.button} href={COMMUNITY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
                 See the full framework
               </a>
