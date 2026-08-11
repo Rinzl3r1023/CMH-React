@@ -90,3 +90,28 @@ set, run these against the deployed demo:
 > SPARC buyers — this is a CMH marketing page, not a SPARC deployment, so a row
 > there would be a false record (and a new bucket would pollute the enum for a
 > one-off). Git history is the record. Same call applies to Kim's repurposing demo.
+
+---
+
+## 5. Paths that are UNTESTED until production (verify these first, every deploy)
+
+Every external dependency **stubs out when its env var is absent**, which is what
+lets the demo build and run keyless in dev. The flip side: **anything gated on a
+production-only env var runs for the first time in production.** The keyless build
+passing proves nothing about these paths. The Turnstile widget bug (site key only
+present in prod, so the render path never executed locally) is exactly this class.
+
+Exercise each of these on the deployed site, not just in a green build:
+
+| Path | Gated on (prod-only) | Never runs in dev because… |
+|---|---|---|
+| Turnstile **widget render** + token | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | no site key → widget branch is skipped entirely |
+| Turnstile **server verify** | `TURNSTILE_SECRET_KEY` | unset → fail-open (verification skipped) |
+| Live search + **mirror/absence** synthesis, incl. the §6 **appears** branch | `ANTHROPIC_API_KEY_DEMO` | unset → deterministic stub returns the absence branch only |
+| Call-2 **rubric scoring** + JSON parse of live model output | `ANTHROPIC_API_KEY_DEMO` | unset → stub payoff, real rubric never runs |
+| **Supabase** persistence, IP-24h + ceiling counts, `markGated` PATCH | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | unset → checks return null / writes no-op |
+| **Kit** demo subscribe + `kit_synced_at` | `KIT_API_KEY` / `KIT_DEMO_FORM_ID` | unset → subscribe skipped |
+
+The §3 launch-gate smoke test is what actually exercises the live model paths;
+the widget + a real submit exercise Turnstile + Supabase. **Run a full flow on the
+deployed URL after every deploy — a passing build is not coverage for any row above.**

@@ -63,6 +63,7 @@ const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || '#';
 declare global {
   interface Window {
     turnstile?: {
+      ready?: (cb: () => void) => void;
       render: (el: HTMLElement, opts: { sitekey: string; callback: (t: string) => void; 'error-callback'?: () => void; theme?: string }) => string;
       reset: (id?: string) => void;
     };
@@ -82,8 +83,10 @@ export default function VisibilityDemo() {
 
   // Turnstile.
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileFailed, setTurnstileFailed] = useState(false);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const turnstileRendered = useRef(false);
+  const gotToken = useRef(false);
 
   // Run outputs.
   const [sessionToken, setSessionToken] = useState('');
@@ -107,26 +110,55 @@ export default function VisibilityDemo() {
   // Load + render Turnstile once, only when a site key is configured.
   useEffect(() => {
     if (!TURNSTILE_SITE_KEY || turnstileRendered.current) return;
-    const render = () => {
+
+    const doRender = () => {
       if (turnstileRendered.current || !turnstileRef.current || !window.turnstile) return;
       turnstileRendered.current = true;
       window.turnstile.render(turnstileRef.current, {
         sitekey: TURNSTILE_SITE_KEY,
         theme: 'dark',
-        callback: (t) => setTurnstileToken(t),
-        'error-callback': () => setTurnstileToken(''),
+        callback: (t) => {
+          gotToken.current = true;
+          setTurnstileToken(t);
+          setTurnstileFailed(false);
+        },
+        'error-callback': () => {
+          setTurnstileToken('');
+          setTurnstileFailed(true);
+        },
       });
     };
+
+    // Cloudflare's documented requirement: call render() inside turnstile.ready(),
+    // NOT directly on script load. `window.turnstile` can exist before the API is
+    // ready, in which case a bare render() silently no-ops — container present, no
+    // widget, no token (the exact prod symptom). ready() defers until it can run.
+    const ready = () => {
+      if (typeof window.turnstile?.ready === 'function') window.turnstile.ready(doRender);
+      else doRender();
+    };
+
+    // Never-dead-end: if no token has been produced within the window (script
+    // blocked, failed to load, or silently no-op'd), surface an honest failure
+    // state instead of a working-looking page with an unclickable button. A late
+    // token still clears the flag via the callback above.
+    const failTimer = setTimeout(() => {
+      if (!gotToken.current) setTurnstileFailed(true);
+    }, 8000);
+
     if (window.turnstile) {
-      render();
-      return;
+      ready();
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      s.async = true;
+      s.defer = true;
+      s.onload = ready;
+      s.onerror = () => setTurnstileFailed(true);
+      document.head.appendChild(s);
     }
-    const s = document.createElement('script');
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-    s.async = true;
-    s.defer = true;
-    s.onload = render;
-    document.head.appendChild(s);
+
+    return () => clearTimeout(failTimer);
   }, []);
 
   function toTerminal(kind: 'at_capacity' | 'rate_limited' | 'error', msg: string, cta: 'community' | 'calendly' | null) {
@@ -374,6 +406,18 @@ export default function VisibilityDemo() {
             </div>
 
             {TURNSTILE_SITE_KEY && <div className={styles.turnstile} ref={turnstileRef} />}
+
+            {/* Never-dead-end: a missing/blocked widget must not leave a working-
+                looking form with an unclickable button. Offer an honest out. */}
+            {turnstileFailed && (
+              <p className={styles.error}>
+                Verification didn&rsquo;t load. Refresh to try again, or{' '}
+                <a href={CALENDLY_URL} style={{ color: 'var(--vd-amber)', textDecoration: 'underline' }}>
+                  book a call
+                </a>{' '}
+                and we&rsquo;ll run your check with you.
+              </p>
+            )}
 
             <button className={styles.button} type="submit">
               Check my visibility
