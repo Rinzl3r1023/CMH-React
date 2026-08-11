@@ -269,6 +269,10 @@ interface PersistInput {
   mirrorVerdict: string;
   appearedInBuyerQuery: boolean;
   ipHash: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmContent: string;
 }
 
 async function persistCall1(p: PersistInput): Promise<boolean> {
@@ -303,6 +307,10 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
       // most valuable analytics field, §8) come out of the synthesis step.
       mirror_verdict: p.mirrorVerdict || null,
       appeared_in_buyer_query: p.appearedInBuyerQuery,
+      utm_source: p.utmSource || null,
+      utm_medium: p.utmMedium || null,
+      utm_campaign: p.utmCampaign || null,
+      utm_content: p.utmContent || null,
       map_generated_at: new Date().toISOString(),
     }),
   });
@@ -791,6 +799,13 @@ export async function POST(request: NextRequest) {
   // Service area drives the query shape (online → "for [who]", else "in [location]").
   const serviceArea = typeof body.serviceArea === 'string' ? body.serviceArea : '';
   const location = clean(body.location, CAP_LOCATION);
+  // Attribution (promo bar + ad campaigns). URL-supplied, so sanitized like every
+  // other input. utm_content carries the originating page slug — which content
+  // drives demo runs. Columns already exist on demo_sessions.
+  const utmSource = clean(body.utm_source, 100);
+  const utmMedium = clean(body.utm_medium, 100);
+  const utmCampaign = clean(body.utm_campaign, 100);
+  const utmContent = clean(body.utm_content, 200);
 
   if (!name) {
     return new Response(JSON.stringify({ ok: false, error: 'A business or brand name is required.' }), {
@@ -943,6 +958,10 @@ export async function POST(request: NextRequest) {
           mirrorVerdict: synthesis.mirror.verdict,
           appearedInBuyerQuery: synthesis.absence.appeared,
           ipHash,
+          utmSource,
+          utmMedium,
+          utmCampaign,
+          utmContent,
         });
 
         send({

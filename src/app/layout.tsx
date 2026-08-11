@@ -4,6 +4,7 @@ import './fonts.css';
 import './globals.css';
 import ClientEnhancer from '@/components/ClientEnhancer';
 import BookCallController from '@/components/BookCallController';
+import PromoBar from '@/components/PromoBar';
 import Analytics from '@/components/Analytics';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <ClientEnhancer />
         <BookCallController />
+        <PromoBar />
         <Analytics />
       </body>
     </html>
