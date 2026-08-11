@@ -42,13 +42,16 @@ const LOCATION_FIELD: Record<string, { label: string; placeholder: string }> = {
   country: { label: 'Country', placeholder: 'United Kingdom' },
 };
 
-// §1 running narration, keyed by the search kind the server streams.
+// §1 running narration. Keyed to REAL work: two searches then the synthesis.
+// The comparative search was cut (fix B1) — its step used to hang forever right
+// before the payoff. Step 3 is now the synthesis, which actually completes: it
+// goes active on `synthesis_started` and resolves when the reveal streams in.
 const NARRATION: Record<string, string> = {
   identity: 'Asking what AI thinks your business is…',
   buyer_intent: 'Checking what comes up when someone searches for what you sell…',
-  comparative: "Comparing you to who's showing up instead…",
+  synthesis: 'Reading what it found…',
 };
-const STEP_ORDER = ['identity', 'buyer_intent', 'comparative'];
+const STEP_ORDER = ['identity', 'buyer_intent', 'synthesis'];
 
 type Phase = 'form' | 'running' | 'reveal' | 'gate' | 'scoring' | 'score' | 'at_capacity' | 'rate_limited' | 'error';
 
@@ -200,6 +203,13 @@ export default function VisibilityDemo() {
     return () => clearTimeout(failTimer);
   }, []);
 
+  // Scroll to the top when the score renders. The gate sits at the bottom of the
+  // page, so without this the paid payoff lands scrolled to the wall/CTA — the
+  // visitor's own number should be the first thing they see.
+  useEffect(() => {
+    if (phase === 'score') window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [phase]);
+
   function toTerminal(kind: 'at_capacity' | 'rate_limited' | 'error', msg: string, cta: 'community' | 'calendly' | null) {
     setTerminalMsg(msg);
     setTerminalCta(cta);
@@ -285,7 +295,15 @@ export default function VisibilityDemo() {
       case 'search_complete':
         if (typeof evt.kind === 'string') setActiveSteps((s) => ({ ...s, [evt.kind as string]: 'done' }));
         break;
+      case 'synthesis_started':
+        // The searches are done; the synthesis (longest single wait) is now in
+        // flight. Its step spins here and resolves when the reveal streams in.
+        setActiveSteps((s) => ({ ...s, synthesis: 'active' }));
+        break;
       case 'mirror':
+        // Synthesis returned → mark its step done before the reveal replaces the
+        // running view, so the step never hangs.
+        setActiveSteps((s) => ({ ...s, synthesis: 'done' }));
         setMirror({
           verdict: String(evt.verdict ?? ''),
           bullets: Array.isArray(evt.bullets) ? (evt.bullets as string[]) : [],

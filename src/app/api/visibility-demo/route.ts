@@ -587,7 +587,7 @@ async function synthesizeCall1(
     ``,
     `Produce three parts, honestly (this is a diagnostic — never manufacture a problem). Each section is a scannable three-layer read: a one-line verdict, up to 3 short bullets, and a short detail paragraph.`,
     ``,
-    `1) MIRROR — who AI currently thinks ${subject.name} is, from the identity/comparative results.`,
+    `1) MIRROR — who AI currently thinks ${subject.name} is, from the identity results.`,
     `   • verdict: one line, at most 15 words, plain language.`,
     `   • bullets: up to 3 short factual points about what AI associates them with (drawn only from the results).`,
     `   • detail: 2-3 sentences of nuance. Where AI's answer is stale or wrong, say so directly.`,
@@ -883,6 +883,9 @@ export async function POST(request: NextRequest) {
         // ── State 2 + State 3: synthesize the mirror and the absence ──────────
         // A pure text call over the already-retrieved results. It declares NO
         // web_search tool, so it cannot search and NEVER touches the 3-search cap.
+        // Tell the client the synthesis (the longest single wait) is now in flight
+        // so its progress step goes active instead of sitting idle after the searches.
+        send({ type: 'synthesis_started' });
         const synthesis = await synthesizeCall1(
           { name, url },
           buyerIntentQuery(what, who, serviceArea, location),

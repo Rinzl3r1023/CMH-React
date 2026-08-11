@@ -205,8 +205,16 @@ const CRAWLABILITY_DEFAULT =
 
 function buildScorePrompt(row: DemoSessionRow): string {
   const digest = scoringDigest(row.call1_results);
+  const subjectName = row.subject_name ?? 'this business';
+  // The fixes are generated from the SAME results as the reveal, so they must not
+  // contradict it. The code-anchored appeared signal (never the model's) tells the
+  // model whether the subject already shows up in the buyer-intent search.
+  const appearedNote =
+    row.appeared_in_buyer_query === true
+      ? `A code check confirmed ${subjectName} DOES appear in the buyer-intent results. Fixes must NOT claim they are absent from that search, and must NOT tell them to "get listed on" any source that already includes them — frame those as improving RANK or the existing listing, not as achieving an appearance they already have.`
+      : `A code check found ${subjectName} did NOT appear in the buyer-intent results. Fixes may address becoming findable there.`;
   return [
-    `You are scoring the AI visibility of ${row.subject_name ?? 'this business'}${row.subject_url ? ` (${row.subject_url})` : ''} using ONLY the live search results below. Do not invent results, rankings, or competitors.`,
+    `You are scoring the AI visibility of ${subjectName}${row.subject_url ? ` (${row.subject_url})` : ''} using ONLY the live search results below. Do not invent results, rankings, or competitors.`,
     ``,
     `SEARCH RESULTS (from the free check):`,
     digest,
@@ -220,6 +228,7 @@ function buildScorePrompt(row: DemoSessionRow): string {
     `Band: 5 = strong/ready · 4 = good, could sharpen · 3 = present but too vague · 2 = weak · 1 = missing entirely.`,
     `HONESTY (non-negotiable): score what the results actually show. If they rank well, give the high score — a strong subject should score near 25/25. Do NOT deflate to manufacture a problem. If a criterion cannot be assessed from these results, score it conservatively and say why in its note — never guess.`,
     `Then give the top 3 prioritized fixes, specific to what the results show.`,
+    `FIX GROUNDING (non-negotiable): ${appearedNote} Every fix must be consistent with the results above — a fix may NOT assert absence from a source that appears in the results (e.g. do not say "you're missing from Yelp/Zocdoc" if their Yelp or Zocdoc page is in the results). "Ranked behind the listicle" and "absent from the listicle" are different claims; assert only the one the results support.`,
     `Do NOT score or estimate crawlability/indexability — that requires the site itself, which was not fetched. Provide one sentence naming it as what the free check cannot assess.`,
     ``,
     `Respond with ONLY this JSON, no prose around it:`,
