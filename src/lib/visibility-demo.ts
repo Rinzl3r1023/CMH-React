@@ -215,6 +215,20 @@ export async function markKitSynced(sessionToken: string): Promise<void> {
 
 // ── Call 2 (gated score) support ─────────────────────────────────────────────
 
+// ── per-session spend estimate (fix B3) ──────────────────────────────────────
+// Rates: claude-sonnet-5 standard ($3/1M input, $15/1M output); web_search at
+// $0.01/search. Summed across EVERY call in the session, including Call 2.
+const RATE_INPUT_PER_1M = 3;
+const RATE_OUTPUT_PER_1M = 15;
+const SEARCH_COST_USD = 0.01;
+export function estCostUsd(inputTokens: number, outputTokens: number, searches: number): number {
+  const c =
+    (inputTokens / 1_000_000) * RATE_INPUT_PER_1M +
+    (outputTokens / 1_000_000) * RATE_OUTPUT_PER_1M +
+    searches * SEARCH_COST_USD;
+  return Math.round(c * 10_000) / 10_000; // numeric(10,4)
+}
+
 export interface DemoSessionRow {
   session_token: string;
   subject_name: string | null;
@@ -226,6 +240,9 @@ export interface DemoSessionRow {
   score_clarity: number | null;
   score_presence: number | null;
   payoff: unknown;
+  input_tokens: number | null;
+  output_tokens: number | null;
+  est_cost_usd: number | string | null; // PostgREST may serialize numeric as string
 }
 
 /** Fetch a session row by token for Call 2. null = not found / unconfigured. */
@@ -233,7 +250,8 @@ export async function getSession(sessionToken: string): Promise<DemoSessionRow |
   const base = envTrim('SUPABASE_URL');
   const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return null;
-  const cols = 'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff';
+  const cols =
+    'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff,input_tokens,output_tokens,est_cost_usd';
   try {
     const res = await fetch(
       `${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}&select=${cols}&limit=1`,
@@ -257,6 +275,8 @@ export async function persistScore(
   clarity: number,
   presence: number,
   payoff: unknown,
+  // Session-cumulative totals AFTER Call 2, so est_cost_usd covers every call (B3).
+  totals: { inputTokens: number; outputTokens: number; estCostUsd: number },
 ): Promise<boolean> {
   const base = envTrim('SUPABASE_URL');
   const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
@@ -269,6 +289,9 @@ export async function persistScore(
         score_clarity: clarity,
         score_presence: presence,
         payoff,
+        input_tokens: totals.inputTokens,
+        output_tokens: totals.outputTokens,
+        est_cost_usd: totals.estCostUsd,
         payoff_generated_at: new Date().toISOString(),
       }),
     });

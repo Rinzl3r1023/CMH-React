@@ -2,6 +2,7 @@ import {
   getSession,
   persistScore,
   callClaudeText,
+  estCostUsd,
   CapacityError,
   supabaseConfigured,
   type DemoSessionRow,
@@ -10,7 +11,8 @@ import {
 // AI Visibility Demo — Call 2, the GATED SCORE (State 5). Reads the persisted
 // call1_results ONLY, declares NO web_search tool (via callClaudeText → cannot
 // search, never touches the 3-search cap), and applies the §5 rubric:
-//   • Clarity  /25  (5 criteria × 1–5) — from the identity + comparative queries
+//   • Clarity  /25  (5 criteria × 1–5) — from the identity search (fix B1: the
+//     comparative query is cut; the identity results already span independent sources)
 //   • Presence /25  (5 criteria × 1–5) — from the buyer-intent query
 // Total is /50. NEVER /75. Crawlability is NEVER scored or proxied — it is named
 // once, as the reason to convert (it needs the site itself, which this never sees).
@@ -29,12 +31,16 @@ export const maxDuration = 60;
 
 const SCORE_MAX_TOKENS = 1500;
 
+// All five score from SEARCH 1 (identity) only — the comparative query is cut
+// (fix B1/B2). The identity search returns multiple independent sources, so
+// criterion 5 (consistency) is still assessable without a separate comparative
+// query. No criterion references a search that no longer runs.
 const CLARITY_CRITERIA = [
-  'Own site present in results at all',
-  "Own site's rank position among results",
+  'Own site present in the identity results at all',
+  "Own site's rank position among the identity results",
   'Accuracy of the top-ranked description vs. what they entered',
   'Entity collision — count of distinct orgs sharing the name',
-  'Consistency of description across independent sources',
+  'Consistency of the description across the independent sources in the identity results',
 ];
 const PRESENCE_CRITERIA = [
   'Appear in the buyer-intent results at all',
@@ -126,7 +132,7 @@ function buildScorePrompt(row: DemoSessionRow): string {
     digest,
     ``,
     `Score two pillars, five criteria each, 1–5 per criterion.`,
-    `CLARITY (from the identity + comparative queries):`,
+    `CLARITY (from the identity search results only):`,
     ...CLARITY_CRITERIA.map((c, i) => `  C${i + 1}. ${c}`),
     `PRESENCE (from the buyer-intent query):`,
     ...PRESENCE_CRITERIA.map((c, i) => `  P${i + 1}. ${c}`),
@@ -163,10 +169,12 @@ function stubPayload(): ScorePayload {
   };
 }
 
-async function scoreSession(row: DemoSessionRow): Promise<{ payload: ScorePayload; usageStubbed: boolean }> {
-  const { text, stubbed } = await callClaudeText(buildScorePrompt(row), SCORE_MAX_TOKENS);
+type Usage = { input_tokens: number; output_tokens: number };
+
+async function scoreSession(row: DemoSessionRow): Promise<{ payload: ScorePayload; usage: Usage }> {
+  const { text, usage, stubbed } = await callClaudeText(buildScorePrompt(row), SCORE_MAX_TOKENS);
   if (stubbed || !text) {
-    return { payload: stubPayload(), usageStubbed: true };
+    return { payload: stubPayload(), usage };
   }
 
   let parsed: {
@@ -202,7 +210,7 @@ async function scoreSession(row: DemoSessionRow): Promise<{ payload: ScorePayloa
       fixes,
       crawlability,
     },
-    usageStubbed: false,
+    usage,
   };
 }
 
@@ -255,8 +263,19 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { payload } = await scoreSession(row);
-    await persistScore(sessionToken, payload.score.clarity, payload.score.presence, payload);
+    const { payload, usage } = await scoreSession(row);
+    // fix B3 — accumulate Call-2 spend onto the Call-1 totals so est_cost_usd
+    // covers every call in the session. Call 2 issues no searches.
+    const totalIn = Number(row.input_tokens ?? 0) + usage.input_tokens;
+    const totalOut = Number(row.output_tokens ?? 0) + usage.output_tokens;
+    const totalEst =
+      Math.round((Number(row.est_cost_usd ?? 0) + estCostUsd(usage.input_tokens, usage.output_tokens, 0)) * 10_000) /
+      10_000;
+    await persistScore(sessionToken, payload.score.clarity, payload.score.presence, payload, {
+      inputTokens: totalIn,
+      outputTokens: totalOut,
+      estCostUsd: totalEst,
+    });
     return Response.json({ ok: true, ...payload });
   } catch (err) {
     // Same capacity discipline — never surface a raw provider error on a public page.

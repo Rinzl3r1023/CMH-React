@@ -13,6 +13,7 @@ import {
   CapacityError,
   classifyFailure,
   envTrim,
+  estCostUsd,
   ANTHROPIC_MESSAGES_URL,
   ANTHROPIC_VERSION,
   ANTHROPIC_MODEL,
@@ -98,12 +99,13 @@ function buildQueries(name: string, what: string, who: string, location: string)
     { step: 1, kind: 'identity', text: `What is ${name}?` },
     // Buyer-intent (fix A) — noun-free, location- or audience-shaped. "The moment" (§1).
     { step: 2, kind: 'buyer_intent', text: buyerIntentQuery(what, who, location) },
-    // ⚑ SPEC GAP: §4 defines no comparative template. PROVISIONAL — surfaces
-    // third-party descriptions for CLARITY criteria 3/5 (accuracy + consistency
-    // across independent sources). Do not treat as final; pending §4 sign-off.
-    { step: 3, kind: 'comparative', text: `${name} reviews and alternatives`, provisional: true },
+    // Fix B1: the comparative query is CUT. It was ~30k tokens (a third of the run)
+    // and only added fidelity to one Clarity criterion; the spike found the punch
+    // lands in these two. The identity search's own results already span independent
+    // sources, so Clarity still scores from search 1 (see the score route).
   ];
-  // Hard cap layer 1: the loop can never see more than MAX_SEARCHES queries.
+  // Hard cap layer 1: the loop can never see more than MAX_SEARCHES queries. The
+  // cap stays 3 as HEADROOM (fix B1 — do not lower it); we simply run 2.
   return queries.slice(0, MAX_SEARCHES);
 }
 
@@ -259,6 +261,7 @@ interface PersistInput {
   call1Results: RawSearch[];
   inputTokens: number;
   outputTokens: number;
+  searches: number;
   mirrorVerdict: string;
   appearedInBuyerQuery: boolean;
   ipHash: string;
@@ -288,6 +291,8 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
       call1_results: p.call1Results,
       input_tokens: p.inputTokens,
       output_tokens: p.outputTokens,
+      // fix B3 — Call-1 spend so far (searches + synthesis). Call 2 adds to this.
+      est_cost_usd: estCostUsd(p.inputTokens, p.outputTokens, p.searches),
       ip_hash: p.ipHash,
       // §8 — mirror_verdict (short text) + appeared_in_buyer_query (the single
       // most valuable analytics field, §8) come out of the synthesis step.
@@ -695,6 +700,7 @@ export async function POST(request: NextRequest) {
           call1Results,
           inputTokens,
           outputTokens,
+          searches: searchesRun,
           mirrorVerdict: synthesis.mirror.verdict,
           appearedInBuyerQuery: synthesis.absence.appeared,
           ipHash,
