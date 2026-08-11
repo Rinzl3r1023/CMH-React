@@ -23,8 +23,25 @@ export const PROMO_BAR_DENY: readonly string[] = [
   '/terms',
 ];
 
-const STORAGE_KEY = 'cmh_promobar_dismissed_at';
-const DISMISS_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+// The × and a click-through are OPPOSITE signals, so they get separate keys and
+// windows, tunable independently:
+//   × close        → 7 days.  Usually "not while I'm reading this," not "never" —
+//                    a better-fit post next week should still get a shot.
+//   click-through  → 30 days. They already ran the demo; re-inviting them offers
+//                    nothing new.
+const CLOSE_KEY = 'cmh_promobar_closed_at';
+const CLICK_KEY = 'cmh_promobar_clicked_at';
+const CLOSE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const CLICK_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+function dismissedWithin(key: string, ms: number): boolean {
+  try {
+    const at = Number(localStorage.getItem(key) || '0');
+    return at > 0 && Date.now() - at < ms;
+  } catch {
+    return false; // storage blocked → not dismissed
+  }
+}
 // Fade the bar out when the page's own FOOTER CTA (the end-of-post book-a-call
 // block) enters view — its reader is at higher intent than the bar serves, so the
 // page's own CTA wins. Scoped to the footer block, NOT the mid-article Dispatch
@@ -61,18 +78,12 @@ export default function PromoBar() {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // 30-day dismissal (client-only). Default dismissed=true means SSR/first paint
-  // renders hidden; this reveals it only when not recently dismissed.
+  // Dismissal (client-only). Hidden if EITHER window is still open. Default
+  // dismissed=true means SSR/first paint renders hidden; this reveals it only when
+  // neither the close nor the click-through window is active.
   useEffect(() => {
     if (excluded) return;
-    let hidden = false;
-    try {
-      const at = Number(localStorage.getItem(STORAGE_KEY) || '0');
-      hidden = at > 0 && Date.now() - at < DISMISS_MS;
-    } catch {
-      /* storage blocked → treat as not dismissed */
-    }
-    setDismissed(hidden);
+    setDismissed(dismissedWithin(CLOSE_KEY, CLOSE_MS) || dismissedWithin(CLICK_KEY, CLICK_MS));
   }, [excluded]);
 
   // Arm when either sentinel enters the viewport. IntersectionObserver, not a
@@ -112,21 +123,25 @@ export default function PromoBar() {
 
   if (excluded) return null;
 
-  const dismiss = () => {
+  const stampDismiss = (key: string) => {
     try {
-      localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      localStorage.setItem(key, String(Date.now()));
     } catch {
       /* storage blocked — bar just reappears next load */
     }
     setDismissed(true);
   };
 
+  // × close → the short (7-day) window.
+  const onClose = () => stampDismiss(CLOSE_KEY);
+
+  // Click-through → the long (30-day) window.
   const onCtaClick = () => {
     // Reuse the already-loaded gtag if analytics is configured; no new dependency.
     (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag?.('event', 'promobar_click', {
       page_slug: utmContentFor(path),
     });
-    dismiss(); // someone who clicked through shouldn't be asked again
+    stampDismiss(CLICK_KEY); // already ran the demo — don't re-invite for a while
   };
 
   const href = `/visibility?utm_source=cmh&utm_medium=promobar&utm_campaign=ai-visibility&utm_content=${encodeURIComponent(
@@ -154,7 +169,7 @@ export default function PromoBar() {
           <a className={styles.cta} href={href} onClick={onCtaClick}>
             {BUTTON}
           </a>
-          <button type="button" className={styles.close} aria-label="Dismiss" onClick={dismiss}>
+          <button type="button" className={styles.close} aria-label="Dismiss" onClick={onClose}>
             <span aria-hidden="true">×</span>
           </button>
         </div>
