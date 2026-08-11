@@ -407,7 +407,7 @@ export default function VisibilityDemo() {
 
         {/* State 0 — form */}
         {phase === 'form' && (
-          <form onSubmit={runCheck}>
+          <form onSubmit={runCheck} data-no-global-glow>
             <p className={styles.eyebrow}>AI Visibility Check</p>
             <h1 className={styles.h1}>What does AI say about your business?</h1>
             <p className={styles.lede}>Your buyers are asking ChatGPT for recommendations. Find out what it tells them.</p>
@@ -581,7 +581,7 @@ export default function VisibilityDemo() {
 
             {/* State 4 — gate */}
             {(phase === 'gate' || phase === 'scoring') && (
-              <form className={styles.gate} onSubmit={submitGate}>
+              <form className={styles.gate} onSubmit={submitGate} data-no-global-glow>
                 <p className={styles.cardLabel}>Your full score</p>
                 <p className={styles.cardBody} style={{ marginBottom: '1rem' }}>
                   Want your full visibility score and the top fixes? Enter your email and we&rsquo;ll build the report.
