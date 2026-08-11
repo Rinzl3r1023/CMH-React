@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 
 // AI Visibility Demo — Call 1 (free), STUBBED so it compiles/runs without the
-// live ANTHROPIC_API_KEY or Supabase creds. Scope of THIS piece (per build plan):
+// live ANTHROPIC_API_KEY_DEMO or Supabase creds. Scope of THIS piece (per build plan):
 //   1. Query construction from the 5 inputs + §4 category template.
 //   2. The 3-search loop, with the hard cap enforced IN CODE (a for-loop over a
 //      fixed queries array + max_uses:1 per call) — NOT tool_choice, NOT a prompt
@@ -38,6 +38,24 @@ const MODEL = 'claude-sonnet-5';
 // Dynamic-filtering web search (available on Sonnet 5). Basic variant is
 // web_search_20250305 if a fallback is ever needed.
 const WEB_SEARCH_TOOL_TYPE = 'web_search_20260209';
+
+// This is a public, unauthenticated ad landing page, so the demo runs on its OWN
+// Anthropic Workspace + key + $300/mo spend cap (§7.1) — never the production
+// SPARC key. A runaway here can starve only this Workspace's budget/rate limit,
+// never the live SPARC agents. Reference the demo-specific var by name.
+const ANTHROPIC_KEY_ENV = 'ANTHROPIC_API_KEY_DEMO';
+
+// The $300 cap is enforced by Anthropic at the Workspace level: when it's hit the
+// API returns errors, it does not degrade. We classify that (and a sustained rate
+// limit) as a capacity condition and route it to the SAME graceful "at capacity —
+// book a call" state as the monthly session ceiling (§7.5). One handler, two
+// triggers. A raw provider error must never reach a public landing page (§7).
+class CapacityError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    this.name = 'CapacityError';
+  }
+}
 
 // ── §4 category pills → buyer-intent query template ──────────────────────────
 // The free-text fields ([what]/[who]) carry the query; the pill only selects a
@@ -133,7 +151,7 @@ interface AnthropicResponse {
 }
 
 async function searchWeb(query: string): Promise<{ results: unknown[]; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
-  const key = process.env.ANTHROPIC_API_KEY;
+  const key = process.env[ANTHROPIC_KEY_ENV];
 
   // STUB: no key → deterministic mock shaped like real web_search_result blocks,
   // so query construction, persistence, and SSE all run end-to-end keyless.
@@ -166,6 +184,26 @@ async function searchWeb(query: string): Promise<{ results: unknown[]; usage: { 
   });
 
   if (!res.ok) {
+    // Distinguish a capacity condition (workspace $300 cap hit, or a sustained
+    // rate limit that means we effectively can't serve this visitor now) from a
+    // generic failure. Both stay off the page as raw errors; capacity routes to
+    // the shared "at capacity — book a call" state.
+    let errType = '';
+    let errMsg = '';
+    try {
+      const j = (await res.json()) as { error?: { type?: string; message?: string } };
+      errType = j.error?.type ?? '';
+      errMsg = j.error?.message ?? '';
+    } catch {
+      /* non-JSON error body — fall through to status-based classification */
+    }
+    const capacitySignal =
+      res.status === 429 || // rate/usage limit
+      res.status === 402 || // payment required
+      /credit|billing|spend|budget|quota|payment|balance/i.test(`${errType} ${errMsg}`);
+    if (capacitySignal) {
+      throw new CapacityError(`anthropic capacity ${res.status}`);
+    }
     throw new Error(`anthropic ${res.status}`);
   }
 
@@ -318,8 +356,15 @@ export async function POST(request: NextRequest) {
           session_token: sessionToken,
         });
         controller.close();
-      } catch {
-        send({ type: 'error', message: 'The visibility check could not complete.' });
+      } catch (err) {
+        // Shared "at capacity" handler — two triggers: the Anthropic Workspace
+        // $300 cap (here) and, later, the monthly session ceiling (§7.5). Both
+        // send the same event so the client shows one "book a call" state.
+        if (err instanceof CapacityError) {
+          send({ type: 'at_capacity' });
+        } else {
+          send({ type: 'error', message: 'The visibility check could not complete.' });
+        }
         controller.close();
       }
     },
