@@ -233,10 +233,14 @@ export async function POST(request: Request) {
     return Response.json({ ok: false, error: 'Unlock required.' }, { status: 403 });
   }
 
-  // Idempotent — already scored → return stored numbers, no re-spend. (The full
-  // per-criterion breakdown is generated once at unlock; scores persist, the
-  // prose does not — there is no column for it, and none was requested.)
+  // Idempotent — already scored → return the STORED full payoff, no re-spend. The
+  // score is the paid payoff, so replay returns the complete breakdown + fixes,
+  // not bare numbers. (Fallback to numbers only for rows scored before the payoff
+  // column existed.)
   if (row.score_clarity != null && row.score_presence != null) {
+    if (row.payoff && typeof row.payoff === 'object') {
+      return Response.json({ ok: true, cached: true, ...(row.payoff as Record<string, unknown>) });
+    }
     return Response.json({
       ok: true,
       cached: true,
@@ -252,7 +256,7 @@ export async function POST(request: Request) {
 
   try {
     const { payload } = await scoreSession(row);
-    await persistScore(sessionToken, payload.score.clarity, payload.score.presence);
+    await persistScore(sessionToken, payload.score.clarity, payload.score.presence, payload);
     return Response.json({ ok: true, ...payload });
   } catch (err) {
     // Same capacity discipline — never surface a raw provider error on a public page.

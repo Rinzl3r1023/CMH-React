@@ -7,6 +7,15 @@ import {
   ipRunInLast24h,
   reserveSession,
   MONTHLY_CEILING,
+  // Unified capacity classifier + Anthropic constants — single source of truth in
+  // the lib (shared with Call 2). Only the 429-retry logic below stays local: it
+  // is search-path-specific and belongs with the search call.
+  CapacityError,
+  classifyFailure,
+  ANTHROPIC_MESSAGES_URL,
+  ANTHROPIC_VERSION,
+  ANTHROPIC_MODEL,
+  ANTHROPIC_KEY_ENV,
 } from '@/lib/visibility-demo';
 
 // AI Visibility Demo — the RUN route (/api/visibility-demo). STUBBED so it
@@ -42,32 +51,9 @@ const CAP_WHO = 60;
 // ── §7.4 hard cap: never more than 3 searches per run, enforced in code ──────
 const MAX_SEARCHES = 3;
 
-// Anthropic Messages API (raw fetch — no SDK installed; matches the dependency-
-// free approach used by /api/subscribe).
-const ANTHROPIC_MESSAGES_URL = 'https://api.anthropic.com/v1/messages';
-const ANTHROPIC_VERSION = '2023-06-01';
-const MODEL = 'claude-sonnet-5';
 // Dynamic-filtering web search (available on Sonnet 5). Basic variant is
-// web_search_20250305 if a fallback is ever needed.
+// web_search_20250305 if a fallback is ever needed. Search-path-specific → local.
 const WEB_SEARCH_TOOL_TYPE = 'web_search_20260209';
-
-// This is a public, unauthenticated ad landing page, so the demo runs on its OWN
-// Anthropic Workspace + key + $300/mo spend cap (§7.1) — never the production
-// SPARC key. A runaway here can starve only this Workspace's budget/rate limit,
-// never the live SPARC agents. Reference the demo-specific var by name.
-const ANTHROPIC_KEY_ENV = 'ANTHROPIC_API_KEY_DEMO';
-
-// The $300 cap is enforced by Anthropic at the Workspace level: when it's hit the
-// API returns errors, it does not degrade. We classify that (and a sustained rate
-// limit) as a capacity condition and route it to the SAME graceful "at capacity —
-// book a call" state as the monthly session ceiling (§7.5). One handler, two
-// triggers. A raw provider error must never reach a public landing page (§7).
-class CapacityError extends Error {
-  constructor(msg: string) {
-    super(msg);
-    this.name = 'CapacityError';
-  }
-}
 
 // ── §4 category pills → buyer-intent query template ──────────────────────────
 // The free-text fields ([what]/[who]) carry the query; the pill only selects a
@@ -181,20 +167,6 @@ function retryAfterMs(header: string | null): number {
   return DEFAULT;
 }
 
-// Classify a non-OK Anthropic response. 'capacity' → route to "at capacity"
-// immediately (spend/billing/credit don't self-resolve). 'ratelimit' → a bare
-// 429, retried once before deciding. 'error' → generic graceful failure.
-function classifyFailure(status: number, errType: string, errMsg: string): 'capacity' | 'ratelimit' | 'error' {
-  const text = `${errType} ${errMsg}`;
-  // Billing/spend/credit is capacity regardless of status — a 429 that carries a
-  // spend message is the cap, not a transient limit, so it is NOT retried.
-  if (status === 402 || /credit|billing|spend|budget|quota|payment|balance/i.test(text)) {
-    return 'capacity';
-  }
-  if (status === 429) return 'ratelimit'; // bare rate limit — often transient
-  return 'error';
-}
-
 async function searchWeb(
   query: string,
 ): Promise<{ results: unknown[]; summary: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
@@ -214,7 +186,7 @@ async function searchWeb(
   }
 
   const requestBody = JSON.stringify({
-    model: MODEL,
+    model: ANTHROPIC_MODEL,
     max_tokens: 1024,
     // Hard cap layer 2: THIS call may perform at most one web search. Combined
     // with the ≤3-iteration loop, total searches can never exceed 3 — and the
@@ -523,7 +495,7 @@ async function synthesizeCall1(
     },
     // NO tools → this call physically cannot issue a web search.
     body: JSON.stringify({
-      model: MODEL,
+      model: ANTHROPIC_MODEL,
       max_tokens: SYNTHESIS_MAX_TOKENS,
       messages: [{ role: 'user', content: prompt }],
     }),

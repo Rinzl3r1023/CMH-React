@@ -214,6 +214,7 @@ export interface DemoSessionRow {
   call1_results: unknown;
   score_clarity: number | null;
   score_presence: number | null;
+  payoff: unknown;
 }
 
 /** Fetch a session row by token for Call 2. null = not found / unconfigured. */
@@ -221,7 +222,7 @@ export async function getSession(sessionToken: string): Promise<DemoSessionRow |
   const base = process.env.SUPABASE_URL;
   const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!base || !svc) return null;
-  const cols = 'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence';
+  const cols = 'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff';
   try {
     const res = await fetch(
       `${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}&select=${cols}&limit=1`,
@@ -235,8 +236,17 @@ export async function getSession(sessionToken: string): Promise<DemoSessionRow |
   }
 }
 
-/** Persist Call-2 scores (each /25) + payoff_generated_at. */
-export async function persistScore(sessionToken: string, clarity: number, presence: number): Promise<boolean> {
+/**
+ * Persist the Call-2 result: the two /25 scores AND the full payoff (per-criterion
+ * breakdown + top-3 fixes + crawlability line + /50 score), so idempotent replay
+ * returns the complete paid payoff, not bare numbers.
+ */
+export async function persistScore(
+  sessionToken: string,
+  clarity: number,
+  presence: number,
+  payoff: unknown,
+): Promise<boolean> {
   const base = process.env.SUPABASE_URL;
   const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!base || !svc) return false;
@@ -247,6 +257,7 @@ export async function persistScore(sessionToken: string, clarity: number, presen
       body: JSON.stringify({
         score_clarity: clarity,
         score_presence: presence,
+        payoff,
         payoff_generated_at: new Date().toISOString(),
       }),
     });
