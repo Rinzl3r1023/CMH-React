@@ -256,6 +256,7 @@ export interface DemoSessionRow {
   input_tokens: number | null;
   output_tokens: number | null;
   est_cost_usd: number | string | null; // PostgREST may serialize numeric as string
+  appeared_in_buyer_query: boolean | null; // code-anchored truth for the Call-2 invariant
 }
 
 /** Fetch a session row by token for Call 2. null = not found / unconfigured. */
@@ -264,7 +265,7 @@ export async function getSession(sessionToken: string): Promise<DemoSessionRow |
   const svc = envTrim('SUPABASE_SERVICE_ROLE_KEY');
   if (!base || !svc) return null;
   const cols =
-    'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff,input_tokens,output_tokens,est_cost_usd';
+    'session_token,subject_name,subject_url,category,gated_at,email,call1_results,score_clarity,score_presence,payoff,input_tokens,output_tokens,est_cost_usd,appeared_in_buyer_query';
   try {
     const res = await fetch(
       `${base}/rest/v1/demo_sessions?session_token=eq.${encodeURIComponent(sessionToken)}&select=${cols}&limit=1`,
@@ -347,6 +348,9 @@ interface ClaudeTextResponse {
 export async function callClaudeText(
   prompt: string,
   maxTokens: number,
+  // Optional structured-outputs config, e.g. { format: { type: 'json_schema',
+  // schema } } — forces schema-valid JSON so the response can't be malformed.
+  outputConfig?: unknown,
 ): Promise<{ text: string; usage: { input_tokens: number; output_tokens: number }; stubbed: boolean }> {
   const key = envTrim(ANTHROPIC_KEY_ENV);
   if (!key) return { text: '', usage: { input_tokens: 0, output_tokens: 0 }, stubbed: true };
@@ -355,7 +359,12 @@ export async function callClaudeText(
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': ANTHROPIC_VERSION },
     // NO tools → this call physically cannot issue a web search.
-    body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] }),
+    body: JSON.stringify({
+      model: ANTHROPIC_MODEL,
+      max_tokens: maxTokens,
+      ...(outputConfig ? { output_config: outputConfig } : {}),
+      messages: [{ role: 'user', content: prompt }],
+    }),
   });
 
   if (!res.ok) {
