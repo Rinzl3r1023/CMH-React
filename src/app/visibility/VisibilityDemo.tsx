@@ -768,26 +768,35 @@ export default function VisibilityDemo() {
               </div>
             )}
 
-            {/* The wall. Deliberately NOT asserting backend opportunities exist
-                (we never looked at their backend), no growth statistics (unsourced
-                = the line a skeptic screenshots), no pressure phrasing — the finding
-                above is the motivation. The secondary CTA reuses the app-wide
+            {/* The wall — the conversion moment, in Chris's voice. The Adobe stat is
+                SOURCED and attributed inline; the attribution stays verbatim (an
+                unattributed version is the one that gets challenged). Copy is shipped
+                as written — do not re-hedge it. The secondary CTA reuses the app-wide
                 [data-book-call] modal (BookCallController in the root layout). */}
             <div className={styles.wall}>
-              <h3 className={styles.wallHead}>What this check can&rsquo;t see</h3>
+              <h3 className={styles.wallHead}>IMPORTANT: What this assessment can&rsquo;t see</h3>
               <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
-                This runs on what&rsquo;s publicly visible — what AI finds when it searches. It can&rsquo;t look at your site itself: how
-                it&rsquo;s structured, whether AI can read it cleanly, what&rsquo;s buried in the backend. That&rsquo;s often where the real gap
-                is, and it&rsquo;s the part this free check will never reach.
+                This ONLY sees what&rsquo;s public — meaning, what AI finds when it searches. But it can&rsquo;t see your actual website
+                structure: how it&rsquo;s built, whether AI can read it, what&rsquo;s sitting in the backend that might actually be causing
+                confusion. There&rsquo;s usually a lot hiding back there, and it&rsquo;s often what&rsquo;s holding you back.
               </p>
               <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
-                I built the framework that closes it. Not advice — the actual sequence, so you know exactly what to fix and in what order to
-                get recommended instead of overlooked.
+                But here&rsquo;s the good news. I built a tool that does that work FOR you. It actually tells you exactly what to fix so you
+                stand out in your market and get recommended over your competitors.
               </p>
               <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
-                Two ways in: grab it inside The Business Lounge, or book 30 minutes with me and we&rsquo;ll look at your situation directly.
+                And this is worth moving on sooner rather than later. AI referral traffic to US retail sites grew 693% year-over-year last
+                holiday season — and that traffic converted 31% better than everything else (Adobe Digital Insights, January 2026).
               </p>
-              <p className={styles.earnedLine}>Most business owners haven&rsquo;t thought about this yet. That&rsquo;s the opening.</p>
+              <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
+                GOOD NEWS: It&rsquo;s still early. Most business owners haven&rsquo;t even touched this yet — but that won&rsquo;t last, I
+                guarantee it.
+              </p>
+              <p className={styles.earnedLine}>So don&rsquo;t let this pass you by&hellip;</p>
+              <p className={styles.cardBody} style={{ marginBottom: '0.9rem' }}>
+                You can grab access to my tool inside our community, The Business Lounge (with a sweet 50% OFF deal), or book 30 minutes with
+                me and we&rsquo;ll figure out your next steps together.
+              </p>
               <div className={styles.ctaRow}>
                 <a className={styles.button} href={COMMUNITY_URL} style={{ display: 'inline-block', width: 'auto', padding: '0.9rem 1.6rem' }}>
                   Claim 50% off your first month
