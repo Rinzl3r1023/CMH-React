@@ -406,3 +406,83 @@
   margin: 0;
   font-size: 1.05rem;
 }
+
+/* ── Three-layer reveal (items 3+4): verdict → bullets → collapsed detail ───── */
+.verdict {
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--vd-ink);
+  margin: 0 0 0.7rem;
+}
+.bullets {
+  margin: 0 0 0.2rem;
+  padding-left: 1.2rem;
+  color: var(--vd-ink);
+}
+.bullets li {
+  margin-bottom: 0.35rem;
+}
+/* Collapsed detail — native <details>, custom marker so it reads as an amber
+   "read more" affordance, not a raw OS triangle. */
+.detail {
+  margin-top: 0.85rem;
+  border-top: 1px solid var(--vd-line);
+  padding-top: 0.65rem;
+}
+.detailSummary {
+  cursor: pointer;
+  color: var(--vd-amber);
+  font-size: 0.9rem;
+  font-weight: 600;
+  list-style: none;
+}
+.detailSummary::-webkit-details-marker {
+  display: none;
+}
+.detailSummary::before {
+  content: '▸ ';
+  font-size: 0.8em;
+}
+details[open] > .detailSummary::before {
+  content: '▾ ';
+}
+.detailBody {
+  margin: 0.6rem 0 0;
+  color: var(--vd-muted);
+  font-size: 0.98rem;
+}
+/* "and N more" — the honest cap on a long recommended list. */
+.moreCount {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+  color: var(--vd-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* "The opportunity" — pre-gate tease. Amber-accented to pull the eye toward the
+   payoff without shouting. */
+.opportunity {
+  composes: card;
+  border-color: rgba(240, 169, 60, 0.4);
+  background: var(--vd-amber-soft);
+}
+.opportunityLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vd-amber);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+.opportunityBody {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* Run-to-run variance — a quiet, point-in-time caveat near the score. */
+.varianceLine {
+  color: var(--vd-muted);
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}

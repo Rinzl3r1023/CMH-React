@@ -14,6 +14,7 @@ import {
   classifyFailure,
   envTrim,
   estCostUsd,
+  callClaudeText,
   ANTHROPIC_MESSAGES_URL,
   ANTHROPIC_VERSION,
   ANTHROPIC_MODEL,
@@ -324,11 +325,31 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
 // it (never surface a false absence). The model writes the prose for the branch
 // the evidence supports.
 
+// Each reveal section is now a three-layer read (items 3+4): a one-line verdict,
+// up to 3 scannable bullets, and a collapsed `detail` for anyone who wants the
+// full prose. Copy density restructure — the page stops being a wall of text.
+interface RevealSection {
+  verdict: string; // one line, <=15 words
+  bullets: string[]; // up to 3 short factual points
+  detail: string; // 2-3 sentences, collapsed in the UI
+}
+
 interface Synthesis {
   // `accurate` (fix C1) is a CODE signal, not model output: whether AI's identity
   // results point at the subject's own domain/name. Drives the ✅/⚠️ on State 2.
-  mirror: { verdict: string; body: string; accurate: boolean };
-  absence: { appeared: boolean; query: string; recommended: string[]; body: string };
+  // `collision` (model-owned, guarded) is the OTHER amber trigger: a distinct
+  // named organization sharing the name. It's the one section-verdict field the
+  // model owns — allowed only because flagging a collision makes the finding
+  // WORSE (the model has no incentive to invent one), and code still guards it:
+  // collision=true requires a NAMED entity in the prose or we force it false.
+  // `appeared` stays PURELY code-anchored (never model-returned) — the model has
+  // an incentive to get that one wrong, so collision's exception is NOT a
+  // precedent for it.
+  mirror: RevealSection & { accurate: boolean; collision: boolean };
+  absence: RevealSection & { appeared: boolean; query: string; recommended: string[] };
+  // "The opportunity" (item 4) — one honest paragraph teasing the SHAPE of the
+  // gap the full report would close, branched on whether they already appear.
+  opportunity: string;
   usage: { input_tokens: number; output_tokens: number };
 }
 
@@ -406,7 +427,70 @@ function resultsDigest(call1Results: RawSearch[]): string {
     .join('\n\n');
 }
 
-const SYNTHESIS_MAX_TOKENS = 1200;
+// Three sections × (verdict + up to 3 bullets + detail) + an opportunity
+// paragraph fit comfortably here; bumped from 1200 for the extra structure.
+const SYNTHESIS_MAX_TOKENS = 1600;
+
+// Structured-outputs schema — forces schema-valid JSON so a public page can
+// never render malformed model output. NOTE what is deliberately ABSENT:
+//   • no `appeared` field — appearance is code-anchored (appearanceSignal), never
+//     model-returned. The model has an incentive to misreport it; we don't ask.
+//   • `collision` + `collision_entity` ARE model-owned, but guarded in code: a
+//     true collision must name the distinct entity or it's forced back to false.
+const SYNTHESIS_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['mirror', 'absence', 'opportunity', 'opportunity_anchor'],
+  properties: {
+    mirror: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['verdict', 'bullets', 'detail', 'collision', 'collision_entity'],
+      properties: {
+        verdict: { type: 'string' },
+        bullets: { type: 'array', items: { type: 'string' } },
+        detail: { type: 'string' },
+        collision: { type: 'boolean' },
+        collision_entity: { type: 'string' },
+      },
+    },
+    absence: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['verdict', 'bullets', 'detail', 'recommended'],
+      properties: {
+        verdict: { type: 'string' },
+        bullets: { type: 'array', items: { type: 'string' } },
+        detail: { type: 'string' },
+        recommended: { type: 'array', items: { type: 'string' } },
+      },
+    },
+    opportunity: { type: 'string' },
+    // Specificity guard (same pattern as collision_entity): which concrete
+    // finding from THIS run the opportunity is built on — the collision entity,
+    // a named competitor from recommended, the rank position, or the query. Code
+    // asserts it non-empty; an unanchored opportunity is generic filler and is
+    // replaced with a deterministic, finding-referencing fallback.
+    opportunity_anchor: { type: 'string' },
+  },
+} as const;
+
+// Coerce a schema section into a RevealSection. Even with structured outputs we
+// stay defensive (empty verdict/detail get a safe, non-manufacturing fallback)
+// and cap bullets at 3 in code so a chatty model can't blow the density budget.
+function toRevealSection(raw: unknown, fallbackVerdict: string, fallbackDetail: string): RevealSection {
+  const r = (raw && typeof raw === 'object' ? raw : {}) as {
+    verdict?: unknown;
+    bullets?: unknown;
+    detail?: unknown;
+  };
+  const verdict = typeof r.verdict === 'string' && r.verdict.trim() ? r.verdict.trim() : fallbackVerdict;
+  const bullets = Array.isArray(r.bullets)
+    ? (r.bullets as unknown[]).filter((x): x is string => typeof x === 'string' && x.trim().length > 0).slice(0, 3)
+    : [];
+  const detail = typeof r.detail === 'string' && r.detail.trim() ? r.detail.trim() : fallbackDetail;
+  return { verdict, bullets, detail };
+}
 
 async function synthesizeCall1(
   subject: { name: string; url: string },
@@ -415,8 +499,10 @@ async function synthesizeCall1(
 ): Promise<Synthesis> {
   const subjectHost = extractHost(subject.url);
   const signal = appearanceSignal(resultsOfKind(call1Results, 'buyer_intent'), subject.name, subjectHost);
-  // Bias against a false absence: any code signal of appearance flips the default.
-  const codeSuggestsAppeared = signal.domainMatch || signal.nameMatch;
+  // APPEARANCE IS CODE-ANCHORED. `appeared` is decided here, from the results —
+  // never from the model. A domain match or a name match in the buyer-intent
+  // results is the whole signal; the model never gets to claim or deny it.
+  const appeared = signal.domainMatch || signal.nameMatch;
 
   // fix C1: mirror accuracy from the IDENTITY results — if AI's "what is X?" points
   // at the subject's own domain/name, it identifies them correctly (✅); otherwise
@@ -426,151 +512,152 @@ async function synthesizeCall1(
 
   const key = envTrim(ANTHROPIC_KEY_ENV);
 
-  // STUB: no key → deterministic copy derived from the code signal, so both
-  // branches are exercisable without a live key. (The stub search injects no
-  // subject match, so the keyless path demonstrates the ABSENCE branch; the
-  // APPEARS branch is proven with a live key + a subject known to rank.)
+  // STUB: no key → deterministic copy in the new shape, so both branches are
+  // exercisable without a live key. (The stub search injects no subject match, so
+  // the keyless path demonstrates the ABSENCE branch; the APPEARS branch is proven
+  // with a live key + a subject known to rank.)
   if (!key) {
-    if (codeSuggestsAppeared) {
-      return {
-        mirror: {
-          verdict: 'stub',
-          body: `[stub] Mirror for ${subject.name}. Run with a live key for the real reading.`,
-          accurate,
-        },
-        absence: {
-          appeared: true,
-          query: buyerQuery,
-          recommended: [],
-          body: `[stub] ${subject.name} appears in "${buyerQuery}". The live copy pivots to where and how they're described.`,
-        },
-        usage: { input_tokens: 0, output_tokens: 0 },
-      };
-    }
     return {
       mirror: {
-        verdict: 'stub',
-        body: `[stub] Mirror for ${subject.name}. Run with a live key for the real reading.`,
+        verdict: `[stub] What AI says about ${subject.name}.`,
+        bullets: ['[stub] point one', '[stub] point two'],
+        detail: `[stub] Run with a live key for the real reading of ${subject.name}.`,
         accurate,
+        collision: false,
       },
-      absence: {
-        appeared: false,
-        query: buyerQuery,
-        recommended: [],
-        body: `[stub] For "${buyerQuery}", ${subject.name} did not appear in the stub results.`,
-      },
+      absence: appeared
+        ? {
+            verdict: `[stub] ${subject.name} appears for "${buyerQuery}".`,
+            bullets: ['[stub] the live copy pivots to where and how they rank'],
+            detail: `[stub] appears — the full report covers rank and description.`,
+            appeared: true,
+            query: buyerQuery,
+            recommended: [],
+          }
+        : {
+            verdict: `[stub] ${subject.name} is missing for "${buyerQuery}".`,
+            bullets: ['[stub] the live copy names who the buyer finds instead'],
+            detail: `[stub] For "${buyerQuery}", ${subject.name} did not appear in the stub results.`,
+            appeared: false,
+            query: buyerQuery,
+            recommended: [],
+          },
+      opportunity: appeared
+        ? `[stub] The full report would score how strongly and accurately ${subject.name} shows up. Run with a live key.`
+        : `[stub] The full report would show what's missing so ${subject.name} becomes findable. Run with a live key.`,
       usage: { input_tokens: 0, output_tokens: 0 },
     };
   }
 
   const digest = resultsDigest(call1Results);
   const codeNote = signal.domainMatch
-    ? `A code check found ${subject.name}'s OWN domain (${subjectHost}) among the buyer-intent results — they DO appear. Do not write an absence.`
+    ? `A code check found ${subject.name}'s OWN domain (${subjectHost}) among the buyer-intent results — they DO appear.`
     : signal.nameMatch
-      ? `A code check found ${subject.name}'s name among the buyer-intent results — they likely appear. Look closely before writing any absence.`
-      : `A code check did NOT find ${subject.name} in the buyer-intent results. If the actual results below still show them in any form, trust the results, not this note.`;
+      ? `A code check found ${subject.name}'s name among the buyer-intent results — they appear.`
+      : `A code check did NOT find ${subject.name} in the buyer-intent results — treat them as not appearing for that query.`;
+
+  // Opportunity branch is chosen in CODE from the code-anchored `appeared`, then
+  // the model writes the prose for that branch only. Tease the SHAPE of the gap,
+  // never the specific fixes; no hype, no urgency, no deadlines.
+  const opportunityGuidance = appeared
+    ? `${subject.name} already appears for the buyer-intent search, so the opportunity is about how STRONGLY and ACCURATELY they're positioned — not whether they show up. Tease that the full report scores the strength and accuracy of that presence and where it can be sharpened. Describe the shape of the gap, not the fixes.`
+    : `${subject.name} does NOT appear for the buyer-intent search, so the opportunity is about becoming FINDABLE. Tease that the full report shows what's missing between them and the buyer without listing the specific fixes. Describe the shape of the gap, not the fixes.`;
 
   const prompt = [
-    `You are analyzing live web-search results to tell ${subject.name}${subject.url ? ` (${subject.url})` : ''} what AI currently says about them. Use ONLY the results below — never invent competitors, rankings, or descriptions.`,
+    `You are analyzing live web-search results to tell ${subject.name}${subject.url ? ` (${subject.url})` : ''} what AI currently says about them. Use ONLY the results below — never invent competitors, rankings, descriptions, or organizations.`,
     ``,
     `SEARCH RESULTS:`,
     digest,
     ``,
     `CODE SIGNAL: ${codeNote}`,
     ``,
-    `Write two things, honestly (this is a diagnostic — never manufacture a problem):`,
-    `1) MIRROR: In plain language, who does AI currently think ${subject.name} is, based on the identity and comparative results? Where the answer is stale, wrong, or collides with a DIFFERENT organization sharing the name, say so directly — no hedging. If it's actually accurate, say that.`,
-    `2) ABSENCE: For the buyer-intent query "${buyerQuery}", report what actually came back. If ${subject.name} is NOT among the results, name who is recommended instead and state plainly that they're not on the list. If ${subject.name} IS present in any form, set appeared=true and pivot to WHERE they rank and HOW they're described — do NOT claim an absence. Only claim absence when they are genuinely missing.`,
+    `Produce three parts, honestly (this is a diagnostic — never manufacture a problem). Each section is a scannable three-layer read: a one-line verdict, up to 3 short bullets, and a short detail paragraph.`,
     ``,
-    `Respond with ONLY a JSON object, no prose around it:`,
-    `{"mirror":{"verdict":"<=10 word summary","body":"2-4 sentences"},"absence":{"appeared":true|false,"recommended":["names actually returned"],"body":"2-4 sentences"}}`,
+    `1) MIRROR — who AI currently thinks ${subject.name} is, from the identity/comparative results.`,
+    `   • verdict: one line, at most 15 words, plain language.`,
+    `   • bullets: up to 3 short factual points about what AI associates them with (drawn only from the results).`,
+    `   • detail: 2-3 sentences of nuance. Where AI's answer is stale or wrong, say so directly.`,
+    `   • collision: set true ONLY if a DISTINCT, DIFFERENT organization that shares the name appears in the identity results and could be mistaken for ${subject.name}. If true, you MUST name that other organization in collision_entity (e.g. "Harris & Co Accounting, Leeds"). A vague "there may be similar businesses" is NOT a collision — set collision false and leave collision_entity empty. Never invent an entity to fill this field.`,
+    ``,
+    `2) ABSENCE — for the buyer-intent query "${buyerQuery}", what actually came back.`,
+    `   • verdict: one line, at most 15 words.`,
+    `   • bullets: up to 3 short points on who or what the results surface.`,
+    `   • detail: 2-3 sentences.`,
+    `   • recommended: the names actually returned by that query (who a buyer would find). Empty array if none.`,
+    `   Do NOT state whether ${subject.name} appeared — that is decided separately in code. Just report what the results contain.`,
+    ``,
+    `3) OPPORTUNITY — one short paragraph. ${opportunityGuidance}`,
+    `   • opportunity_anchor: name the ONE concrete finding from THIS run that the paragraph is built on — the colliding entity, a specific competitor from the buyer-intent results, the rank position, or the query "${buyerQuery}" itself. It must be something that actually appeared in the results above. A generic "improvements are available" is NOT anchored — if you cannot tie it to a concrete finding, leave opportunity_anchor empty.`,
   ].join('\n');
 
-  const res = await fetch(ANTHROPIC_MESSAGES_URL, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': key,
-      'anthropic-version': ANTHROPIC_VERSION,
-    },
-    // NO tools → this call physically cannot issue a web search.
-    body: JSON.stringify({
-      model: ANTHROPIC_MODEL,
-      max_tokens: SYNTHESIS_MAX_TOKENS,
-      messages: [{ role: 'user', content: prompt }],
-    }),
+  const { text, usage } = await callClaudeText(prompt, SYNTHESIS_MAX_TOKENS, {
+    format: { type: 'json_schema', schema: SYNTHESIS_SCHEMA },
   });
 
-  if (!res.ok) {
-    // Same capacity/error discipline as searchWeb; no retry needed on synthesis
-    // (no search billed), but capacity still routes to "at capacity".
-    let errType = '';
-    let errMsg = '';
-    try {
-      const j = (await res.json()) as { error?: { type?: string; message?: string } };
-      errType = j.error?.type ?? '';
-      errMsg = j.error?.message ?? '';
-    } catch {
-      /* non-JSON */
-    }
-    if (classifyFailure(res.status, errType, errMsg) === 'capacity') {
-      throw new CapacityError(`anthropic capacity ${res.status}`);
-    }
-    throw new Error(`anthropic ${res.status}`);
-  }
-
-  const data = (await res.json()) as AnthropicResponse;
-  let text = '';
-  for (const block of data.content ?? []) {
-    if (block.type === 'text' && typeof block.text === 'string') text += block.text;
-  }
-
-  // Defensive parse — a public page must never show malformed model output.
+  // Structured outputs guarantee schema-valid JSON, but we still parse defensively
+  // (balanced-brace slice) so a public page never shows a raw model string.
   let parsed: {
-    mirror?: { verdict?: unknown; body?: unknown };
-    absence?: { appeared?: unknown; recommended?: unknown; body?: unknown };
+    mirror?: { verdict?: unknown; bullets?: unknown; detail?: unknown; collision?: unknown; collision_entity?: unknown };
+    absence?: { verdict?: unknown; bullets?: unknown; detail?: unknown; recommended?: unknown };
+    opportunity?: unknown;
+    opportunity_anchor?: unknown;
   } = {};
   try {
     const start = text.indexOf('{');
     const end = text.lastIndexOf('}');
     if (start >= 0 && end > start) parsed = JSON.parse(text.slice(start, end + 1));
   } catch {
-    /* fall through to safe fallback below */
+    /* fall through to safe fallbacks below */
   }
 
-  const usage = {
-    input_tokens: data.usage?.input_tokens ?? 0,
-    output_tokens: data.usage?.output_tokens ?? 0,
-  };
+  const mirrorSection = toRevealSection(
+    parsed.mirror,
+    `Here's what AI currently surfaces about ${subject.name}.`,
+    `Here's the current reading of how AI describes ${subject.name}.`,
+  );
 
-  const mirrorVerdict = typeof parsed.mirror?.verdict === 'string' ? parsed.mirror.verdict : '';
-  const mirrorBody =
-    typeof parsed.mirror?.body === 'string' && parsed.mirror.body.trim()
-      ? parsed.mirror.body.trim()
-      : `Here's what AI currently surfaces about ${subject.name}.`;
+  // COLLISION GUARD (code): a collision is only real if the model NAMED the
+  // distinct entity. collision=true with an empty/blank collision_entity is
+  // treated as false — the model doesn't get to manufacture a problem it can't
+  // name. This exception is scoped to collision ONLY; it is NOT a precedent for
+  // `appeared`, which stays purely code-anchored above.
+  const collisionEntity =
+    typeof parsed.mirror?.collision_entity === 'string' ? parsed.mirror.collision_entity.trim() : '';
+  const collision = parsed.mirror?.collision === true && collisionEntity.length > 0;
 
-  let appeared = parsed.absence?.appeared === true;
-  // Honesty override: a domain match is proof of appearance. Never let a model
-  // false-absence reach the page — if the evidence says they appear, they appear.
-  if (signal.domainMatch && !appeared) {
-    appeared = true;
-  }
+  const absenceSection = toRevealSection(
+    parsed.absence,
+    appeared
+      ? `For "${buyerQuery}", ${subject.name} appears in the results.`
+      : `For "${buyerQuery}", here's who the results surface.`,
+    appeared
+      ? `For "${buyerQuery}", ${subject.name} does appear — the full report covers where they rank and how they're described.`
+      : `For "${buyerQuery}", here's who the results surface instead.`,
+  );
   const recommended = Array.isArray(parsed.absence?.recommended)
-    ? (parsed.absence!.recommended as unknown[]).filter((x): x is string => typeof x === 'string')
+    ? (parsed.absence!.recommended as unknown[]).filter((x): x is string => typeof x === 'string' && x.trim().length > 0)
     : [];
-  let absenceBody =
-    typeof parsed.absence?.body === 'string' && parsed.absence.body.trim() ? parsed.absence.body.trim() : '';
-  if (!absenceBody || (signal.domainMatch && parsed.absence?.appeared !== true)) {
-    // Safe, non-manufacturing fallback when copy is missing or the model tried to
-    // claim an absence the evidence contradicts.
-    absenceBody = appeared
-      ? `For "${buyerQuery}", ${subject.name} does appear in the results — the full report covers where they rank and how they're described.`
-      : `For "${buyerQuery}", here's who the results surface.`;
-  }
+
+  // OPPORTUNITY SPECIFICITY GUARD (code): the model's paragraph is only used if it
+  // named the concrete finding it's built on (opportunity_anchor non-empty). An
+  // unanchored paragraph is generic filler ("improvements are available") and is
+  // replaced with a deterministic fallback that references THIS run's query — so
+  // the opportunity can never be manipulative-vague. Same pattern as the collision
+  // named-entity guard; not a precedent for `appeared`.
+  const opportunityAnchor =
+    typeof parsed.opportunity_anchor === 'string' ? parsed.opportunity_anchor.trim() : '';
+  const modelOpportunity = typeof parsed.opportunity === 'string' ? parsed.opportunity.trim() : '';
+  const opportunity =
+    modelOpportunity && opportunityAnchor.length > 0
+      ? modelOpportunity
+      : appeared
+        ? `The full report scores how strongly and accurately ${subject.name} shows up for "${buyerQuery}", and where that presence can be sharpened.`
+        : `For "${buyerQuery}", the full report shows what's missing between ${subject.name} and the buyers searching — the gap to close to become findable.`;
 
   return {
-    mirror: { verdict: mirrorVerdict, body: mirrorBody, accurate },
-    absence: { appeared, query: buyerQuery, recommended, body: absenceBody },
+    mirror: { ...mirrorSection, accurate, collision },
+    absence: { ...absenceSection, appeared, query: buyerQuery, recommended },
+    opportunity,
     usage,
   };
 }
@@ -695,16 +782,28 @@ export async function POST(request: NextRequest) {
         inputTokens += synthesis.usage.input_tokens;
         outputTokens += synthesis.usage.output_tokens;
 
-        // MIRROR (State 2) — who AI thinks they are, stale/wrong/collision said plainly.
-        send({ type: 'mirror', verdict: synthesis.mirror.verdict, body: synthesis.mirror.body, accurate: synthesis.mirror.accurate });
-        // ABSENCE (State 3) — §6 honesty branch already resolved inside synthesis.
+        // MIRROR (State 2) — verdict + bullets + collapsed detail. `accurate` and
+        // `collision` are the two amber triggers the UI reads for the ✅/⚠️ icon.
+        send({
+          type: 'mirror',
+          verdict: synthesis.mirror.verdict,
+          bullets: synthesis.mirror.bullets,
+          detail: synthesis.mirror.detail,
+          accurate: synthesis.mirror.accurate,
+          collision: synthesis.mirror.collision,
+        });
+        // ABSENCE (State 3) — `appeared` is code-anchored inside synthesis.
         send({
           type: 'absence',
+          verdict: synthesis.absence.verdict,
+          bullets: synthesis.absence.bullets,
+          detail: synthesis.absence.detail,
           appeared: synthesis.absence.appeared,
           query: synthesis.absence.query,
           recommended: synthesis.absence.recommended,
-          body: synthesis.absence.body,
         });
+        // OPPORTUNITY (item 4) — teases the shape of the gap the full report closes.
+        send({ type: 'opportunity', text: synthesis.opportunity });
 
         const persisted = await persistCall1({
           sessionToken,
