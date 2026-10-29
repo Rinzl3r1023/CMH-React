@@ -283,8 +283,7 @@ async function persistCall1(p: PersistInput): Promise<boolean> {
   const res = await fetch(`${base}/rest/v1/demo_sessions?on_conflict=session_token`, {
     method: 'POST',
     headers: {
-      apikey: svc,
-      authorization: `Bearer ${svc}`,
+      apikey: svc, // no Authorization: Bearer — sb_secret_ keys aren't JWTs
       'content-type': 'application/json',
       // Upsert on the unique session_token; don't echo the row back.
       prefer: 'resolution=merge-duplicates,return=minimal',
