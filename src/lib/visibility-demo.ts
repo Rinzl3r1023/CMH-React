@@ -83,8 +83,10 @@ export function supabaseConfigured(): boolean {
   return !!(envTrim('SUPABASE_URL') && envTrim('SUPABASE_SERVICE_ROLE_KEY'));
 }
 
+// apikey header only: Supabase's sb_secret_ keys aren't JWTs and are rejected in
+// Authorization: Bearer. Without that header, the legacy service_role key works too.
 function sbAuth(svc: string): Record<string, string> {
-  return { apikey: svc, authorization: `Bearer ${svc}` };
+  return { apikey: svc };
 }
 
 // Exact row count for a filter, via PostgREST count=exact + Content-Range.
